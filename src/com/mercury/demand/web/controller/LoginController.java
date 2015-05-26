@@ -1,5 +1,7 @@
 package com.mercury.demand.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 	
 	@RequestMapping(value="/security/login.htm", method = RequestMethod.GET)
-	public String login(ModelMap model) {
+	public String login(HttpServletRequest request, ModelMap model) {
 		return "security/login";
 	}
 	

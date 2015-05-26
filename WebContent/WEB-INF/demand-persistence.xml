@@ -46,12 +46,14 @@
 		</property> -->
     	<property name="packagesToScan" value="com.mercury.demand.persistence.model"/>
     </bean>
+    
     <bean id="user1Impl" class="com.mercury.demand.persistence.dao.impl.User1DaoImpl">
 		<property name="sessionFactory" ref="tableSessionFactory"/>
 	</bean>
 	<bean id="user1" class="com.mercury.result.Result" factory-method="getInstance">
 		<property name="hd" ref="user1Impl"></property>
-	</bean>
+	</bean>	
+	
     <!--  Tomcat does not have a built in JTA Transaction Manager to so use JOTM -->
 	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
 	    <property name="userTransaction">

@@ -18,6 +18,7 @@
     <sec:http use-expressions="true">
    		<sec:intercept-url pattern="/content/**" access="isAuthenticated()" />
    		<sec:intercept-url pattern="/**" access="permitAll" />
+   		<sec:intercept-url pattern="/rest/**" access="isAuthenticated()" />
         <!-- <sec:intercept-url pattern="/security/**" access="permitAll" />  -->
         
         <sec:form-login 

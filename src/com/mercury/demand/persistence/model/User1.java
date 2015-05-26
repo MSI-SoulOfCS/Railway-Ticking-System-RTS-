@@ -14,7 +14,6 @@ public class User1 implements java.io.Serializable{
 	private String name;
 	private String location;
 	private String country;
-	private String type;
 	public User1(){
 		
 	}
@@ -46,13 +45,6 @@ public class User1 implements java.io.Serializable{
 	}
 	public void setCountry(String country) {
 		this.country = country;
-	}
-	@Column(name="TYPE", nullable = false)
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
