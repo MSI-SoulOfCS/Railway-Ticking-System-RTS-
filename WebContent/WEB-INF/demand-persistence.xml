@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:jee="http://www.springframework.org/schema/jee"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="
+		   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+	  	   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd        
+	       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+ 	<tx:annotation-driven  />   
+    
+    <bean id="baseSessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" abstract="true">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+ 				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+            </props>
+        </property>
+    </bean>
+            
+	 <jee:jndi-lookup id="appDataSource" jndi-name="jdbc/myoracle" resource-ref="true" />	
+    <bean id="appSessionFactory" parent="baseSessionFactory">  
+        <property name="dataSource" ref="appDataSource" />
+        <property name="packagesToScan" value="com.mercury.demand.persistence.model"/>
+    </bean> 
+   
+    <jee:jndi-lookup id="loginDataSource" jndi-name="jdbc/myoracle" resource-ref="true" />
+    <bean id ="loginSessionFactory" parent="baseSessionFactory">
+    	<property name="dataSource" ref="loginDataSource" />
+        <property name="packagesToScan" value="com.mercury.demand.persistence.model"/>
+    </bean>  
+    
+    <jee:jndi-lookup id="tableDataSource" jndi-name="jdbc/myoracle" resource-ref="true" />
+    <bean id="tableSessionFactory" parent="baseSessionFactory">
+    	<property name="dataSource" ref="tableDataSource"/>
+    	<!-- <property name="mappingResources">
+			<list>
+				<value>com/mercury/mappings/User1.hbm.xml</value>
+			</list>
+		</property> -->
+    	<property name="packagesToScan" value="com.mercury.demand.persistence.model"/>
+    </bean>
+    <bean id="user1Impl" class="com.mercury.demand.persistence.dao.impl.User1DaoImpl">
+		<property name="sessionFactory" ref="tableSessionFactory"/>
+	</bean>
+	<bean id="user1" class="com.mercury.result.Result" factory-method="getInstance">
+		<property name="hd" ref="user1Impl"></property>
+	</bean>
+    <!--  Tomcat does not have a built in JTA Transaction Manager to so use JOTM -->
+	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+	    <property name="userTransaction">
+	        <bean class="org.springframework.transaction.jta.JotmFactoryBean"/>
+	    </property>
+	</bean>
+	
+    
+		<!-- <tx:jta-transaction-manager />    -->
+	
+	 
+    <!-- <bean id="genericDao" class="com.mercury.common.db.HibernateDao" abstract="true" scope="prototype"/>
+    
+    <bean id="user1Dao" parent="genericDao" scope="prototype">
+		<constructor-arg value="com.mercury.demand.persistence.dao.UserDAO" />
+    </bean>  -->
+</beans>

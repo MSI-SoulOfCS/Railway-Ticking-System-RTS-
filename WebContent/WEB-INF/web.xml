@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+	xsi:schemaLocation="
+		http://java.sun.com/xml/ns/javaee 
+		http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+		id="WebApp_ID" version="3.0">
+	
+  	
+  	<!-- Spring Security -->
+  	<filter>
+    	<filter-name>springSecurityFilterChain</filter-name>
+    	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>springSecurityFilterChain</filter-name>
+    	<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  	
+  	<!-- Spring MVC -->
+  	<servlet>
+    	<servlet-name>demand</servlet-name>
+    	<servlet-class>
+	        org.springframework.web.servlet.DispatcherServlet
+	    </servlet-class>
+    	<load-on-startup>1</load-on-startup>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>demand</servlet-name>
+    	<url-pattern>*.htm</url-pattern>
+  	</servlet-mapping>
+  	
+  	<!-- Spring Listeners and Corresponding parameters -->
+  	<listener>
+    	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  	</listener>
+  	<context-param>
+    	<param-name>contextConfigLocation</param-name>
+    	<param-value>
+			/WEB-INF/demand-*.xml
+		</param-value>
+  	</context-param>
+  	
+  	<welcome-file-list>
+    	<welcome-file>/security/login.htm</welcome-file>
+  	</welcome-file-list>
+  	
+  	<error-page>
+ 		<!-- Missing login -->
+    	<error-code>401</error-code>
+    	<location>/errorGeneral.jsp</location>
+	</error-page>
+	<error-page>
+    	<!-- Forbidden directory listing -->
+    	<error-code>403</error-code>
+    	<location>/errorGeneral.jsp</location>
+	</error-page>
+	<error-page>
+    	<!-- Forbidden directory listing -->
+    	<error-code>404</error-code>
+    	<location>/errorGeneral.jsp</location>
+	</error-page>
+	<error-page>
+    	<!-- Forbidden directory listing -->
+    	<error-code>405</error-code>
+    	<location>/errorMethod.jsp</location>
+	</error-page>
+	<error-page>
+    	<!-- Uncaught exception -->
+    	<error-code>500</error-code>
+    	<location>/errorGeneral.jsp</location>
+	</error-page>
+	<error-page>
+    	<!-- Unsupported servlet method -->
+    	<error-code>503</error-code>
+    	<location>/errorGeneral.jsp</location>
+	</error-page>
+	
+	<!-- For HTTPS usage -->
+	<!-- 
+	<session-config>
+		<cookie-config>
+  			<http-only>true</http-only>
+  			<secure>true</secure>
+ 		</cookie-config>
+	</session-config> 
+	-->
+</web-app>

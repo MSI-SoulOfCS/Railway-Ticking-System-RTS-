@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<!-- 
+    <sec:debug />
+ 	-->
+ 	
+	<sec:global-method-security pre-post-annotations="enabled" />
+
+    
+
+    <sec:http use-expressions="true">
+   		<sec:intercept-url pattern="/content/**" access="isAuthenticated()" />
+   		<sec:intercept-url pattern="/**" access="permitAll" />
+        <!-- <sec:intercept-url pattern="/security/**" access="permitAll" />  -->
+        
+        <sec:form-login 
+        	login-page="/security/login.htm" 
+        	authentication-success-handler-ref="postSuccessAuthHandler"
+        	authentication-failure-url="/security/login.htm?login_error=1" 
+        />
+
+        <sec:logout logout-success-url="/" delete-cookies="JSESSIONID"/>
+       
+        <!-- Uncomment to limit the number of sessions a user can have (requires listener)
+        <sec:session-management invalid-session-url="/timeout.htm">
+            <sec:concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+        </sec:session-management>
+		 -->
+	</sec:http>
+    <!--
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" />
+    -->
+    <bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+  		<property name="authenticationManager" ref="authenticationManager"/>
+  		<property name="filterProcessesUrl" value="/j_spring_security_check"/>
+	</bean> 
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider user-service-ref="customUserDetailsService" />
+    </sec:authentication-manager>
+   
+	<bean id="postSuccessAuthHandler" class="com.mercury.demand.security.PostSuccessfulAuthenticationHandler">
+	    <property name="defaultTargetUrl" value="/content/main.htm" />
+	    <property name="alwaysUseDefaultTargetUrl" value="true" />
+	</bean>
+
+	<bean id="customUserDetailsService" class="com.mercury.demand.service.CustomUserDetailsService"/>
+</beans>
+
