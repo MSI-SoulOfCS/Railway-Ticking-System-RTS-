@@ -11,7 +11,7 @@
 <script>
 	$(document).ready(function() {
 		$.ajax({
-			url: "http://localhost:8080/Demand1/rest/hello",
+			url: "http://localhost:8080/Demand1/rest/Stations",
 			type: "get",
 			dataType: "json",
 			success:showData
@@ -20,9 +20,9 @@
 	function showData(data) {
 		var rows = "";
 		$("#users").empty();
-		$(data.user).each(function(i, item) {
+		$(data.stations).each(function(i, item) {
 			var user_id = item.id;
-			var user_name = item.name;
+			var user_name = item.station;
 			rows = "<tr><td>" + user_id + "</td><td>" + user_name + "</td></tr>";
 			$(rows).appendTo("#users");
 		});

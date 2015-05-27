@@ -22,12 +22,6 @@ public class PersonDaoImpl implements PersonDao {
     }
     
 	@Override
-	public Person getPersonById(int personId) {
-		// TODO Auto-generated method stub
-		return (Person)this.getCurrentSession().get(Person.class, personId);
-	}
-
-	@Override
 	public Person getPersonByUsername(String username) {
 		// TODO Auto-generated method stub
 		Criteria ct = this.getCurrentSession().createCriteria(Person.class);

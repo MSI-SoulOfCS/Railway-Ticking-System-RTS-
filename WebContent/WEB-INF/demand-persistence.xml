@@ -39,19 +39,14 @@
     <jee:jndi-lookup id="tableDataSource" jndi-name="jdbc/myoracle" resource-ref="true" />
     <bean id="tableSessionFactory" parent="baseSessionFactory">
     	<property name="dataSource" ref="tableDataSource"/>
-    	<!-- <property name="mappingResources">
-			<list>
-				<value>com/mercury/mappings/User1.hbm.xml</value>
-			</list>
-		</property> -->
     	<property name="packagesToScan" value="com.mercury.demand.persistence.model"/>
     </bean>
     
-    <bean id="user1Impl" class="com.mercury.demand.persistence.dao.impl.User1DaoImpl">
+    <bean id="stationImpl" class="com.mercury.demand.persistence.dao.impl.StationDaoImpl">
 		<property name="sessionFactory" ref="tableSessionFactory"/>
 	</bean>
-	<bean id="user1" class="com.mercury.result.Result" factory-method="getInstance">
-		<property name="hd" ref="user1Impl"></property>
+	<bean id="Stations" class="com.mercury.demand.service.StationDetailsService" factory-method="getInstance">
+		<property name="hd" ref="stationImpl"></property>
 	</bean>	
 	
     <!--  Tomcat does not have a built in JTA Transaction Manager to so use JOTM -->

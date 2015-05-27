@@ -9,16 +9,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.mercury.common.info.ResultInfo;
-import com.mercury.demand.persistence.model.User1;
-import com.mercury.result.Result;
+import com.mercury.common.info.StationsInfo;
+import com.mercury.demand.persistence.model.Station;
+import com.mercury.demand.service.StationDetailsService;
 
-@Path("/hello")
-public class HelloResource {
+@Path("/Stations")
+public class StationsResource {
 	
 	@POST
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public List<User1> execute(
+	public List<Station> execute(
 			@FormParam("name") String name,
 			@FormParam("age") int age) {
 		return null;
@@ -26,7 +26,7 @@ public class HelloResource {
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})	
-	public ResultInfo execute() {
-		return Result.getInstance().getResult();
+	public StationsInfo execute() {
+		return StationDetailsService.getInstance().getAllStations();
 	}
 }

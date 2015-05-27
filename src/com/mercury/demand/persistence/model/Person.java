@@ -6,14 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ss_person")
+@Table(name="users")
 public class Person implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2748948831285204760L;
-	private int personId;
 	private String username;
 	private String password;
 	private String authority;
@@ -25,15 +24,7 @@ public class Person implements java.io.Serializable {
 
     // Property accessors
     @Id
-    @Column(name="PERSONID", nullable = false)
-    public int getPersonId() {
-        return this.personId;
-    }
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
-
-    @Column(name="USERNAME", nullable = false)
+    @Column(name="ID", nullable = false)
 	public String getUsername() {
 		return username;
 	}
