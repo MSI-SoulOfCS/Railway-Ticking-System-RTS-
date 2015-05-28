@@ -12,9 +12,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 	
 	@RequestMapping(value="/security/login.htm", method = RequestMethod.GET)
-	public String login(HttpServletRequest request, ModelMap model) {
+	public String login(ModelMap model) {
 		return "security/login";
 	}
+	
+	@RequestMapping(value="/welcome/welcome.htm", method = RequestMethod.GET)
+	public ModelAndView welcome(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("welcome/welcome");
+		return mav;
+	}	
 	
 	@RequestMapping(value="/content/main.htm", method = RequestMethod.GET)
 	public ModelAndView mainPage() {	

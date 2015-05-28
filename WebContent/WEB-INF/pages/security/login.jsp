@@ -64,7 +64,7 @@
 	<p>The username or password supplied is incorrect</p>
 </div>	
 <!-- Login Form -->	
-<form name="f" action="<c:url value='j_spring_security_check'/>" method="POST" id="login-form">
+<form name="f" action="<c:url value='/j_spring_security_check'/>" method="POST" id="login-form">
 	<table>
 		<tr>
 			<td>Username: </td>

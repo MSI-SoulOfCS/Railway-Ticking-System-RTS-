@@ -60,7 +60,7 @@
   	</context-param>
   	
   	<welcome-file-list>
-    	<welcome-file>/security/login.htm</welcome-file>
+    	<welcome-file>/welcome/welcome.htm</welcome-file>
   	</welcome-file-list>
   	
   	<error-page>
