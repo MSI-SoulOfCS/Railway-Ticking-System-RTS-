@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-import com.mercury.demand.persistence.dao.StationDao;
-import com.mercury.demand.persistence.model.Station;
+import com.mercury.demand.persistence.dao.TicketDao;
+import com.mercury.demand.persistence.model.Ticket;
 
-public class StationDaoImpl implements StationDao {
+public class TicketDaoImpl implements TicketDao {
 
 	private HibernateTemplate template;
 	
@@ -22,9 +22,9 @@ public class StationDaoImpl implements StationDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Station> getAllStations() {
+	public List<Ticket> getAllTickets() {
 		// TODO Auto-generated method stub
-		String hql = "From Station";
+		String hql = "From Ticket";
 		return template.find(hql);
 	}
 	

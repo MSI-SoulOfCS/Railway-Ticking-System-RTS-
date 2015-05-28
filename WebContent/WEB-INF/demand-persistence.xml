@@ -42,12 +42,15 @@
     	<property name="packagesToScan" value="com.mercury.demand.persistence.model"/>
     </bean>
     
-    <bean id="stationImpl" class="com.mercury.demand.persistence.dao.impl.StationDaoImpl">
-		<property name="sessionFactory" ref="tableSessionFactory"/>
-	</bean>
-	<bean id="Stations" class="com.mercury.demand.service.StationDetailsService" factory-method="getInstance">
-		<property name="hd" ref="stationImpl"></property>
-	</bean>	
+    <bean id="stationImpl" class="com.mercury.demand.persistence.dao.impl.StationDaoImpl"/>
+	<bean id="stations" class="com.mercury.demand.service.StationDetailsService" factory-method="getInstance"/>
+
+    <bean id="ticketImpl" class="com.mercury.demand.persistence.dao.impl.TicketDaoImpl"/>
+	<bean id="tickets" class="com.mercury.demand.service.TicketDetailsService" factory-method="getInstance"/>
+	
+	<bean id="historyImpl" class="com.mercury.demand.persistence.dao.impl.HistoryDaoImpl"/>
+	<bean id="history" class="com.mercury.demand.service.HistoryDetailsService" factory-method="getInstance"/>
+
 	
     <!--  Tomcat does not have a built in JTA Transaction Manager to so use JOTM -->
 	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">

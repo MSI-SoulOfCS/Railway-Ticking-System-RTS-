@@ -12,7 +12,7 @@ public class StationsInfo {
 	private List<Station> stations;	
 	
 	@XmlElement(name="stations")
-	public List<Station> getUsers() {
+	public List<Station> getStations() {
 			return stations;
 	}
 	public void setStations(List<Station> stations) {

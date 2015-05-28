@@ -14,29 +14,87 @@
 			url: "http://localhost:8080/Demand1/rest/Stations",
 			type: "get",
 			dataType: "json",
-			success:showData
+			success:showStation
 		});
+		$.ajax({
+			url: "http://localhost:8080/Demand1/rest/Tickets",
+			type: "get",
+			dataType: "json",
+			success:showTicket
+		});
+		$.ajax({
+			url: "http://localhost:8080/Demand1/rest/History",
+			type: "get",
+			dataType: "json",
+			success:showHistory
+		});
+
 	});
-	function showData(data) {
+	function showStation(data) {
 		var rows = "";
-		$("#users").empty();
+		$("#stations").empty();
 		$(data.stations).each(function(i, item) {
-			var user_id = item.id;
-			var user_name = item.station;
-			rows = "<tr><td>" + user_id + "</td><td>" + user_name + "</td></tr>";
-			$(rows).appendTo("#users");
+			rows = "<tr><td>" + item.id + "</td><td>" + item.station + "</td><td>" +
+								item.state + "</td><td>" + item.city + "</td></tr>";
+			$(rows).appendTo("#stations");
 		});
 	}
+	function showTicket(data) {
+		var rows = "";
+		$("#tickets").empty();
+		$(data.tickets).each(function(i, item) {
+			var d = new Date(item.date);
+			rows = "<tr><td>" + item.id + "</td><td>" + item.price + "</td><td>" +
+								(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
+								+ "</td><td>" + item.amount + "</td><td>" +
+								item.from_loc.station + "</td><td>" + item.to_loc.station + "</td></tr>";
+			$(rows).appendTo("#tickets");
+		});
+	}
+	function showHistory(data) {
+		var rows = "";
+		$("#history").empty();
+		$(data.history).each(function(i, item) {
+			rows = "<tr><td>" + item.person.username + "</td><td>" + item.ticket.id + "</td><td>" +
+								item.amount + "</td></tr>";
+			$(rows).appendTo("#history");
+		});
+	}
+
 </script>
 </head>
 <body>
 <h1><font color="blue">${title}</font></h1>
-<table border="1" style="width:200px">
+<table border="1" style="width:600px">
 	<tr>
 		<th>id</th>
-		<th>Name</th>
+		<th>Station</th>
+		<th>State</th>
+		<th>City</th>
 	</tr>
-	<tbody id="users">
+	<tbody id="stations">
+	</tbody>
+</table>
+
+<table border="1" style="width:600px">
+	<tr>
+		<th>id</th>
+		<th>price</th>
+		<th>date</th>
+		<th>amount</th>
+		<th>From</th>
+		<th>To</th>
+	</tr>
+	<tbody id="tickets">
+	</tbody>
+</table>
+<table border="1" style="width:600px">
+	<tr>
+		<th>username</th>
+		<th>ticketid</th>
+		<th>amount</th>
+	</tr>
+	<tbody id="history">
 	</tbody>
 </table>
 <a href="<c:url value='/j_spring_security_logout'/>">Logout</a>

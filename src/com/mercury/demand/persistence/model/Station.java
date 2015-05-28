@@ -20,7 +20,7 @@ public class Station implements Serializable{
 	private String state;
 	private String city;
 	private String station;
-	
+
 	@Id
 	@Column(name="ID", nullable = false)
 	public int getId() {

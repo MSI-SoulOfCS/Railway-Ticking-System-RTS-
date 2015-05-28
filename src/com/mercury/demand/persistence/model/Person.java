@@ -16,6 +16,9 @@ public class Person implements java.io.Serializable {
 	private String username;
 	private String password;
 	private String authority;
+	private String firstname;
+	private String lastname;
+	private String email;
 	private boolean enabled;
     
 	// Constructors
@@ -55,5 +58,29 @@ public class Person implements java.io.Serializable {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-  
+	@Column(name="FIRSTNAME", nullable = false)
+	public String getFirstname() {
+		return firstname;
+	}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	@Column(name="LASTNAME", nullable = false)
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+	@Column(name="EMAIL", nullable = false)
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 }
