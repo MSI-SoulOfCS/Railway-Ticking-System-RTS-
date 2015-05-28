@@ -11,6 +11,10 @@
     <title>Cover Template for Bootstrap</title>
   <!--  <link href=".\css\bootstrap.min.css" rel="stylesheet"> -->
     <link href="<c:url value="/css/cover.css" />" rel="stylesheet">
+    <!-- Added by Ning ***********start********** -->
+    <link href="<c:url value="/css/modal.css" />" rel="stylesheet">
+    <!-- Added by Ning ***********end************ -->
+
 <style>
 	.alert {
 		color: red;
@@ -78,20 +82,7 @@
 </head>
 <body background="<c:url value="/img/15.jpg" />">
 <!-- <h1><font color="blue">Login with Username and Password</font></h1> -->
-<!-- Alerts for missing form info  --> 
-<div class="alert" style="display:none;" id="usernameAndPasswordReq">
-	<p>Username and password are required</p>
-</div>
 
-<div class="alert" style="display:none;" id="usernameReq">
-	<p>Username is required</p>
-</div>
-<div class="alert" style="display:none;" id="passwordReq">
-	<p>Password is required</p>
-</div>
-<div class="alert" id="wrongCredentials" style="display:none;">
-	<p>The username or password supplied is incorrect</p>
-</div>	
 <!-- Login Form -->	
 <div class="site-wrapper">
 
@@ -105,13 +96,92 @@
               <nav>
                 <ul class="nav masthead-nav">
                   
-                  <li><a href="#">Sign On</a></li>
-                  <li><a href="./content/main.html">Sign In</a></li>
+                  <!-- Modify by Ning *******start********** -->
+                  <li><a href="#join_form">Join Now</a></li>
+                  <li><a href="#login_form" id="login_pop">Sign In</a></li>
+                  <!-- Modify by Ning *******end********** -->
                 </ul>
               </nav>
             </div>
           </div>
-			
+          <!-- Modify by Ning ************start********** -->
+          <!-- popup form #1 -->
+	       <a href="#x" class="overlay" id="join_form"></a>
+			<div class="popup">
+				<h2>Please register!</h2>
+	            <p>Please enter your user name and password here</p>
+				<form name="f" action="<c:url value='/j_spring_security_check'/>" method="POST" id="login-form">
+					<table>
+						<tr>
+		            		<td>User name: </td>
+							<td><input type="text" name="r_username" id="r_username"/></td>
+		            	</tr>
+		            	<tr>
+							<td>Password: </td>
+							<td><input type="password" name="r_password" id="r_password"/></td>
+						</tr>
+						<tr>
+							<td>RetypePassword: </td>
+							<td><input type="password" name="r_retypepassword" id="r_retypepassword"/></td>
+						</tr>
+						<tr>
+		            		<td>Email address: </td>
+							<td><input type="text" name="r_emailaddress" id="r_emailaddress"/></td>
+		            	</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button id="joinin" type="submit">Join Now</button>
+							</td>
+						</tr>
+		            </table>
+		            	            
+	 			</form>
+	            <a class="close" href="/Demand1/"></a>
+	           </div>
+          <!-- popup form #1 -->
+	       <a href="#x" class="overlay" id="login_form"></a>
+	       
+	       <div class="popup">
+		       <!-- Alerts for missing form info  --> 
+				<div class="alert" style="display:none;" id="usernameAndPasswordReq">
+					<p>User name and password are required</p>
+				</div>
+				
+				<div class="alert" style="display:none;" id="usernameReq">
+					<p>User name is required</p>
+				</div>
+				<div class="alert" style="display:none;" id="passwordReq">
+					<p>Password is required</p>
+				</div>
+				<div class="alert" id="wrongCredentials" style="display:none;">
+					<p>The user name or password supplied is incorrect</p>
+				</div>	
+	            <h2>Please sign in!</h2>
+	            <p>Please enter your user name and password here</p>
+	            <form name="f" action="<c:url value='/j_spring_security_check'/>" method="POST" id="login-form">
+		            <table>
+		            	<tr>
+		            		<td>User name: </td>
+							<td><input type="text" name="j_username" id="j_username"/></td>
+		            	</tr>
+		            	<tr>
+							<td>Password: </td>
+							<td><input type="password" name="j_password" id="j_password"/></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<button id="signin" type="submit">Login</button>
+							</td>
+						</tr>
+		            </table>
+		            	            
+	 			</form>
+	            <a class="close" href="/Demand1/"></a>
+	       </div>
+	       
+			<!-- Modify by Ning ************end********** -->
           <div align="center">
 			<div>
 				<h1>Search your tickets!</h1>
@@ -164,7 +234,7 @@
 					</tr>
 				</table>
 				<br>
-				<a href="./content/main.html" class="button orange">Search Ticket</a> 
+				<a href="./content/main.htm" class="button orange">Search Ticket</a> 
 			</div>
           </div>
 
