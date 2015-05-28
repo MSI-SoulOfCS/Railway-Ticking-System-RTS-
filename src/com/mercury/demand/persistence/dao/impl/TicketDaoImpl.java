@@ -1,5 +1,6 @@
 package com.mercury.demand.persistence.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -26,6 +27,12 @@ public class TicketDaoImpl implements TicketDao {
 		// TODO Auto-generated method stub
 		String hql = "From Ticket";
 		return template.find(hql);
+	}
+
+	@Override
+	public List<Ticket> getTicketsWithCondition(String fromLocation, String toLocation, Date date) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

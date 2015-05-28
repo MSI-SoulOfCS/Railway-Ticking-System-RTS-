@@ -19,7 +19,7 @@
 	
 	<!-- With this component-scan tag, Spring will automatically wire all objects with @controller annotations -->
 	<!-- Since we're doing a component scan here which includes services, we'll need to make this transactional annotation driven as well -->
-	
+	<mvc:annotation-driven />
  	<tx:annotation-driven /> 
  	
  	<!-- Allows for @Controller validation  -->

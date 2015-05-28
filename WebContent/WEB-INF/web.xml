@@ -28,24 +28,7 @@
   	</servlet>
   	<servlet-mapping>
     	<servlet-name>demand</servlet-name>
-    	<url-pattern>*.htm</url-pattern>
-  	</servlet-mapping>
-  	
-  	<!-- Jersey Rest Service -->
-	<servlet>
-  		<servlet-name>Jersey REST Service</servlet-name>
-  		<servlet-class>
-  			com.sun.jersey.spi.container.servlet.ServletContainer
-  		</servlet-class>
-  		<init-param>
-  			<param-name>com.sun.jersey.config.property.packages</param-name>
-  			<param-value>com.mercury.demand.resource</param-value>
-  		</init-param>
-  		<load-on-startup>1</load-on-startup>
-  	</servlet>
-  	<servlet-mapping>
-  		<servlet-name>Jersey REST Service</servlet-name>
-  		<url-pattern>/rest/*</url-pattern>
+    	<url-pattern>*.html</url-pattern>
   	</servlet-mapping>
   	
   	<!-- Spring Listeners and Corresponding parameters -->
@@ -60,7 +43,7 @@
   	</context-param>
   	
   	<welcome-file-list>
-    	<welcome-file>/welcome/welcome.htm</welcome-file>
+    	<welcome-file>/welcome/welcome.html</welcome-file>
   	</welcome-file-list>
   	
   	<error-page>

@@ -6,34 +6,39 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Hello Page</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 </script>
 <script>
 	$(document).ready(function() {
 		$.ajax({
-			url: "/Demand1/rest/Stations",
+			url: "/Demand1/restful/Stations.html",
 			type: "get",
 			dataType: "json",
 			success:showStation
+		})
+		.fail(function(){ alert("please login!");
 		});
 		$.ajax({
-			url: "/Demand1/rest/Tickets",
+			url: "/Demand1/restful/Tickets.html",
 			type: "get",
 			dataType: "json",
 			success:showTicket
 		});
+		.fail(function(){ alert("please login!");
 		$.ajax({
-			url: "/Demand1/rest/History",
+			url: "/Demand1/restful/History.html",
 			type: "get",
 			dataType: "json",
 			success:showHistory
+		})
+		.fail(function(){ alert("Something error");
 		});
 
 	});
 	function showStation(data) {
 		var rows = "";
 		$("#stations").empty();
-		$(data.stations).each(function(i, item) {
+		$(data).each(function(i, item) {
 			rows = "<tr><td>" + item.id + "</td><td>" + item.station + "</td><td>" +
 								item.state + "</td><td>" + item.city + "</td></tr>";
 			$(rows).appendTo("#stations");
@@ -42,7 +47,7 @@
 	function showTicket(data) {
 		var rows = "";
 		$("#tickets").empty();
-		$(data.tickets).each(function(i, item) {
+		$(data).each(function(i, item) {
 			var d = new Date(item.date);
 			rows = "<tr><td>" + item.id + "</td><td>" + item.price + "</td><td>" +
 								(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
@@ -54,7 +59,7 @@
 	function showHistory(data) {
 		var rows = "";
 		$("#history").empty();
-		$(data.history).each(function(i, item) {
+		$(data).each(function(i, item) {
 			rows = "<tr><td>" + item.person.username + "</td><td>" + item.ticket.id + "</td><td>" +
 								item.amount + "</td></tr>";
 			$(rows).appendTo("#history");

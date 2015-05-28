@@ -24,7 +24,7 @@ public class StationDaoImpl implements StationDao {
 	@Override
 	public List<Station> getAllStations() {
 		// TODO Auto-generated method stub
-		String hql = "From Station";
+		String hql = "From Station order by id";
 		return template.find(hql);
 	}
 	

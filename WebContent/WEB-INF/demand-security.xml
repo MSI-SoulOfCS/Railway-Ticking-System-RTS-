@@ -17,12 +17,12 @@
 
     <sec:http use-expressions="true">
    		<sec:intercept-url pattern="/content/**" access="isAuthenticated()" />
+   		<sec:intercept-url pattern="/restful/**" access="isAuthenticated()" />
    		<sec:intercept-url pattern="/**" access="permitAll" />
-   		<sec:intercept-url pattern="/rest/**" access="isAuthenticated()" />
         <!-- <sec:intercept-url pattern="/security/**" access="permitAll" />  -->
         
         <sec:form-login 
-        	login-page="/security/login.htm" 
+        	login-page="/security/login.html" 
         	authentication-success-handler-ref="postSuccessAuthHandler"
         	authentication-failure-url="/security/login.htm?login_error=1" 
         />
@@ -47,7 +47,7 @@
     </sec:authentication-manager>
    
 	<bean id="postSuccessAuthHandler" class="com.mercury.demand.security.PostSuccessfulAuthenticationHandler">
-	    <property name="defaultTargetUrl" value="/content/main.htm" />
+	    <property name="defaultTargetUrl" value="/content/main.html" />
 	    <property name="alwaysUseDefaultTargetUrl" value="true" />
 	</bean>
 

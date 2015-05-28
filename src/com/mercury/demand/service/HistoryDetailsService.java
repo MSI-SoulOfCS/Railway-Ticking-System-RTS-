@@ -1,27 +1,16 @@
 package com.mercury.demand.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mercury.common.info.HistoryInfo;
 import com.mercury.demand.persistence.dao.HistoryDao;
+import com.mercury.demand.persistence.model.History;
 
 public class HistoryDetailsService {
 	@Autowired
 	private HistoryDao hd;
-	
-	private static HistoryDetailsService instance;
-	
-	private HistoryDetailsService() {}
-	
-	public static HistoryDetailsService getInstance() {
-		if(instance == null) {
-			synchronized(HistoryDetailsService.class) {
-				if(instance == null) instance = new HistoryDetailsService();
-			}
-		}
-		return instance;
-	}
-	
+		
 	public HistoryDao getHd() {
 		return hd;
 	}
@@ -30,9 +19,7 @@ public class HistoryDetailsService {
 		this.hd = hd;
 	}
 	
-	public HistoryInfo getAllHistory(){
-		HistoryInfo rs = new HistoryInfo();
-		rs.setHistory(hd.getAllHistory());
-		return rs;
+	public List<History> getAllHistory(){
+		return hd.getAllHistory();
 	}
 }

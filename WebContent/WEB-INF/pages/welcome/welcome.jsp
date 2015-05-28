@@ -106,7 +106,7 @@
                 <ul class="nav masthead-nav">
                   
                   <li><a href="#">Sign On</a></li>
-                  <li><a href="./content/main.htm">Sign In</a></li>
+                  <li><a href="./content/main.html">Sign In</a></li>
                 </ul>
               </nav>
             </div>
@@ -164,7 +164,7 @@
 					</tr>
 				</table>
 				<br>
-				<a href="./content/main.htm" class="button orange">Search Ticket</a> 
+				<a href="./content/main.html" class="button orange">Search Ticket</a> 
 			</div>
           </div>
 

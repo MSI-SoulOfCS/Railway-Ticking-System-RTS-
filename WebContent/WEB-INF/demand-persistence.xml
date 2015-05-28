@@ -16,8 +16,8 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">false</prop>
  				<prop key="hibernate.cache.use_second_level_cache">false</prop>
 				<prop key="hibernate.cache.use_query_cache">false</prop>
             </props>
@@ -43,14 +43,13 @@
     </bean>
     
     <bean id="stationImpl" class="com.mercury.demand.persistence.dao.impl.StationDaoImpl"/>
-	<bean id="stations" class="com.mercury.demand.service.StationDetailsService" factory-method="getInstance"/>
+	<bean id="stations" class="com.mercury.demand.service.StationDetailsService"/>
 
     <bean id="ticketImpl" class="com.mercury.demand.persistence.dao.impl.TicketDaoImpl"/>
-	<bean id="tickets" class="com.mercury.demand.service.TicketDetailsService" factory-method="getInstance"/>
+	<bean id="tickets" class="com.mercury.demand.service.TicketDetailsService"/>
 	
 	<bean id="historyImpl" class="com.mercury.demand.persistence.dao.impl.HistoryDaoImpl"/>
-	<bean id="history" class="com.mercury.demand.service.HistoryDetailsService" factory-method="getInstance"/>
-
+	<bean id="history" class="com.mercury.demand.service.HistoryDetailsService"/>
 	
     <!--  Tomcat does not have a built in JTA Transaction Manager to so use JOTM -->
 	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">

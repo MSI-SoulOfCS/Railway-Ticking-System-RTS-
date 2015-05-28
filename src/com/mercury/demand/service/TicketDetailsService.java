@@ -1,27 +1,16 @@
 package com.mercury.demand.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mercury.common.info.TicketsInfo;
 import com.mercury.demand.persistence.dao.TicketDao;
+import com.mercury.demand.persistence.model.Ticket;
 
 public class TicketDetailsService {
 	@Autowired
 	private TicketDao hd;
-	
-	private static TicketDetailsService instance;
-	
-	private TicketDetailsService() {}
-	
-	public static TicketDetailsService getInstance() {
-		if(instance == null) {
-			synchronized(TicketDetailsService.class) {
-				if(instance == null) instance = new TicketDetailsService();
-			}
-		}
-		return instance;
-	}
-	
+		
 	public TicketDao getHd() {
 		return hd;
 	}
@@ -30,9 +19,7 @@ public class TicketDetailsService {
 		this.hd = hd;
 	}
 	
-	public TicketsInfo getAllTickets(){
-		TicketsInfo rs = new TicketsInfo();
-		rs.setTickets(hd.getAllTickets());
-		return rs;
+	public List<Ticket> getAllTickets(){
+		return hd.getAllTickets();
 	}
 }

@@ -9,13 +9,13 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link rel="icon" href="../../favicon.ico">
-
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     
- <link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">   
+	 <link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">   
 
     <!-- Custom styles for this template -->
     <link href="<c:url value="/css/dashboard.css" />" rel="stylesheet">
@@ -32,12 +32,13 @@
 	<script>
 		$(document).ready(function() {
 			$.ajax({
-				url: "http://localhost:8080/Demand1/rest/Stations",
+				url: "/Demand1/rest/Stations",
 				type: "get",
 				dataType: "json",
 				success:showData
 			});
 		});
+		
 		function showData(data) {
 			var rows = "";
 			$("#users").empty();
@@ -105,7 +106,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="../../assets/js/vendor/holder.js"></script>

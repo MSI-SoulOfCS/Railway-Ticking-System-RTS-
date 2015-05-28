@@ -1,26 +1,15 @@
 package com.mercury.demand.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mercury.common.info.StationsInfo;
 import com.mercury.demand.persistence.dao.StationDao;
+import com.mercury.demand.persistence.model.Station;
 
 public class StationDetailsService {
 	@Autowired
 	private StationDao hd;
-	
-	private static StationDetailsService instance;
-	
-	private StationDetailsService() {}
-	
-	public static StationDetailsService getInstance() {
-		if(instance == null) {
-			synchronized(StationDetailsService.class) {
-				if(instance == null) instance = new StationDetailsService();
-			}
-		}
-		return instance;
-	}
 	
 	public StationDao getHd() {
 		return hd;
@@ -30,9 +19,7 @@ public class StationDetailsService {
 		this.hd = hd;
 	}
 	
-	public StationsInfo getAllStations(){
-		StationsInfo rs = new StationsInfo();
-		rs.setStations(hd.getAllStations());
-		return rs;
+	public List<Station> getAllStations(){
+		return hd.getAllStations();
 	}
 }
