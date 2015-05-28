@@ -11,19 +11,19 @@
 <script>
 	$(document).ready(function() {
 		$.ajax({
-			url: "http://localhost:8080/Demand1/rest/Stations",
+			url: "/Demand1/rest/Stations",
 			type: "get",
 			dataType: "json",
 			success:showStation
 		});
 		$.ajax({
-			url: "http://localhost:8080/Demand1/rest/Tickets",
+			url: "/Demand1/rest/Tickets",
 			type: "get",
 			dataType: "json",
 			success:showTicket
 		});
 		$.ajax({
-			url: "http://localhost:8080/Demand1/rest/History",
+			url: "/Demand1/rest/History",
 			type: "get",
 			dataType: "json",
 			success:showHistory

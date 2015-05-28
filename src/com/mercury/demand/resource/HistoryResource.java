@@ -16,6 +16,10 @@ import com.mercury.demand.service.HistoryDetailsService;
 @Path("/History")
 public class HistoryResource {
 	
+	public HistoryResource() {
+		System.out.println("Create HistoryResource!!!");
+	}
+	
 	@POST
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public List<Station> execute(

@@ -23,6 +23,12 @@ public class LoginController {
 		return mav;
 	}	
 	
+	@RequestMapping(value="/account/account.htm", method = RequestMethod.GET)
+	public ModelAndView account(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("account/dashboard");
+		return mav;
+	}	
 	@RequestMapping(value="/content/main.htm", method = RequestMethod.GET)
 	public ModelAndView mainPage() {	
 		ModelAndView mav = new ModelAndView();

@@ -1,5 +1,6 @@
 
 <!DOCTYPE html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -13,10 +14,11 @@
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
- <link href=".\css\bootstrap.min.css" rel="stylesheet">   
+    
+ <link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">   
 
     <!-- Custom styles for this template -->
-    <link href=".\css\dashboard.css" rel="stylesheet">
+    <link href="<c:url value="/css/dashboard.css" />" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
