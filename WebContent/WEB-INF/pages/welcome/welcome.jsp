@@ -73,7 +73,8 @@
 		$("#tickets").empty();
 		$(data).each(function(i, item) {
 			var d = new Date(item.date);
-			rows = "<tr><td>" + item.id + "</td><td>" + item.price + "</td><td>" +d.getHours()+"/"+
+			rows = "<tr><td>" + item.id + "</td><td>" + item.price + "</td><td>" + 
+								d.getHours() + ":" + d.getMinutes() +"  "+
 								(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
 								+ "</td><td>" + item.amount + "</td><td>" +
 								item.from_loc.station + "</td><td>" + item.to_loc.station + "</td></tr>";
@@ -137,8 +138,8 @@
 		    });
 		    $( "#From" ).autocomplete({
 			      source: availableTags
-			    });
-		  });
+			});
+	});
 </script>
 </head>
 <body background="<c:url value="/img/15.jpg" />">
@@ -260,35 +261,36 @@
 						<td>
 							<select id="At" style="height:24px">
 								<option value="Anytime">Anytime</option>
-								<option value="12am-9am">12am-9am</option>
-								<option value="6am-noon">6am-noon</option>
-								<option value="10am-2pm">10am-2pm</option>
-								<option value="noon-5pm">noon-5pm</option>
-								<option value="4pm-8pm">4pm-8pm</option>
-								<option value="6pm-12am">6pm-12am</option>
-								<option value="1am">1am</option>
-								<option value="2am">2am</option>
-								<option value="3am">3am</option>
-								<option value="4am">4am</option>
-								<option value="5am">5am</option>
-								<option value="6am">6am</option>
-								<option value="7am">7am</option>
-								<option value="8am">8am</option>
-								<option value="9am">9am</option>
-								<option value="10am">10am</option>
-								<option value="Noon">Noon</option>
-								<option value="1pm">1pm</option>
-								<option value="2pm">2pm</option>
-								<option value="3pm">3pm</option>
-								<option value="4pm">4pm</option>
-								<option value="5pm">5pm</option>
-								<option value="6pm">6pm</option>
-								<option value="7pm">7pm</option>
-								<option value="8pm">8pm</option>
-								<option value="9pm">9pm</option>
-								<option value="10pm">10pm</option>
-								<option value="11pm">11pm</option>
-								<option value="Midnight">Midnight</option>
+								<option value="00-09">0am-9am</option>
+								<option value="06-12">6am-noon</option>
+								<option value="10-14">10am-2pm</option>
+								<option value="12-17">noon-5pm</option>
+								<option value="16-20">4pm-8pm</option>
+								<option value="18-24">6pm-0am</option>
+								<option value="01">1am</option>
+								<option value="02">2am</option>
+								<option value="03">3am</option>
+								<option value="04">4am</option>
+								<option value="05">5am</option>
+								<option value="06">6am</option>
+								<option value="07">7am</option>
+								<option value="08">8am</option>
+								<option value="09">9am</option>
+								<option value="10">10am</option>
+								<option value="11">11am</option>
+								<option value="12">Noon</option>
+								<option value="13">1pm</option>
+								<option value="14">2pm</option>
+								<option value="15">3pm</option>
+								<option value="16">4pm</option>
+								<option value="17">5pm</option>
+								<option value="18">6pm</option>
+								<option value="19">7pm</option>
+								<option value="20">8pm</option>
+								<option value="21">9pm</option>
+								<option value="22">10pm</option>
+								<option value="23">11pm</option>
+								<option value="00">Midnight</option>
 							</select>
 						</td>
 					</tr>

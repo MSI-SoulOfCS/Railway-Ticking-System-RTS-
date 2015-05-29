@@ -34,5 +34,21 @@ public class TicketDaoImpl implements TicketDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Ticket> getTicketsInPeroidOfTime(String fromLocation,
+			String toLocation, Date beginDate, Date endDate) {
+		// TODO Auto-generated method stub
+		String[] fromLocations = fromLocation.split(",");
+		String[] toLocations = toLocation.split(",");
+		if(fromLocations.length == 3 && toLocations.length == 3) {
+			String hql = "From Ticket where from_loc.station = ? and to_loc.station = ? and date between ? and ?"; 
+			return template.find(hql, new Object[] {fromLocations[2], toLocations[2], beginDate, endDate});
+		}
+		else {
+			return this.getAllTickets();
+		}
+	}
 	
 }

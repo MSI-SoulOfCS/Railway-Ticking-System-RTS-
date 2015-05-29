@@ -1,5 +1,6 @@
 package com.mercury.demand.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,9 @@ public class TicketDetailsService {
 	
 	public List<Ticket> getAllTickets(){
 		return hd.getAllTickets();
+	}
+	
+	public List<Ticket> getPeroidTimeOfTikcets(String from, String to, Date fromDate, Date toDate) {
+		return hd.getTicketsInPeroidOfTime(from, to, fromDate, toDate);
 	}
 }
