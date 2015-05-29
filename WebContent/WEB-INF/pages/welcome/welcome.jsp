@@ -77,15 +77,18 @@
            			  method: "post",
              		  data: {"From":$("#From").val(), "To":$("#To").val(), "Time":$("#Leave").val()+"/"+$("#At").val()}
 		});
-		/* 		var formData = {From : $("#From").val(),To:$("#To").val(),Time:$("#Leave").val()+"/"+$("#At").val()};
+/*        
+ 		var formData = {From : $("#From").val(),To:$("#To").val(),Time:$("#Leave").val()+"/"+$("#At").val()};
 		$.ajax({
 			url: "/Demand1/restful/PeroidTickets.html",
 			type: "post",
 			data: formData,
 			dataType: "json",
 			success:showTicket
-		});*/
+		});
+*/
 	}
+/*
 	function showTicket(data){
 		var rows = "";
 		$("#tickets").empty();
@@ -99,6 +102,7 @@
 			$(rows).appendTo("#tickets");
 		});
 	}
+*/
 	function loginValidation() {
 		$("#usernameAndPasswordReq").hide();
 		$("#usernameReq").hide();
@@ -376,19 +380,6 @@
 				<button onclick="ticket()" class="button orange">Search Ticket</button> 
 			</div>
           </div>
-
-		 <table border="1" style="width:600px">
-			<tr>
-				<th>id</th>
-				<th>price</th>
-				<th>date</th>
-				<th>amount</th>
-				<th>From</th>
-				<th>To</th>
-			</tr>
-			<tbody id="tickets">
-			</tbody>
-		</table>
 
           <div class="mastfoot">
             <div class="inner">

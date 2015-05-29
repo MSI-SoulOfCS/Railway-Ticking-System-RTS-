@@ -73,7 +73,6 @@
                     <tbody>
 						<c:forEach var="ticket" items="${resultTickets}">
 							<tr>
-								<td>${ticket.id}</td>
 								<td>${ticket.price}</td>
 								<td>${ticket.date}</td>
 								<td>${ticket.amount}</td>
