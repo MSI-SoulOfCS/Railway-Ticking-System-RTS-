@@ -59,15 +59,32 @@
 		$("#signin").on("click", loginValidation);
 		$("#signup").on("click", signUpValidation);
 	});
+	
+    function url_redirect(options){
+        var $form = $("<form />");
+        
+        $form.attr("action",options.url);
+        $form.attr("method",options.method);
+        
+        for (var data in options.data)
+        $form.append('<input type="hidden" name="'+data+'" value="'+options.data[data]+'" />');
+         
+        $("body").append($form);
+        $form.submit();
+    }
 	function ticket(){
-		var formData = {From : $("#From").val(),To:$("#To").val(),Time:$("#Leave").val()+"/"+$("#At").val()};
+        url_redirect({url: "/Demand1/content/ticket.html",
+           			  method: "post",
+             		  data: {"From":$("#From").val(), "To":$("#To").val(), "Time":$("#Leave").val()+"/"+$("#At").val()}
+		});
+		/* 		var formData = {From : $("#From").val(),To:$("#To").val(),Time:$("#Leave").val()+"/"+$("#At").val()};
 		$.ajax({
 			url: "/Demand1/restful/PeroidTickets.html",
 			type: "post",
 			data: formData,
 			dataType: "json",
 			success:showTicket
-		});
+		});*/
 	}
 	function showTicket(data){
 		var rows = "";

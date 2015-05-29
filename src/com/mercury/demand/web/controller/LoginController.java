@@ -74,10 +74,68 @@ public class LoginController {
 		return mav;
 	}	
 	
-	@RequestMapping(value="/content/ticket.html", method = RequestMethod.GET)
-	public ModelAndView ticket(HttpServletRequest request, ModelMap model) {
+	@RequestMapping(value="/content/ticket.html", method = RequestMethod.POST)
+	public ModelAndView ticket(@RequestParam("From") String from, 
+			   				   @RequestParam("To") String to,
+			   				   @RequestParam("Time") String time, 
+			 				   ModelMap model) {
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		String[] DateAndTime = time.split("/");
+		String[] HourTime = DateAndTime[1].split("-");
+		Date firstDate;
+		Date secondDate;
+		
+		List<Ticket> result = ticketDetailsService.getAllTickets();
+		if(!DateAndTime[0].equals("")) {
+			if(DateAndTime[1].equals("Anytime")) {
+				try {
+					String timestamp = DateAndTime[0] + " 00:00:00.0";
+					firstDate = dateFormat.parse(timestamp);
+					timestamp = DateAndTime[0] + " 23:59:59.0";
+					secondDate = dateFormat.parse(timestamp);
+					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+			else if(HourTime.length == 2) {
+				try {
+					String timestamp = DateAndTime[0] + " " + HourTime[0] + ":00:00.0";
+					firstDate = dateFormat.parse(timestamp);
+
+					if(HourTime[1] != "24")
+						timestamp = DateAndTime[0] + " " + HourTime[1] + ":00:00.0";
+					else
+						timestamp = DateAndTime[0] + " 23:59:59.0";
+
+					secondDate = dateFormat.parse(timestamp);
+					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else {
+				try {
+					String timestamp = DateAndTime[0] + " " + HourTime[0] + ":00:00.0";
+					firstDate = dateFormat.parse(timestamp);
+
+					timestamp = DateAndTime[0] + " " + HourTime[0] + ":59:59.0";
+					secondDate = dateFormat.parse(timestamp);
+					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
+			}
+		}
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("content/ticket");
+		mav.addObject("resultTickets", result);
+
 		return mav;
 	}
 	@RequestMapping(value="/account/account.html", method = RequestMethod.GET)

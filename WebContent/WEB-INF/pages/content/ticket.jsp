@@ -71,61 +71,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Article 1</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Article 2</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Article 3</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Article 4</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Article 5</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Article 6</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Article 7</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>Article 8</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>Article 9</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>Article 10</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>Article 11</td>
-                            <td>0</td>
-                        </tr>
+						<c:forEach var="ticket" items="${resultTickets}">
+							<tr>
+								<td>${ticket.id}</td>
+								<td>${ticket.price}</td>
+								<td>${ticket.date}</td>
+								<td>${ticket.amount}</td>
+								<td>${ticket.from_loc.station}</td>
+								<td>${ticket.to_loc.station}</td>
+								
+							</tr>
+						</c:forEach>
                     </tbody>
                 </table>
             </div>
