@@ -67,7 +67,7 @@ public class LoginController {
 		return "security/login";
 	}
 	
-	@RequestMapping(value="/welcome/welcome.html", method = RequestMethod.GET)
+	@RequestMapping(value="/index.html", method = RequestMethod.GET)
 	public ModelAndView welcome(HttpServletRequest request, ModelMap model) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("welcome/welcome");
@@ -189,5 +189,15 @@ public class LoginController {
 	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    System.out.println(user.getUsername()); //get logged in username
 		return userDetailsService.getUserByUsername(username);
+	}
+		
+	//Register a user
+	@RequestMapping(value="/restful/RegisterUser.html", method = RequestMethod.POST)
+	public @ResponseBody String registerUser(@RequestParam("r_username") String username,
+											 @RequestParam("r_password") String password,
+											 @RequestParam("r_email") String email,
+											 @RequestParam("r_lastname") String lastname,
+											 @RequestParam("r_firstname") String firstname) {
+		return "{}";
 	}
 }

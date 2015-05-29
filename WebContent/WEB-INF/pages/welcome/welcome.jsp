@@ -56,7 +56,8 @@
 		if ("<c:out value='${param.login_error}'/>" != "") {
 		  	$('#wrongCredentials').show();
 		}
-		$("#signin").on("click", loginValidation);	
+		$("#signin").on("click", loginValidation);
+		$("#signup").on("click", signUpValidation);
 	});
 	function ticket(){
 		var formData = {From : $("#From").val(),To:$("#To").val(),Time:$("#Leave").val()+"/"+$("#At").val()};
@@ -99,8 +100,37 @@
 	  		return true;
 	  	}
 	}
-	
-	 $(function() {
+	function signUpValidation() {
+  		$("#r_usernameReq").hide();
+  		$("#r_passwordReq").hide();
+  		$('#r_retypepasswordReq').hide();
+  		$("#r_emailReq").hide();
+  		$("#r_lastnameReq").hide();
+  		$("#r_firstnameReq").hide();
+		
+	  	if($("#r_username").val().length < 8 ) {
+	  		$("#r_usernameReq").show();
+	  	}
+	  	if ($("#r_password").val().length < 8 ) {
+	  		$("#r_passwordReq").show();
+	  	}
+	  	if ($("#r_retypepassword").val() != $("#r_password").val()) {
+	  		$('#r_retypepasswordReq').show();
+	  	}
+	  	if ($("#r_email").val().length == 0) {
+	  		$("#r_emailReq").show();
+	  	}
+	  	if ($("#r_lastname").val().length == 0) {
+	  		$("#r_lastnameReq").show();
+	  	}
+	  	if ($("#r_firstname").val().length == 0) {
+	  		$("#r_firstnameReq").show();
+	  	} else {
+	  		return true;
+	  	}
+
+	}
+	$(function() {
 		    var availableTags = [
 				"NY,NewYork,Penn Station",
 				"NY,NewYork,Jamaica",
@@ -169,35 +199,64 @@
           <!-- popup form #1 -->
 	       <a href="/Demand1/" class="overlay" id="join_form"></a>
 			<div class="popup">
+		       <!-- Alerts for missing form info  --> 
+				<div class="alert" style="display:none;" id="r_usernameReq">
+					<p>User name length must be between 8 to 20 charactors</p>
+				</div>
+				<div class="alert" style="display:none;" id="r_passwordReq">
+					<p>Password is length must be between 8 to 20 charactors</p>
+				</div>
+				<div class="alert" style="display:none;" id="r_retypepasswordReq">
+					<p>RetypePassword and Password must be same</p>
+				</div>
+				<div class="alert" style="display:none;" id="r_emailReq">
+					<p>Email is required</p>
+				</div>
+				<div class="alert" style="display:none;" id="r_lastnameReq">
+					<p>Last Name is required</p>
+				</div>
+				<div class="alert" style="display:none;" id="r_firstnameReq">
+					<p>First Name is required</p>
+				</div>
+				<div class="alert" id="test123123" style="display:none;">
+					<p>The user name or password supplied is incorrect</p>
+				</div>	
+				<!-- Alerts for missing form end -->
 				<h2>Please register!</h2>
 	            <p>Please enter your user name and password here</p>
-				<form name="f" action="<c:url value='/j_spring_security_check'/>" method="POST" id="login-form">
-					<table>
-						<tr>
-		            		<td>User name: </td>
-							<td><input type="text" name="r_username" id="r_username"/></td>
-		            	</tr>
-		            	<tr>
-							<td>Password: </td>
-							<td><input type="password" name="r_password" id="r_password"/></td>
-						</tr>
-						<tr>
-							<td>RetypePassword: </td>
-							<td><input type="password" name="r_retypepassword" id="r_retypepassword"/></td>
-						</tr>
-						<tr>
-		            		<td>Email address: </td>
-							<td><input type="text" name="r_emailaddress" id="r_emailaddress"/></td>
-		            	</tr>
-						<tr>
-							<td></td>
-							<td>
-								<button id="joinin" type="submit">Join Now</button>
-							</td>
-						</tr>
+				<table>
+					<tr>
+		            	<td>User name: </td>
+						<td><input type="text" name="r_username" id="r_username"/></td>
+		            </tr>
+		           	<tr>
+						<td>Password: </td>
+						<td><input type="password" name="r_password" id="r_password"/></td>
+					</tr>
+					<tr>
+						<td>RetypePassword: </td>
+						<td><input type="password" name="r_retypepassword" id="r_retypepassword"/></td>
+					</tr>
+					<tr>
+		            	<td>Email address: </td>
+						<td><input type="text" name="r_email" id="r_email"/></td>
+		            </tr>
+					<tr>
+		            	<td>Last Name: </td>
+						<td><input type="text" name="r_lastname" id="r_lastname"/></td>
+		            </tr>
+					<tr>
+		            	<td>First Name: </td>
+						<td><input type="text" name="r_firstname" id="r_firstname"/></td>
+		            </tr>
+					<tr>
+						<td>
+						</td>
+						<td>
+							<button id="signup" class="button orange">Join Now</button>
+						</td>
+					</tr>
 		            </table>
-		            	            
-	 			</form>
 	            <a class="close" href="/Demand1/"></a>
 	           </div>
           <!-- popup form #1 -->
@@ -218,6 +277,7 @@
 				<div class="alert" id="wrongCredentials" style="display:none;">
 					<p>The user name or password supplied is incorrect</p>
 				</div>	
+				<!-- Alerts for missing form end -->
 	            <h2>Please sign in!</h2>
 	            <p>Please enter your user name and password here</p>
 	            <form name="f" action="<c:url value='/j_spring_security_check'/>" method="POST" id="login-form">
@@ -233,7 +293,7 @@
 						<tr>
 							<td></td>
 							<td>
-								<button id="signin" type="submit">Login</button>
+								<button class="button orange" id="signin" type="submit">Login</button>
 							</td>
 						</tr>
 		            </table>

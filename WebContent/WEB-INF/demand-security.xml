@@ -23,9 +23,9 @@
    		<sec:intercept-url pattern="/restful/**" access="permitAll" />
                 
         <sec:form-login 
-        	login-page="/welcome/welcome.html" 
+        	login-page="/index.html" 
         	authentication-success-handler-ref="postSuccessAuthHandler"
-        	authentication-failure-url="/welcome/welcome.html?login_error=1#login_form" 
+        	authentication-failure-url="/index.html?login_error=1#login_form" 
         />
 
         <sec:logout logout-success-url="/" delete-cookies="JSESSIONID"/>
