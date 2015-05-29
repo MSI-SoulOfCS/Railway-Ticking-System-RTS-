@@ -74,6 +74,12 @@ public class LoginController {
 		return mav;
 	}	
 	
+	@RequestMapping(value="/content/ticket.html", method = RequestMethod.GET)
+	public ModelAndView ticket(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("content/ticket");
+		return mav;
+	}
 	@RequestMapping(value="/account/account.html", method = RequestMethod.GET)
 	public ModelAndView account(HttpServletRequest request, ModelMap model) {
 		ModelAndView mav = new ModelAndView();

@@ -16,7 +16,7 @@
     
 
     <sec:http use-expressions="true">
-   		<sec:intercept-url pattern="/content/**" access="isAuthenticated()" />
+   		<sec:intercept-url pattern="/content/**" access="permitAll" />
    		<sec:intercept-url pattern="/auth/**" access="isAuthenticated()" />
     	<sec:intercept-url pattern="/welcome/**" access="permitAll" />
    		<sec:intercept-url pattern="/**" access="permitAll" />
