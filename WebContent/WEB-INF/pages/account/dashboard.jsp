@@ -32,7 +32,7 @@
 	<script>
 		$(document).ready(function() {
 			$.ajax({
-				url: "/Demand1/rest/Stations",
+				url: "/Demand1/rest/Stations.html",
 				type: "get",
 				dataType: "json",
 				success:showData

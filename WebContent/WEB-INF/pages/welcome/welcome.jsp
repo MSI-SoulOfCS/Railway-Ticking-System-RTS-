@@ -106,7 +106,7 @@
           </div>
           <!-- Modify by Ning ************start********** -->
           <!-- popup form #1 -->
-	       <a href="#x" class="overlay" id="join_form"></a>
+	       <a href="/Demand1/" class="overlay" id="join_form"></a>
 			<div class="popup">
 				<h2>Please register!</h2>
 	            <p>Please enter your user name and password here</p>
@@ -140,7 +140,7 @@
 	            <a class="close" href="/Demand1/"></a>
 	           </div>
           <!-- popup form #1 -->
-	       <a href="#x" class="overlay" id="login_form"></a>
+	       <a href="/Demand1/" class="overlay" id="login_form"></a>
 	       
 	       <div class="popup">
 		       <!-- Alerts for missing form info  --> 
@@ -234,7 +234,7 @@
 					</tr>
 				</table>
 				<br>
-				<a href="./content/main.htm" class="button orange">Search Ticket</a> 
+				<a href="./content/main.html" class="button orange">Search Ticket</a> 
 			</div>
           </div>
 

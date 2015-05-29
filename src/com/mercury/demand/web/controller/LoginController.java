@@ -5,17 +5,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.demand.persistence.model.History;
+import com.mercury.demand.persistence.model.Person;
 import com.mercury.demand.persistence.model.Station;
 import com.mercury.demand.persistence.model.Ticket;
 import com.mercury.demand.service.HistoryDetailsService;
+import com.mercury.demand.service.ModUserDetailsService;
 import com.mercury.demand.service.StationDetailsService;
 import com.mercury.demand.service.TicketDetailsService;
 
@@ -27,6 +32,8 @@ public class LoginController {
 	private HistoryDetailsService historyDetailsService;
 	@Autowired
 	private TicketDetailsService ticketDetailsService;
+	@Autowired
+	private ModUserDetailsService userDetailsService;
 
 	public StationDetailsService getStationDetailsService() {
 		return stationDetailsService;
@@ -98,4 +105,11 @@ public class LoginController {
 		return historyDetailsService.getAllHistory();
 	}
 	
+	@RequestMapping(value="/restful/GetUser.html", method = RequestMethod.POST)
+	public @ResponseBody Person getCertainUserByUsername(@RequestParam("username") String username) {
+		//get current login user
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    System.out.println(user.getUsername()); //get logged in username
+		return userDetailsService.getUserByUsername(username);
+	}
 }

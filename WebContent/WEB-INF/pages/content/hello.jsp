@@ -10,6 +10,16 @@
 </script>
 <script>
 	$(document).ready(function() {
+		var formData = {username : "takuro1026"};
+		$.ajax({
+			url: "/Demand1/restful/GetUser.html",
+			type: "post",
+			data: formData,
+			dataType: "json",
+			success:showUser
+		})
+		.fail(function(){ alert("please login!");
+		});
 		$.ajax({
 			url: "/Demand1/restful/Stations.html",
 			type: "get",
@@ -23,8 +33,9 @@
 			type: "get",
 			dataType: "json",
 			success:showTicket
+		})
+		.fail(function(){ alert("please login!")
 		});
-		.fail(function(){ alert("please login!");
 		$.ajax({
 			url: "/Demand1/restful/History.html",
 			type: "get",
@@ -35,6 +46,9 @@
 		});
 
 	});
+	function showUser(data) {
+		alert("username:"+data.username+" password:"+data.password);
+	}
 	function showStation(data) {
 		var rows = "";
 		$("#stations").empty();

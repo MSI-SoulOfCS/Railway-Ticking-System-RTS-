@@ -14,7 +14,7 @@ import com.mercury.demand.persistence.model.Person;
 @Repository
 public class PersonDaoImpl implements PersonDao {
 	@Autowired 
-	@Qualifier("loginSessionFactory")
+	@Qualifier("tableSessionFactory")
     private SessionFactory sessionFactory;
 
     public Session getCurrentSession() {
