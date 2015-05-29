@@ -63,11 +63,6 @@
                 <table id="grid" class="table table-condensed table-hover table-striped">
                     <thead>
                         <tr>
-                            <!-- <th data-column-id="id" data-identifier="true" data-type="numeric">Article ID</th>
-                            <th data-column-id="sender" data-order="asc">Article Name</th>
-                            <th data-column-id="quantity" data-formatter="quantity">Quantity</th> -->
-                            
-                            <th data-column-id="id" data-identifier="true" data-type="numeric">ID</th>
                             <th data-column-id="price" data-order="asc">Price</th>
                             <th data-column-id="date" data-type="date">Date</th>
                             <th data-column-id="amount" data-type="numeric">Amount</th>
