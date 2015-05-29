@@ -4,17 +4,17 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"> -->
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cover Template for Bootstrap</title>
-  <!--  <link href=".\css\bootstrap.min.css" rel="stylesheet"> -->
+    <title>Welcome</title>
     <link href="<c:url value="/css/cover.css" />" rel="stylesheet">
     <!-- Added by Ning ***********start********** -->
     <link href="<c:url value="/css/modal.css" />" rel="stylesheet">
     <!-- Added by Ning ***********end************ -->
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="<c:url value="css/jquery-ui.css"/>">
+  	<script src="<c:url value="js/jquery-ui.js"/>"></script>
 <style>
 	.alert {
 		color: red;
@@ -50,8 +50,7 @@
 	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
 	}
 </style>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
+
 <script>
 	$(document).ready(function() {
 		if ("<c:out value='${param.login_error}'/>" != "") {
@@ -78,10 +77,50 @@
 	  		return true;
 	  	}
 	}
+	
+	 $(function() {
+		    var availableTags = [
+				"NY,NewYork,Penn Station",
+				"NY,NewYork,Jamaica",
+				"NY, NewYork,Yonkers Amtrak",
+				"NJ,Princeton,West Trenton",
+				"NJ,Princeton,Joe's Train Station",
+				"NJ,Princeton,Princeton Junction",
+				"NJ,Hoboken,Hoboken terminal",
+				"MA,Boston,North Station",
+				"MA,Boston,Haymarket Station",
+				"MA,Boston,Back Bay Station",
+				"CA,SanFrancisco,San Jose Train Station",
+				"CA,SanFrancisco,San Francisco Caltrain Station",
+				"CA,Los Angeles,Union Station",
+				"CA,Los Angeles,Pomona-North Metrolink Station",
+				"CA,Los Angeles,Santa Train Station",
+				"TX,Abilene,Abilene Regional station",
+				"TX,Amarillo,Rick Husband Amarillo station",
+				"TX,Austin,Austin-Bergstrom station",
+				"FL,Orlando,Orlando Amtrak Train Station",
+				"FL,Orlando,SunRail Station",
+				"FL,Orlando,Church Street Station",
+				"FL,Miami,Miami Amtrak Train Station",
+				"NC,Winston-Salem,Winston-Salem Amtrak Train Station",
+				"NC,Winston-Salem,Willow Street Train Station",
+				"NC,Chapel Hill,Chapel Hill Metro Station",
+				"NC,Chapel Hill,Southern Rail",
+				"NC,Chapel Hill,Amtrak Station",
+				"GA,Appling County,Apple Station",
+				"GA,Appling County,Sant Train Station",
+				"GA,Appling County,Amtrak Station"
+		    ];
+		    $( "#To" ).autocomplete({
+		      source: availableTags
+		    });
+		    $( "#From" ).autocomplete({
+			      source: availableTags
+			    });
+		  });
 </script>
 </head>
 <body background="<c:url value="/img/15.jpg" />">
-<!-- <h1><font color="blue">Login with Username and Password</font></h1> -->
 
 <!-- Login Form -->	
 <div class="site-wrapper">
@@ -234,7 +273,7 @@
 					</tr>
 				</table>
 				<br>
-				<a href="./content/main.html" class="button orange">Search Ticket</a> 
+				<button onclick="./content/main.html" class="button orange">Search Ticket</button> 
 			</div>
           </div>
 
