@@ -1,5 +1,6 @@
 package com.mercury.demand.web.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,22 +91,47 @@ public class LoginController {
 	//************RESTFUL PART API************
 	//****************************************
 	
+	//****************************************
+	//***************Station******************
+	//****************************************
+	//Get all stations
 	@RequestMapping(value="/restful/Stations.html", method = RequestMethod.GET)
 	public @ResponseBody List<Station> getAllStations() {
 		return stationDetailsService.getAllStations();
 	}
 	
+	//****************************************
+	//***************Ticket*******************
+	//****************************************
+	//Get all tickets
 	@RequestMapping(value="/restful/Tickets.html", method = RequestMethod.GET)
 	public @ResponseBody List<Ticket> getAllTickets() {
 		return ticketDetailsService.getAllTickets();
 	}
 	
-	@RequestMapping(value="/restful/History.html", method = RequestMethod.GET)
+	//Get tickets during a period of time
+	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
+	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 
+																 @RequestParam("To") String to,
+																 @RequestParam("Time") String time) {
+		System.out.println("From:"+from+" To:"+to+" Date:"+time);
+		return ticketDetailsService.getAllTickets();
+	}
+
+	//****************************************
+	//***************History******************
+	//****************************************	
+	//Get all history
+	@RequestMapping(value="/auth/History.html", method = RequestMethod.GET)
 	public @ResponseBody List<History> getAllHistory() {
 		return historyDetailsService.getAllHistory();
 	}
 	
-	@RequestMapping(value="/restful/GetUser.html", method = RequestMethod.POST)
+	//****************************************
+	//***************Users*******************
+	//****************************************
+	//Get a certain user by username
+	@RequestMapping(value="/auth/GetUser.html", method = RequestMethod.POST)
 	public @ResponseBody Person getCertainUserByUsername(@RequestParam("username") String username) {
 		//get current login user
 	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

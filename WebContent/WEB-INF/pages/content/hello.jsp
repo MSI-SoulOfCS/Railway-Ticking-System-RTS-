@@ -12,7 +12,7 @@
 	$(document).ready(function() {
 		var formData = {username : "takuro1026"};
 		$.ajax({
-			url: "/Demand1/restful/GetUser.html",
+			url: "/Demand1/auth/GetUser.html",
 			type: "post",
 			data: formData,
 			dataType: "json",
@@ -37,7 +37,7 @@
 		.fail(function(){ alert("please login!")
 		});
 		$.ajax({
-			url: "/Demand1/restful/History.html",
+			url: "/Demand1/auth/History.html",
 			type: "get",
 			dataType: "json",
 			success:showHistory

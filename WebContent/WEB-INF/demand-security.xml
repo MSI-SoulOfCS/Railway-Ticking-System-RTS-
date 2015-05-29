@@ -16,12 +16,12 @@
     
 
     <sec:http use-expressions="true">
-    	<sec:intercept-url pattern="/welcome/**" access="permitAll" />
    		<sec:intercept-url pattern="/content/**" access="isAuthenticated()" />
+   		<sec:intercept-url pattern="/auth/**" access="isAuthenticated()" />
+    	<sec:intercept-url pattern="/welcome/**" access="permitAll" />
    		<sec:intercept-url pattern="/**" access="permitAll" />
-   		<sec:intercept-url pattern="/rest/**" access="isAuthenticated()" />
-        
-        
+   		<sec:intercept-url pattern="/restful/**" access="permitAll" />
+                
         <sec:form-login 
         	login-page="/welcome/welcome.html" 
         	authentication-success-handler-ref="postSuccessAuthHandler"
