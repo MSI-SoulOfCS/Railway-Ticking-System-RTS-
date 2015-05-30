@@ -78,7 +78,6 @@
 								<td>${ticket.amount}</td>
 								<td>${ticket.from_loc.station}</td>
 								<td>${ticket.to_loc.station}</td>
-								
 							</tr>
 						</c:forEach>
                     </tbody>
@@ -88,7 +87,6 @@
     </div>
 
     <footer id="footer">
-        © Copyright 2014-2015, Rafael Staib
     </footer>
 
     

@@ -23,5 +23,9 @@ public class ModUserDetailsService {
 	public Person getUserByUsername(String username) {
 		return pd.getPersonByUsername(username);
 	}
+	
+	public String registerNewUser(String username, String password, String email, String lastname, String firstname) {
+		return pd.registerNewUser(username, password, email, lastname, firstname);
+	}
 }
 

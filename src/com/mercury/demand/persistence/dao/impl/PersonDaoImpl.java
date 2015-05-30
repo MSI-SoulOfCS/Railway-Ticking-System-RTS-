@@ -28,4 +28,23 @@ public class PersonDaoImpl implements PersonDao {
 		return (Person)ct.add(Restrictions.eq("username", username)).uniqueResult();
 	}
 
+	@Override
+	public String registerNewUser(String username, String password,
+			String email, String lastname, String firstname) {
+		Person existUser = this.getPersonByUsername(username);
+		if(existUser == null) {
+			Person newUser = new Person();
+			newUser.setUsername(username);
+			newUser.setPassword(password);
+			newUser.setEmail(email);
+			newUser.setFirstname(firstname);
+			newUser.setLastname(lastname);
+			newUser.setAuthority("ROLE_USER");
+			newUser.setEnabled(false);
+			sessionFactory.getCurrentSession().save(newUser);
+			return "yes";
+		}
+		return "no";
+	}
+
 }

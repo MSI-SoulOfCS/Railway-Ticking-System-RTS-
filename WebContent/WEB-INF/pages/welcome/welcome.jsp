@@ -9,12 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Welcome</title>
     <link href="<c:url value="/css/cover.css" />" rel="stylesheet">
-    <!-- Added by Ning ***********start********** -->
     <link href="<c:url value="/css/modal.css" />" rel="stylesheet">
-    <!-- Added by Ning ***********end************ -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" href="<c:url value="css/jquery-ui.css"/>">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   	<script src="<c:url value="js/jquery-ui.js"/>"></script>
+  	<script src="<c:url value="js/msi-jquery.js"/>"></script>
 <style>
 	.alert {
 		color: red;
@@ -26,28 +25,28 @@
 		position: relative;
 	}
 	.button {
-	display: inline-block;
-	outline: none;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
-	padding: .5em 2em .55em;
-	text-shadow: 0 1px 1px rgba(0,0,0,.3);
-	-webkit-border-radius: .5em; 
-	-moz-border-radius: .5em;
-	border-radius: .5em;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		display: inline-block;
+		outline: none;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
+		padding: .5em 2em .55em;
+		text-shadow: 0 1px 1px rgba(0,0,0,.3);
+		-webkit-border-radius: .5em; 
+		-moz-border-radius: .5em;
+		border-radius: .5em;
+		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		box-shadow: 0 1px 2px rgba(0,0,0,.2);
 	}
 	.orange {
-	color: #fef4e9;
-	border: solid 1px #da7c0c;
-	background: #f78d1d;
-	background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
-	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+		color: #fef4e9;
+		border: solid 1px #da7c0c;
+		background: #f78d1d;
+		background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+		background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
 	}
 </style>
 
@@ -59,138 +58,7 @@
 		$("#signin").on("click", loginValidation);
 		$("#signup").on("click", signUpValidation);
 	});
-	
-    function url_redirect(options){
-        var $form = $("<form />");
-        
-        $form.attr("action",options.url);
-        $form.attr("method",options.method);
-        
-        for (var data in options.data)
-        $form.append('<input type="hidden" name="'+data+'" value="'+options.data[data]+'" />');
-         
-        $("body").append($form);
-        $form.submit();
-    }
-	function ticket(){
-        url_redirect({url: "/Demand1/content/ticket.html",
-           			  method: "post",
-             		  data: {"From":$("#From").val(), "To":$("#To").val(), "Time":$("#Leave").val()+"/"+$("#At").val()}
-		});
-/*        
- 		var formData = {From : $("#From").val(),To:$("#To").val(),Time:$("#Leave").val()+"/"+$("#At").val()};
-		$.ajax({
-			url: "/Demand1/restful/PeroidTickets.html",
-			type: "post",
-			data: formData,
-			dataType: "json",
-			success:showTicket
-		});
-*/
-	}
-/*
-	function showTicket(data){
-		var rows = "";
-		$("#tickets").empty();
-		$(data).each(function(i, item) {
-			var d = new Date(item.date);
-			rows = "<tr><td>" + item.id + "</td><td>" + item.price + "</td><td>" + 
-								d.getHours() + ":" + d.getMinutes() +"  "+
-								(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
-								+ "</td><td>" + item.amount + "</td><td>" +
-								item.from_loc.station + "</td><td>" + item.to_loc.station + "</td></tr>";
-			$(rows).appendTo("#tickets");
-		});
-	}
-*/
-	function loginValidation() {
-		$("#usernameAndPasswordReq").hide();
-		$("#usernameReq").hide();
-		$("#passwordReq").hide();   
-		$("#wrongCredentials").hide();	
-	  	if($("#j_username").val().length == 0 && $("#j_password").val().length == 0) {
-	  		$("#usernameAndPasswordReq").show();
-	  		return false;
-	  	} else if ($("#j_username").val().length == 0) {
-	  		$('#usernameReq').show();
-	  		return false;
-	  	} else if ($("#j_password").val().length == 0) {
-	  		$("#passwordReq").show();
-	  		return false;
-	  	} else {
-	  		return true;
-	  	}
-	}
-	function signUpValidation() {
-  		$("#r_usernameReq").hide();
-  		$("#r_passwordReq").hide();
-  		$('#r_retypepasswordReq').hide();
-  		$("#r_emailReq").hide();
-  		$("#r_lastnameReq").hide();
-  		$("#r_firstnameReq").hide();
-		
-	  	if($("#r_username").val().length < 8 ) {
-	  		$("#r_usernameReq").show();
-	  	}
-	  	if ($("#r_password").val().length < 8 ) {
-	  		$("#r_passwordReq").show();
-	  	}
-	  	if ($("#r_retypepassword").val() != $("#r_password").val()) {
-	  		$('#r_retypepasswordReq').show();
-	  	}
-	  	if ($("#r_email").val().length == 0) {
-	  		$("#r_emailReq").show();
-	  	}
-	  	if ($("#r_lastname").val().length == 0) {
-	  		$("#r_lastnameReq").show();
-	  	}
-	  	if ($("#r_firstname").val().length == 0) {
-	  		$("#r_firstnameReq").show();
-	  	} else {
-	  		return true;
-	  	}
 
-	}
-	$(function() {
-		    var availableTags = [
-				"NY,NewYork,Penn Station",
-				"NY,NewYork,Jamaica",
-				"NY, NewYork,Yonkers Amtrak",
-				"NJ,Princeton,West Trenton",
-				"NJ,Princeton,Joe's Train Station",
-				"NJ,Princeton,Princeton Junction",
-				"NJ,Hoboken,Hoboken terminal",
-				"MA,Boston,North Station",
-				"MA,Boston,Haymarket Station",
-				"MA,Boston,Back Bay Station",
-				"CA,SanFrancisco,San Jose Train Station",
-				"CA,SanFrancisco,San Francisco Caltrain Station",
-				"CA,Los Angeles,Union Station",
-				"CA,Los Angeles,Pomona-North Metrolink Station",
-				"CA,Los Angeles,Santa Train Station",
-				"TX,Abilene,Abilene Regional station",
-				"TX,Amarillo,Rick Husband Amarillo station",
-				"TX,Austin,Austin-Bergstrom station",
-				"FL,Orlando,Orlando Amtrak Train Station",
-				"FL,Orlando,SunRail Station",
-				"FL,Orlando,Church Street Station",
-				"FL,Miami,Miami Amtrak Train Station",
-				"NC,Winston-Salem,Winston-Salem Amtrak Train Station",
-				"NC,Winston-Salem,Willow Street Train Station",
-				"NC,Chapel Hill,Chapel Hill Metro Station",
-				"NC,Chapel Hill,Southern Rail",
-				"NC,Chapel Hill,Amtrak Station",
-				"GA,Appling County,Apple Station",
-				"GA,Appling County,Sant Train Station",
-				"GA,Appling County,Amtrak Station"
-		    ];
-		    $( "#To" ).autocomplete({
-		      source: availableTags
-		    });
-		    $( "#From" ).autocomplete({
-			      source: availableTags
-			});
-	});
 </script>
 </head>
 <body background="<c:url value="/img/15.jpg" />">
@@ -222,16 +90,16 @@
 			<div class="popup">
 		       <!-- Alerts for missing form info  --> 
 				<div class="alert" style="display:none;" id="r_usernameReq">
-					<p>User name length must be between 8 to 20 charactors</p>
+					<p>User name length must be between 8 to 16 charactors</p>
 				</div>
 				<div class="alert" style="display:none;" id="r_passwordReq">
-					<p>Password is length must be between 8 to 20 charactors</p>
+					<p>Password is length must be between 8 to 16 charactors</p>
 				</div>
 				<div class="alert" style="display:none;" id="r_retypepasswordReq">
 					<p>RetypePassword and Password must be same</p>
 				</div>
 				<div class="alert" style="display:none;" id="r_emailReq">
-					<p>Email is required</p>
+					<p>Email is invalid</p>
 				</div>
 				<div class="alert" style="display:none;" id="r_lastnameReq">
 					<p>Last Name is required</p>
@@ -239,8 +107,8 @@
 				<div class="alert" style="display:none;" id="r_firstnameReq">
 					<p>First Name is required</p>
 				</div>
-				<div class="alert" id="test123123" style="display:none;">
-					<p>The user name or password supplied is incorrect</p>
+				<div class="alert" id="r_alreadyexisted" style="display:none;">
+					<p>Username already existed, please choose other username</p>
 				</div>	
 				<!-- Alerts for missing form end -->
 				<h2>Please register!</h2>
@@ -248,27 +116,27 @@
 				<table>
 					<tr>
 		            	<td>User name: </td>
-						<td><input type="text" name="r_username" id="r_username"/></td>
+						<td><input type="text" maxlength="16" name="r_username" id="r_username"/></td>
 		            </tr>
 		           	<tr>
 						<td>Password: </td>
-						<td><input type="password" name="r_password" id="r_password"/></td>
+						<td><input type="password" maxlength="16" name="r_password" id="r_password"/></td>
 					</tr>
 					<tr>
 						<td>RetypePassword: </td>
-						<td><input type="password" name="r_retypepassword" id="r_retypepassword"/></td>
+						<td><input type="password" maxlength="16" name="r_retypepassword" id="r_retypepassword"/></td>
 					</tr>
 					<tr>
 		            	<td>Email address: </td>
-						<td><input type="text" name="r_email" id="r_email"/></td>
+						<td><input type="email" maxlength="50" name="r_email" id="r_email"/></td>
 		            </tr>
 					<tr>
 		            	<td>Last Name: </td>
-						<td><input type="text" name="r_lastname" id="r_lastname"/></td>
+						<td><input type="text" maxlength="20" name="r_lastname" id="r_lastname"/></td>
 		            </tr>
 					<tr>
 		            	<td>First Name: </td>
-						<td><input type="text" name="r_firstname" id="r_firstname"/></td>
+						<td><input type="text" maxlength="20" name="r_firstname" id="r_firstname"/></td>
 		            </tr>
 					<tr>
 						<td>
@@ -322,8 +190,16 @@
 	 			</form>
 	            <a class="close" href="/Demand1/"></a>
 	       </div>
+
+          <!-- popup form #1 -->
+	       <a href="/Demand1/" class="overlay" id="Success_form"></a>
 	       
-			<!-- Modify by Ning ************end********** -->
+	       <div class="popup">
+	            <h2>Register success!</h2>
+	            <p>Please check your e-mail to activate your account!</p>
+	            <a class="close" href="/Demand1/"></a>
+	       </div>			
+			
           <div align="center">
 			<div>
 				<h1>Search your tickets!</h1>

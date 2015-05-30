@@ -262,6 +262,11 @@ public class LoginController {
 											 @RequestParam("r_email") String email,
 											 @RequestParam("r_lastname") String lastname,
 											 @RequestParam("r_firstname") String firstname) {
-		return "{}";
+		
+		String result = userDetailsService.registerNewUser(username, password, email, lastname, firstname);
+		result = "[{\"result\":\"" + result + "\"}]";
+		System.out.println(result);
+		return result;
+		
 	}
 }
