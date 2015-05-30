@@ -14,6 +14,7 @@
     <script src="<c:url value="/js/jquery-1.11.1.js"/>"></script>
     <script src="<c:url value="/js/bootstrap.js"/>"></script>
     <script src="<c:url value="/js/jquery.bootgrid.js"/>"></script>
+    <script src="<c:url value="/js/msi-jquery.js"/>"></script>
     <style>
         .button {
 		display: inline-block;
@@ -80,12 +81,13 @@
 								<td>${ticket.amount}</td>
 								<td>${ticket.from_loc.station}</td>
 								<td>${ticket.to_loc.station}</td>
-								<td><input type="checkbox"/></td>
+								<td><input id="check" type="checkbox"/></td>
 							</tr>
 						</c:forEach>
                     </tbody>
                 </table>
-                <button id="buy" name="buy" onclick="#" class="button orange">Add to Cart</button>
+                <button id="addToCart" name="addToCart" onclick="check()" class="button orange">Add to Cart</button>
+            	<button id="goToMyCart" name="goToMyCart" onclick="#" class="button orange">Go to My Cart</button>
             </div>
         </div>
     </div>

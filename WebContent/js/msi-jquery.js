@@ -14,6 +14,25 @@
         $("body").append($form);
         $form.submit();
     }
+    function check(){
+    	$('#grid input[type=checkbox]:checked').each(function() { 		
+    		   var row = $(this).parent().parent();
+    		   var rowcells = row.find('td');
+    		   var i,j;
+    		   for(i=0;i<rowcells.length/6;i++){
+    			   var formData=[];
+    			   for(j=0;j<6;j++){
+    				   formData[j]=$(rowcells[j]).html();
+    			   }
+    			   $.ajax({
+        			   url:"Demand1/restful/#",
+        			   type:"post",
+        			   data: formData,
+        			   dataType:"json"
+        		   });
+    		   }
+    		});
+    }
 	function ticket(){
         url_redirect({url: "/Demand1/content/ticket.html",
            			  method: "post",
