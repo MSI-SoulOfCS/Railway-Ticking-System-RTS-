@@ -250,8 +250,8 @@ public class LoginController {
 	@RequestMapping(value="/auth/GetUser.html", method = RequestMethod.POST)
 	public @ResponseBody Person getCertainUserByUsername(@RequestParam("username") String username) {
 		//get current login user
-	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    System.out.println(user.getUsername()); //get logged in username
+//	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//	    System.out.println(user.getUsername()); //get logged in username
 		return userDetailsService.getUserByUsername(username);
 	}
 		
@@ -265,8 +265,17 @@ public class LoginController {
 		
 		String result = userDetailsService.registerNewUser(username, password, email, lastname, firstname);
 		result = "[{\"result\":\"" + result + "\"}]";
-		System.out.println(result);
 		return result;
 		
+	}
+	
+	//Activate a user
+	@RequestMapping(value="/restful/UserActivate.html", method = RequestMethod.GET)
+	public ModelAndView activateUser(@RequestParam("id") String id) {
+		System.out.println(id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("content/activation");
+		mav.addObject("Result", userDetailsService.activateUser(id));
+		return mav;
 	}
 }

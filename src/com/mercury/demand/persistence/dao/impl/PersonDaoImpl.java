@@ -8,14 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.mercury.demand.mail.MailAppBean;
 import com.mercury.demand.persistence.dao.PersonDao;
 import com.mercury.demand.persistence.model.Person;
+import com.mercury.demand.security.MagicCrypt;
 
 @Repository
 public class PersonDaoImpl implements PersonDao {
 	@Autowired 
 	@Qualifier("tableSessionFactory")
     private SessionFactory sessionFactory;
+	
+	@Autowired
+	@Qualifier("mailApp")
+	private MailAppBean mailApp;
 
     public Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
@@ -24,7 +30,7 @@ public class PersonDaoImpl implements PersonDao {
 	@Override
 	public Person getPersonByUsername(String username) {
 		// TODO Auto-generated method stub
-		Criteria ct = this.getCurrentSession().createCriteria(Person.class);
+		Criteria ct = this.getCurrentSession().createCriteria(Person.class);		
 		return (Person)ct.add(Restrictions.eq("username", username)).uniqueResult();
 	}
 
@@ -42,9 +48,33 @@ public class PersonDaoImpl implements PersonDao {
 			newUser.setAuthority("ROLE_USER");
 			newUser.setEnabled(false);
 			sessionFactory.getCurrentSession().save(newUser);
+			
+			String encryptStr = MagicCrypt.getInstance().encrypt(username);
+			mailApp.sendMail(firstname + " " + lastname, "http://localhost:8080/Demand1/restful/UserActivate.html?id="+encryptStr);
+			
 			return "yes";
 		}
 		return "no";
 	}
+
+	@Override
+	public String activateUser(String encryptId) {
+		// TODO Auto-generated method stub
+		String username = MagicCrypt.getInstance().decrypt(encryptId);
+		Person activateUser = this.getPersonByUsername(username);
+		
+		
+		if(activateUser == null)
+			return "This account is invalid. Please register an account.";
+		else if(activateUser.isEnabled())
+			return "This account had been activated";
+		
+		activateUser.setEnabled(true);
+		sessionFactory.getCurrentSession().update(activateUser);
+		
+		return "Your account is activated";
+	}
+	
+
 
 }

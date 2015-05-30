@@ -30,7 +30,7 @@ public class PostSuccessfulAuthenticationHandler extends SavedRequestAwareAuthen
 
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws ServletException, IOException {
-        //mailApp.sendMail("Peter", "This is a welcome email");
+//        mailApp.sendMail("Peter", "This is a welcome email");
 		super.onAuthenticationSuccess(request, response, authentication);
    }
 

@@ -27,5 +27,9 @@ public class ModUserDetailsService {
 	public String registerNewUser(String username, String password, String email, String lastname, String firstname) {
 		return pd.registerNewUser(username, password, email, lastname, firstname);
 	}
+	
+	public String activateUser(String id) {
+		return pd.activateUser(id);
+	}
 }
 

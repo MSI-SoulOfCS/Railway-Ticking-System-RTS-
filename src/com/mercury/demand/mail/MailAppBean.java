@@ -30,7 +30,8 @@ public class MailAppBean {
 		try{
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setFrom(simpleMailMessage.getFrom());
-			helper.setTo(simpleMailMessage.getTo());
+			helper.setTo("takuro1026@gmail.com");
+//			helper.setTo(simpleMailMessage.getTo());
 			helper.setSubject(simpleMailMessage.getSubject());
 			helper.setText(String.format(simpleMailMessage.getText(), dear, content));
 		} catch (MessagingException e) {
