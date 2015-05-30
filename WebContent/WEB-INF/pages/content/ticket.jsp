@@ -11,38 +11,39 @@
     <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet" />
     <link href="<c:url value="/css/jquery.bootgrid.css"/>" rel="stylesheet" />
     <script src="<c:url value="/js/moderniz.2.8.1.js"/>"></script>
-    <script src="<c:url value="/js/jquery-1.11.1.min.js"/>"></script>
+    <script src="<c:url value="/js/jquery-1.11.1.js"/>"></script>
     <script src="<c:url value="/js/bootstrap.js"/>"></script>
     <script src="<c:url value="/js/jquery.bootgrid.js"/>"></script>
     <style>
-        @-webkit-viewport {
-            width: device-width;
-        }
-
-        @-moz-viewport {
-            width: device-width;
-        }
-
-        @-ms-viewport {
-            width: device-width;
-        }
-
-        @-o-viewport {
-            width: device-width;
-        }
-
-        @viewport {
-            width: device-width;
-        }
-
-        body {
-            padding-top: 70px;
-        }
+        .button {
+		display: inline-block;
+		outline: none;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
+		padding: .5em 2em .55em;
+		text-shadow: 0 1px 1px rgba(0,0,0,.3);
+		-webkit-border-radius: .5em; 
+		-moz-border-radius: .5em;
+		border-radius: .5em;
+		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	}
+	.orange {
+		color: #fef4e9;
+		border: solid 1px #da7c0c;
+		background: #f78d1d;
+		background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+		background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+	}
     </style>
 </head>
 <body>
-    <header id="header" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
+   <header id="header" class="navbar navbar-default navbar-fixed-top">
+        <div >
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -68,6 +69,7 @@
                             <th data-column-id="amount" data-type="numeric">Amount</th>
                             <th data-column-id="from">From</th>
                             <th data-column-id="to">To</th>
+                            <th data-column-id="checkbox">Select</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,10 +80,12 @@
 								<td>${ticket.amount}</td>
 								<td>${ticket.from_loc.station}</td>
 								<td>${ticket.to_loc.station}</td>
+								<td><input type="checkbox"/></td>
 							</tr>
 						</c:forEach>
                     </tbody>
                 </table>
+                <button id="buy" name="buy" onclick="#" class="button orange">Add to Cart</button>
             </div>
         </div>
     </div>
@@ -90,7 +94,7 @@
     </footer>
 
     
-    <script>
+    <!-- <script>
         $(function ()
         {
             var data = [];
@@ -123,7 +127,7 @@
                         item.quantity = $this.val();
                     }
                 });
-            }).on("selected.rs.jquery.bootgrid", function (e, selectedRows)
+            }) .on("selected.rs.jquery.bootgrid", function (e, selectedRows)
             {
                 var row, quantity;
                 for (var i = 0; i < selectedRows.length; i++)
@@ -154,12 +158,12 @@
                 }
             });
 
-            $("#send").on("click", function ()
+             $("#send").on("click", function ()
             {
                 var params = $.param({ "": data });
                 alert(decodeURIComponent(params));
-            });
+            }); 
         });
-    </script>
+    </script> -->
 </body>
 </html>
