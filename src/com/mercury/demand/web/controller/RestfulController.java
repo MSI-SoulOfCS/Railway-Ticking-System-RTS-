@@ -28,7 +28,7 @@ import com.mercury.demand.service.StationDetailsService;
 import com.mercury.demand.service.TicketDetailsService;
 
 @Controller
-public class LoginController {
+public class RestfulController {
 	@Autowired
 	private StationDetailsService stationDetailsService;
 	@Autowired
@@ -61,37 +61,41 @@ public class LoginController {
 	public void setTicketDetailsService(TicketDetailsService ticketDetailsService) {
 		this.ticketDetailsService = ticketDetailsService;
 	}
-	//test for ticket page
-	@RequestMapping(value="/content/testTicket.html", method = RequestMethod.GET)
-	public String testTicket(ModelMap model) {
-		return "content/ticket";
+
+	//****************************************
+	//************RESTFUL PART API************
+	//****************************************
+	
+	//****************************************
+	//***************Station******************
+	//****************************************
+	//Get all stations
+	@RequestMapping(value="/restful/Stations.html", method = RequestMethod.GET)
+	public @ResponseBody List<Station> getAllStations() {
+		return stationDetailsService.getAllStations();
 	}
 	
-	@RequestMapping(value="/security/login.html", method = RequestMethod.GET)
-	public String login(ModelMap model) {
-		return "security/login";
+	//****************************************
+	//***************Ticket*******************
+	//****************************************
+	//Get all tickets
+	@RequestMapping(value="/restful/Tickets.html", method = RequestMethod.GET)
+	public @ResponseBody List<Ticket> getAllTickets() {
+		return ticketDetailsService.getAllTickets();
 	}
 	
-	@RequestMapping(value="/index.html", method = RequestMethod.GET)
-	public ModelAndView welcome(HttpServletRequest request, ModelMap model) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("welcome/welcome");
-		return mav;
-	}	
-	
-	@RequestMapping(value="/content/ticket.html", method = RequestMethod.POST)
-	public ModelAndView ticket(@RequestParam("From") String from, 
-			   				   @RequestParam("To") String to,
-			   				   @RequestParam("Time") String time, 
-			 				   ModelMap model) {
+	//Get tickets during a period of time
+	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
+	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 
+																 @RequestParam("To") String to,
+																 @RequestParam("Time") String time) {
+		System.out.println("From:"+from+" To:"+to+" Date:"+time);
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String[] DateAndTime = time.split("/");
 		String[] HourTime = DateAndTime[1].split("-");
 		Date firstDate;
 		Date secondDate;
-		
-		List<Ticket> result = ticketDetailsService.getAllTickets();
 		if(!DateAndTime[0].equals("")) {
 			if(DateAndTime[1].equals("Anytime")) {
 				try {
@@ -99,7 +103,7 @@ public class LoginController {
 					firstDate = dateFormat.parse(timestamp);
 					timestamp = DateAndTime[0] + " 23:59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);
+					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -116,7 +120,7 @@ public class LoginController {
 						timestamp = DateAndTime[0] + " 23:59:59.0";
 
 					secondDate = dateFormat.parse(timestamp);
-					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -129,31 +133,58 @@ public class LoginController {
 
 					timestamp = DateAndTime[0] + " " + HourTime[0] + ":59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}				
 			}
 		}
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("content/ticket");
-		mav.addObject("resultTickets", result);
-
-		return mav;
+		return ticketDetailsService.getAllTickets();
 	}
-	@RequestMapping(value="/account/account.html", method = RequestMethod.GET)
-	public ModelAndView account(HttpServletRequest request, ModelMap model) {
+
+	//****************************************
+	//***************History******************
+	//****************************************	
+	//Get all history
+	@RequestMapping(value="/auth/History.html", method = RequestMethod.GET)
+	public @ResponseBody List<History> getAllHistory() {
+		return historyDetailsService.getAllHistory();
+	}
+	
+	//****************************************
+	//***************Users*******************
+	//****************************************
+	//Get a certain user by username
+	@RequestMapping(value="/auth/GetUser.html", method = RequestMethod.POST)
+	public @ResponseBody Person getCertainUserByUsername(@RequestParam("username") String username) {
+		//get current login user
+//	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//	    System.out.println(user.getUsername()); //get logged in username
+		return userDetailsService.getUserByUsername(username);
+	}
+		
+	//Register a user
+	@RequestMapping(value="/restful/RegisterUser.html", method = RequestMethod.POST)
+	public @ResponseBody String registerUser(@RequestParam("r_username") String username,
+											 @RequestParam("r_password") String password,
+											 @RequestParam("r_email") String email,
+											 @RequestParam("r_lastname") String lastname,
+											 @RequestParam("r_firstname") String firstname) {
+		
+		String result = userDetailsService.registerNewUser(username, password, email, lastname, firstname);
+		result = "[{\"result\":\"" + result + "\"}]";
+		return result;
+		
+	}
+	
+	//Activate a user
+	@RequestMapping(value="/restful/UserActivate.html", method = RequestMethod.GET)
+	public ModelAndView activateUser(@RequestParam("id") String id) {
+		System.out.println(id);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("account/dashboard");
-		return mav;
-	}	
-	@RequestMapping(value="/content/main.html", method = RequestMethod.GET)
-	public ModelAndView mainPage() {	
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("content/hello");
-		mav.addObject("title", "Hello, welcome to Customized Spring Security");
+		mav.setViewName("content/activation");
+		mav.addObject("Result", userDetailsService.activateUser(id));
 		return mav;
 	}
 	
