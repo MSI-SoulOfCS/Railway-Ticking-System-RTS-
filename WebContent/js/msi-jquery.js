@@ -14,6 +14,16 @@
         $("body").append($form);
         $form.submit();
     }
+    function countDown(secs,surl){          
+    	 var jumpTo = document.getElementById('jumpTo');
+    	 jumpTo.innerHTML=secs;  
+    	 if(--secs>0){     
+    	     setTimeout("countDown("+secs+",'"+surl+"')",1000);     
+    	     }     
+    	 else{       
+    	     location.href=surl;     
+    	     }     
+    	 }
     function check(){
     	var i=0;
     	var formData=[];
