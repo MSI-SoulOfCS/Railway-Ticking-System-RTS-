@@ -138,7 +138,7 @@ public class LoginController {
 
 		return mav;
 	}
-	@RequestMapping(value="/account/account.html", method = RequestMethod.GET)
+	@RequestMapping(value="/auth/user.html", method = RequestMethod.GET)
 	public ModelAndView account(HttpServletRequest request, ModelMap model) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("account/dashboard");

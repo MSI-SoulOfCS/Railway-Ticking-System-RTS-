@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -9,8 +10,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <link rel="icon" href="../../favicon.ico">
+
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
@@ -19,10 +19,9 @@
 
     <!-- Custom styles for this template -->
     <link href="<c:url value="/css/dashboard.css" />" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    
+    
+    <script src="<c:url value="/js/jquery-1.11.1.min.js" />"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -31,29 +30,48 @@
     <![endif]-->
 	<script>
 		$(document).ready(function() {
-			$.ajax({
-				url: "/Demand1/rest/Stations.html",
+ 			$.ajax({
+				url: "/Demand1/restful/Stations.html",
 				type: "get",
 				dataType: "json",
 				success:showData
+			});
+			
+			$("#navigation-menu li a").on("click", function(event){
+				removeActiveClass();
+				$(event.target).parent().addClass("active");
+				var viewTag = event.target.id + "View";
+				$("#"+viewTag).show();
 			});
 		});
 		
 		function showData(data) {
 			var rows = "";
 			$("#users").empty();
-			$(data.stations).each(function(i, item) {
+			$(data).each(function(i, item) {
 				var user_id = item.id;
 				var user_name = item.station;
 				rows = "<tr><td>" + user_id + "</td><td>" + user_name + "</td></tr>";
 				$(rows).appendTo("#users");
 			});
 		}
+		
+		function removeActiveClass() {
+			$("#MyTrip").parent().removeClass("active");
+			$("#History").parent().removeClass("active");
+			$("#Profile").parent().removeClass("active");
+			
+			$("#MyTripView").hide();
+		}
+		
+		
 	</script>
   </head>
 
   <body>
-
+	<sec:authentication var="user" property="principal" />  
+  
+  
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -67,49 +85,60 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Homepage</a></li>
-            <li><a href="#">Logout</a></li>
+          	<li><a>${user.username}'s Account</a></li>
+            <li><a href="/Demand1/">Home</a></li>
+            <li><a href="<c:url value='/j_spring_security_logout'/>">Logout</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">My Trip <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Analytics</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h2 class="sub-header">Section title</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                </tr>
-              </thead>
-              <tbody id="users">
-			  </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul id="navigation-menu" class="nav nav-sidebar">
+					<sec:authorize access="hasRole('ROLE_USER')">
+            			<li class="active"><a id="MyTrip" href="#MyTrip">My Trip</a></li>
+            			<li>			   <a id="History" href="#History">History</a></li>
+            			<li>			   <a id="Profile" href="#Profile">Profile</a>
+          			</sec:authorize>
+          			<sec:authorize access="hasRole('ROLE_ADMIN')">
+            			<li class="active"><a id="History" href="#History">History</a></li>
+          			</sec:authorize>	
+          		</ul>
+        	</div>
+        	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          		<sec:authorize access="hasRole('ROLE_USER')">
+          		
+
+          			<div id="MyTripView">
+	        	 		<h2 class="sub-header">Section title</h2>
+	          			<div class="table-responsive">
+	            			<table class="table table-striped">
+	              				<thead>
+	                				<tr>
+	                  					<th>#</th>
+	                  					<th>Header</th>
+	                  					<th>Header</th>
+	                  					<th>Header</th>
+	                  					<th>Header</th>
+	               					</tr>
+	              				</thead>
+	              					<tbody id="users">
+				  					</tbody>
+	            			</table>
+	          			</div>
+					</div>
+					
+					
+				</sec:authorize>
+			</div>
+		</div>
     </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../../assets/js/vendor/holder.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+<%--     <script src="<c:url value="/css/bootstrap.min.css" />"></script>
+ --%>  </body>
 </html>

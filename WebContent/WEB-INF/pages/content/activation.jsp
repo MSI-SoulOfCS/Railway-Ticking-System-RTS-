@@ -57,7 +57,8 @@ function countDown(secs,surl){//alert(surl);
 <div class="style">
 	
 	<br/>
-	${Result}! <span id="jumpTo">5</span> seconds to MSI Ticket System!
+	${Result}! 
+	<br /><span id="jumpTo" style="font-size:20pt">5</span> seconds to MSI Ticket System!
 	<script>countDown(5,'http://localhost:8080/Demand1/');</script> 
 </div>
 </body>

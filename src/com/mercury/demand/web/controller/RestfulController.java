@@ -196,7 +196,6 @@ public class RestfulController {
 	//Activate a user
 	@RequestMapping(value="/restful/UserActivate.html", method = RequestMethod.GET)
 	public ModelAndView activateUser(@RequestParam("id") String id) {
-		System.out.println(id);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("content/activation");
 		mav.addObject("Result", userDetailsService.activateUser(id));

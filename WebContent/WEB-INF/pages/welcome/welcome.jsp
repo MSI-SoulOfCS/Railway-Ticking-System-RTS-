@@ -12,8 +12,10 @@
     <link href="<c:url value="/css/cover.css" />" rel="stylesheet">
     <link href="<c:url value="/css/modal.css" />" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value="css/jquery-ui.css"/>">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  	<script src="<c:url value="js/jquery-ui.js"/>"></script>
+<!--     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+ -->
+ 	<script src="<c:url value="js/jquery-1.11.1.min.js"/>"></script>
+   	<script src="<c:url value="js/jquery-ui.js"/>"></script>
   	<script src="<c:url value="js/msi-jquery.js"/>"></script>
 <style>
 	.alert {
@@ -79,10 +81,10 @@
     	              			<li><a href="#join_form">Sign up</a></li>
         	          			<li><a href="#login_form" id="login_pop">Sign In</a></li>
 					  		</sec:authorize>
-							<li><sec:authentication var="user" property="principal" /></li>
-				  			<sec:authorize access="hasRole('ROLE_USER')">
+							<sec:authentication var="user" property="principal" />
+				  			<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
 				  				<b>Hi, ${user.username}</b><br />
-					 			<li><a href="http://localhost:8080/Demand1/content/main.html">My Account</a></li>
+					 			<li><a href="/Demand1/auth/user.html">My Account</a></li>
 					 			<li><a href="<c:url value='/j_spring_security_logout'/>">Logout</a></li>
 				  			</sec:authorize>
                 		</ul>
