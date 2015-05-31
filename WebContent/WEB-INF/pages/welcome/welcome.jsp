@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -76,7 +76,7 @@
               		<nav>
                 		<ul class="nav masthead-nav">            
 	         		  		<sec:authorize access="isAnonymous()">
-    	              			<li><a href="#join_form">Join Now</a></li>
+    	              			<li><a href="#join_form">Sign up</a></li>
         	          			<li><a href="#login_form" id="login_pop">Sign In</a></li>
 					  		</sec:authorize>
 							<li><sec:authentication var="user" property="principal" /></li>
@@ -95,7 +95,7 @@
 			<div class="popup">
 		       <!-- Alerts for missing form info  --> 
 				<div class="alert" style="display:none;" id="r_usernameReq">
-					<p>User name length must be between 8 to 16 charactors</p>
+					<p>Username length must be between 8 to 16 charactors</p>
 				</div>
 				<div class="alert" style="display:none;" id="r_passwordReq">
 					<p>Password is length must be between 8 to 16 charactors</p>
@@ -120,7 +120,7 @@
 	            <p>Please enter your user name and password here</p>
 				<table>
 					<tr>
-		            	<td>Account name: </td>
+		            	<td>Username: </td>
 						<td><input type="text" maxlength="16" name="r_username" id="r_username"/></td>
 		            </tr>
 		           	<tr>
@@ -159,25 +159,25 @@
 	       <div class="popup">
 		       <!-- Alerts for missing form info  --> 
 				<div class="alert" style="display:none;" id="usernameAndPasswordReq">
-					<p>User name and password are required</p>
+					<p>Username and Password are required</p>
 				</div>
 				
 				<div class="alert" style="display:none;" id="usernameReq">
-					<p>User name is required</p>
+					<p>Username is required</p>
 				</div>
 				<div class="alert" style="display:none;" id="passwordReq">
 					<p>Password is required</p>
 				</div>
 				<div class="alert" id="wrongCredentials" style="display:none;">
-					<p>The user name or password supplied is incorrect</p>
+					<p>The Username or Password supplied is incorrect</p>
 				</div>	
 				<!-- Alerts for missing form end -->
 	            <h2>Please sign in!</h2>
-	            <p>Please enter your user name and password here</p>
+	            <p>Please enter your Username and Password here</p>
 	            <form name="f" action="<c:url value='/j_spring_security_check'/>" method="POST" id="login-form">
 		            <table>
 		            	<tr>
-		            		<td>User name: </td>
+		            		<td>Username: </td>
 							<td><input type="text" name="j_username" id="j_username"/></td>
 		            	</tr>
 		            	<tr>
