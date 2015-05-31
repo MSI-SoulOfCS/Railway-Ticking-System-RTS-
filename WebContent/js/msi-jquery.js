@@ -14,46 +14,37 @@
         $("body").append($form);
         $form.submit();
     }
-    function countDown(secs,surl){          
-    	 var jumpTo = document.getElementById('jumpTo');
-    	 jumpTo.innerHTML=secs;  
-    	 if(--secs>0){     
-    	     setTimeout("countDown("+secs+",'"+surl+"')",1000);     
-    	     }     
-    	 else{       
-    	     location.href=surl;     
-    	     }     
-    	 }
     function check(){
-    	var i=0;
     	var formData=[];
-    	$('#grid input[type=checkbox]:checked').each(function(){ 		
+    	$('#grid input[type=checkbox]:checked').each(function(){ 
 			var row = $(this).parent().parent();
 			var rowcells = row.find('td');
-			var rowData={ID: $(rowcells[0]).html(),Amount: $(rowcells[1]).find('input').val()};;
-			formData[i]=rowData;
-			i++; 		  
+			var item = {};
+			item["ticket_id"] = $(rowcells[0]).html();
+			item["amount"] = $(rowcells[6]).find('input').val();
+			formData.push(item);
 		});
     	$.ajax({
-			  url:"Demand1/restful/#",
+			  url:"/Demand1/auth/AddCart.html",
+			  contentType: 'application/json',
 			  type:"post",
-			  data: formData,
+			  data: JSON.stringify(formData),
 			  dataType:"json",
-			  success:addToCart
+			  success:checkResult
 		});
     }
-    function addToCart(data){
-    	if(data[0].result == "yes") {
-			window.location.href = "/Demand1/#Success_form";
+	function checkResult(data) {
+		if(data[0].result == "yes") {
+			alert("Success");
 		}
-    	else
-    }
+	}
 	function ticket(){
         url_redirect({url: "/Demand1/content/ticket.html",
            			  method: "post",
              		  data: {"From":$("#From").val(), "To":$("#To").val(), "Time":$("#Leave").val()+"/"+$("#At").val()}
-        });
+		});
 	}
+	
 	function loginValidation() {
 		$("#usernameAndPasswordReq").hide();
 		$("#usernameReq").hide();
@@ -131,6 +122,16 @@
 	  		$("#r_firstnameReq").hide();
 	  		$("#r_alreadyexisted").show();
 		}
+	}
+	function keyboardValidate(evt) {
+		  var theEvent = evt || window.event;
+		  var key = theEvent.keyCode || theEvent.which;
+		  key = String.fromCharCode( key );
+		  var regex = /^[0-9]+$/;
+		  if( !regex.test(key) ) {
+		    theEvent.returnValue = false;
+		    if(theEvent.preventDefault) theEvent.preventDefault();
+		  }
 	}
 	$(function() {
 		    var availableTags = [
