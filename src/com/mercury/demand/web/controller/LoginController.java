@@ -61,11 +61,6 @@ public class LoginController {
 	public void setTicketDetailsService(TicketDetailsService ticketDetailsService) {
 		this.ticketDetailsService = ticketDetailsService;
 	}
-	//test for ticket page
-	@RequestMapping(value="/content/testTicket.html", method = RequestMethod.GET)
-	public String testTicket(ModelMap model) {
-		return "content/ticket";
-	}
 	
 	@RequestMapping(value="/security/login.html", method = RequestMethod.GET)
 	public String login(ModelMap model) {

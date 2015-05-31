@@ -35,10 +35,10 @@
     }
 	function checkResult(data) {
 		if(data[0].result == "yes") {
-			window.location.href = "/Demand1/#success_addToCart";
+			location.href = "#success_addToCart";
 		}
 		else{
-			window.location.href = "/Demand1/#failure_addToCart";
+			window.location = "#failure_addToCart";
 		}
 	}
 	function ticket(){
