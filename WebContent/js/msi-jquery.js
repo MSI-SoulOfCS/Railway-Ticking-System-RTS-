@@ -38,40 +38,22 @@
 			  url:"Demand1/restful/#",
 			  type:"post",
 			  data: formData,
-			  dataType:"json"
+			  dataType:"json",
+			  success:addToCart
 		});
+    }
+    function addToCart(data){
+    	if(data[0].result == "yes") {
+			window.location.href = "/Demand1/#Success_form";
+		}
+    	else
     }
 	function ticket(){
         url_redirect({url: "/Demand1/content/ticket.html",
            			  method: "post",
              		  data: {"From":$("#From").val(), "To":$("#To").val(), "Time":$("#Leave").val()+"/"+$("#At").val()}
-		});
-/*        
- 		var formData = {From : $("#From").val(),To:$("#To").val(),Time:$("#Leave").val()+"/"+$("#At").val()};
-		$.ajax({
-			url: "/Demand1/restful/PeroidTickets.html",
-			type: "post",
-			data: formData,
-			dataType: "json",
-			success:showTicket
-		});
-*/
+        });
 	}
-/*
-	function showTicket(data){
-		var rows = "";
-		$("#tickets").empty();
-		$(data).each(function(i, item) {
-			var d = new Date(item.date);
-			rows = "<tr><td>" + item.id + "</td><td>" + item.price + "</td><td>" + 
-								d.getHours() + ":" + d.getMinutes() +"  "+
-								(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
-								+ "</td><td>" + item.amount + "</td><td>" +
-								item.from_loc.station + "</td><td>" + item.to_loc.station + "</td></tr>";
-			$(rows).appendTo("#tickets");
-		});
-	}
-*/
 	function loginValidation() {
 		$("#usernameAndPasswordReq").hide();
 		$("#usernameReq").hide();
