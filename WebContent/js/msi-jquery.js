@@ -25,53 +25,36 @@
     	     }     
     	 }
     function check(){
-    	var i=0;
     	var formData=[];
-    	$('#grid input[type=checkbox]:checked').each(function(){ 		
+    	$('#grid input[type=checkbox]:checked').each(function(){ 
 			var row = $(this).parent().parent();
 			var rowcells = row.find('td');
-			var rowData={ID: $(rowcells[0]).html(),Amount: $(rowcells[1]).find('input').val()};;
-			formData[i]=rowData;
-			i++; 		  
+			var item = {};
+			item["ticket_id"] = $(rowcells[0]).html();
+			item["amount"] = $(rowcells[6]).find('input').val();
+			formData.push(item);
 		});
     	$.ajax({
-			  url:"Demand1/restful/#",
+			  url:"/Demand1/auth/AddCart.html",
+			  contentType: 'application/json',
 			  type:"post",
-			  data: formData,
-			  dataType:"json"
+			  data: JSON.stringify(formData),
+			  dataType:"json",
+			  success:checkResult
 		});
     }
+	function checkResult(data) {
+		if(data[0].result == "yes") {
+			alert("good");
+		}
+	}
 	function ticket(){
         url_redirect({url: "/Demand1/content/ticket.html",
            			  method: "post",
              		  data: {"From":$("#From").val(), "To":$("#To").val(), "Time":$("#Leave").val()+"/"+$("#At").val()}
 		});
-/*        
- 		var formData = {From : $("#From").val(),To:$("#To").val(),Time:$("#Leave").val()+"/"+$("#At").val()};
-		$.ajax({
-			url: "/Demand1/restful/PeroidTickets.html",
-			type: "post",
-			data: formData,
-			dataType: "json",
-			success:showTicket
-		});
-*/
 	}
-/*
-	function showTicket(data){
-		var rows = "";
-		$("#tickets").empty();
-		$(data).each(function(i, item) {
-			var d = new Date(item.date);
-			rows = "<tr><td>" + item.id + "</td><td>" + item.price + "</td><td>" + 
-								d.getHours() + ":" + d.getMinutes() +"  "+
-								(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
-								+ "</td><td>" + item.amount + "</td><td>" +
-								item.from_loc.station + "</td><td>" + item.to_loc.station + "</td></tr>";
-			$(rows).appendTo("#tickets");
-		});
-	}
-*/
+	
 	function loginValidation() {
 		$("#usernameAndPasswordReq").hide();
 		$("#usernameReq").hide();
@@ -149,6 +132,16 @@
 	  		$("#r_firstnameReq").hide();
 	  		$("#r_alreadyexisted").show();
 		}
+	}
+	function keyboardValidate(evt) {
+		  var theEvent = evt || window.event;
+		  var key = theEvent.keyCode || theEvent.which;
+		  key = String.fromCharCode( key );
+		  var regex = /^[0-9]+$/;
+		  if( !regex.test(key) ) {
+		    theEvent.returnValue = false;
+		    if(theEvent.preventDefault) theEvent.preventDefault();
+		  }
 	}
 	$(function() {
 		    var availableTags = [

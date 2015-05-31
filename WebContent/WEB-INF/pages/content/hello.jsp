@@ -47,7 +47,7 @@
 
 	});
 	function showUser(data) {
-		alert("username:"+data.username+" password:"+data.password);
+//		alert("username:"+data.username+" password:"+data.password);
 	}
 	function showStation(data) {
 		var rows = "";
