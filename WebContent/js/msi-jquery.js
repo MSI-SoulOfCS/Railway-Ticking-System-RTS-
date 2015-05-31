@@ -15,23 +15,21 @@
         $form.submit();
     }
     function check(){
-    	$('#grid input[type=checkbox]:checked').each(function() { 		
-    		   var row = $(this).parent().parent();
-    		   var rowcells = row.find('td');
-    		   var i,j;
-    		   for(i=0;i<rowcells.length/6;i++){
-    			   var formData=[];
-    			   for(j=0;j<6;j++){
-    				   formData[j]=$(rowcells[j]).html();
-    			   }
-    			   $.ajax({
-        			   url:"Demand1/restful/#",
-        			   type:"post",
-        			   data: formData,
-        			   dataType:"json"
-        		   });
-    		   }
-    		});
+    	var i=0;
+    	var formData=[];
+    	$('#grid input[type=checkbox]:checked').each(function(){ 		
+			var row = $(this).parent().parent();
+			var rowcells = row.find('td');
+			var rowData={ID: $(rowcells[0]).html(),Amount: $(rowcells[1]).find('input').val()};;
+			formData[i]=rowData;
+			i++; 		  
+		});
+    	$.ajax({
+			  url:"Demand1/restful/#",
+			  type:"post",
+			  data: formData,
+			  dataType:"json"
+		});
     }
 	function ticket(){
         url_redirect({url: "/Demand1/content/ticket.html",

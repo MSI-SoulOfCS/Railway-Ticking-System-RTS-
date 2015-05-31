@@ -40,6 +40,9 @@
 		background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
 		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
 	}
+	.hideTd{
+		display:none;
+	}
     </style>
 </head>
 <body>
@@ -65,22 +68,23 @@
                 <table id="grid" class="table table-condensed table-hover table-striped">
                     <thead>
                         <tr>
-                            <th data-column-id="price" data-order="asc">Price</th>
-                            <th data-column-id="date" data-type="date">Date</th>
-                            <th data-column-id="amount" data-type="numeric">Amount</th>
+         					<th data-column-id="amount">Amount</th>
                             <th data-column-id="from">From</th>
                             <th data-column-id="to">To</th>
+                            <th data-column-id="price" data-order="asc">Price</th>
+                            <th data-column-id="date" data-type="date">Date</th>
                             <th data-column-id="checkbox">Select</th>
                         </tr>
                     </thead>
                     <tbody>
 						<c:forEach var="ticket" items="${resultTickets}">
 							<tr>
-								<td>${ticket.price}</td>
-								<td>${ticket.date}</td>
-								<td>${ticket.amount}</td>
+								<td class="hideTd">${ticket.id }</td>
+								<td><input id="amount" type=text size="1"/></td>
 								<td>${ticket.from_loc.station}</td>
 								<td>${ticket.to_loc.station}</td>
+								<td>${ticket.date}</td>
+								<td>${ticket.price}</td>
 								<td><input id="check" type="checkbox"/></td>
 							</tr>
 						</c:forEach>
