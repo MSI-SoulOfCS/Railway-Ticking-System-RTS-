@@ -50,7 +50,8 @@ public class PersonDaoImpl implements PersonDao {
 			sessionFactory.getCurrentSession().save(newUser);
 			
 			String encryptStr = MagicCrypt.getInstance().encrypt(username);
-			mailApp.sendMail(firstname + " " + lastname, "http://localhost:8080/Demand1/restful/UserActivate.html?id="+encryptStr);
+			encryptStr = MagicCrypt.getInstance().httpGetStringConvert(encryptStr);
+			mailApp.sendMail(firstname + " " + lastname, "http://localhost:8080/Demand1/restful/UserActivate.html?id="+encryptStr, email);
 			
 			return "yes";
 		}

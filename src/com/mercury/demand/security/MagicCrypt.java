@@ -2,6 +2,9 @@ package com.mercury.demand.security;
 
 import java.security.Key;
 import java.security.MessageDigest;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -127,6 +130,69 @@ public class MagicCrypt {
 		} catch (final Exception ex) {
 			throw new RuntimeException(ex.getMessage());
 		}
+	}
+	
+	public String httpGetStringConvert(String token) {
+		StringBuilder s = new StringBuilder(token.length());
+
+		CharacterIterator it = new StringCharacterIterator(token);
+		for (char ch = it.first(); ch != CharacterIterator.DONE; ch = it.next()) {
+		    switch (ch) {
+		        case '&':
+		            s.append("%26");
+		            break;
+		        case '+':
+		            s.append("%2B");
+		            break;
+		        case ',':
+		            s.append("%2C");
+		            break;
+		        case '/':
+		        	s.append("%2F");
+		        	break;
+		        case ':':
+		        	s.append("%3A");
+		        	break;
+		        case ';':
+		        	s.append("%3B");
+		        	break;
+		        case '=':
+		        	s.append("%3D");
+		        	break;
+		        case '?':
+		        	s.append("%3F");
+		        	break;
+		        case '@':
+		        	s.append("%40");
+		        	break;
+		        case ' ':
+		        	s.append("%20");
+		        	break;
+		        case '\t':
+		        	s.append("%09");
+		        	break;
+		        case '#':
+		        	s.append("%23");
+		        	break;
+		        case '<':
+		        	s.append("%3C");
+		        	break;
+		        case '>':
+		        	s.append("%3E");
+		        	break;
+		        case '\\':
+		        	s.append("%22");
+		        	break;
+		        case '\n':
+		        	s.append("%0A");
+		        	break;
+		        default:
+		            s.append(ch);
+		            break;
+		    }
+		}
+
+		return s.toString();		
 	}
 }
  
