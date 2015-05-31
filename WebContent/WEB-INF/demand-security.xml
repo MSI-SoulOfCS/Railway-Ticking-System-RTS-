@@ -48,7 +48,7 @@
     </sec:authentication-manager>
    
 	<bean id="postSuccessAuthHandler" class="com.mercury.demand.security.PostSuccessfulAuthenticationHandler">
-	    <property name="defaultTargetUrl" value="/content/main.html" />
+	    <property name="defaultTargetUrl" value="/index.html" />
 	    <property name="alwaysUseDefaultTargetUrl" value="true" />
 	</bean>
 

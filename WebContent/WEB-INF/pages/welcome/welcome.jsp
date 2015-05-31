@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -62,27 +63,31 @@
 </script>
 </head>
 <body background="<c:url value="/img/15.jpg" />">
-
 <!-- Login Form -->	
 <div class="site-wrapper">
 
       <div class="site-wrapper-inner">
 
-        <div class="cover-container">
+			<div class="cover-container">
 
-          <div class="masthead clearfix">
-            <div class="inner">
+          		<div class="masthead clearfix">
+            		<div class="inner">
               
-              <nav>
-                <ul class="nav masthead-nav">
-                  
-                  <!-- Modify by Ning *******start********** -->
-                  <li><a href="#join_form">Join Now</a></li>
-                  <li><a href="#login_form" id="login_pop">Sign In</a></li>
-                  <!-- Modify by Ning *******end********** -->
-                </ul>
-              </nav>
-            </div>
+              		<nav>
+                		<ul class="nav masthead-nav">            
+	         		  		<sec:authorize access="isAnonymous()">
+    	              			<li><a href="#join_form">Join Now</a></li>
+        	          			<li><a href="#login_form" id="login_pop">Sign In</a></li>
+					  		</sec:authorize>
+							<li><sec:authentication var="user" property="principal" /></li>
+				  			<sec:authorize access="hasRole('ROLE_USER')">
+				  				<b>Hi, ${user.username}</b><br />
+					 			<li><a href="http://localhost:8080/Demand1/content/main.html">My Account</a></li>
+					 			<li><a href="<c:url value='/j_spring_security_logout'/>">Logout</a></li>
+				  			</sec:authorize>
+                		</ul>
+              		</nav>
+            	</div>
           </div>
           <!-- Modify by Ning ************start********** -->
           <!-- popup form #1 -->
@@ -115,7 +120,7 @@
 	            <p>Please enter your user name and password here</p>
 				<table>
 					<tr>
-		            	<td>User name: </td>
+		            	<td>Account name: </td>
 						<td><input type="text" maxlength="16" name="r_username" id="r_username"/></td>
 		            </tr>
 		           	<tr>
@@ -123,7 +128,7 @@
 						<td><input type="password" maxlength="16" name="r_password" id="r_password"/></td>
 					</tr>
 					<tr>
-						<td>RetypePassword: </td>
+						<td>Comfirm Password: </td>
 						<td><input type="password" maxlength="16" name="r_retypepassword" id="r_retypepassword"/></td>
 					</tr>
 					<tr>
@@ -142,7 +147,7 @@
 						<td>
 						</td>
 						<td>
-							<button id="signup" class="button orange">Join Now</button>
+							<button id="signup" class="button orange">Submit</button>
 						</td>
 					</tr>
 		            </table>
