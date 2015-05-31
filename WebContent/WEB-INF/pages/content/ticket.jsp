@@ -8,6 +8,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Results</title>
+    <link href="<c:url value="/css/coverInTicket.css" />" rel="stylesheet">
+    <link href="<c:url value="/css/modal.css" />" rel="stylesheet">
     <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet" />
     <link href="<c:url value="/css/jquery.bootgrid.css"/>" rel="stylesheet" />
     <script src="<c:url value="/js/moderniz.2.8.1.js"/>"></script>
@@ -59,7 +61,12 @@
             
         </div>
     </header>
-
+	<a href="/Demand1/" class="overlay" id="success_addToCart"></a>
+	       
+	<div class="popup">
+	       <p>Tickets have been added to your cart successfully!</p>
+	</div>
+	<a class="close" href="/Demand1/content/ticket.html"></a>
     <div class="container-fluid">
         <div class="row">
             

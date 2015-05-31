@@ -203,7 +203,9 @@
 	            <h2>Register success!</h2>
 	            <p>Please check your e-mail to activate your account!</p>
 	            <a class="close" href="/Demand1/"></a>
-	       </div>			
+	       </div>	
+	       
+	       
 			
           <div align="center">
 			<div>
