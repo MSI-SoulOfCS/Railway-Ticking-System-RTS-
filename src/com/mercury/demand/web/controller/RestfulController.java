@@ -12,12 +12,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.demand.persistence.model.CartEntity;
 import com.mercury.demand.persistence.model.History;
 import com.mercury.demand.persistence.model.Person;
 import com.mercury.demand.persistence.model.Station;
@@ -155,8 +157,15 @@ public class RestfulController {
 	//****************************************
 	//***************Cart*********************
 	//****************************************		
-	
-	
+	@RequestMapping(value="/auth/AddCart.html", method = RequestMethod.POST, headers = {"Content-type=application/json"})
+	public @ResponseBody String addTicketToUser(@RequestBody CartEntity[] data) {
+
+		for(CartEntity entity : data) {
+			System.out.println(entity.getTicket_id() + " " + entity.getAmount());
+		}
+		
+		return "[{\"result\":\"" + "yes" + "\"}]";
+	}
 	
 	//****************************************
 	//***************Users*******************

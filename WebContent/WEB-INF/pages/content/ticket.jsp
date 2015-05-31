@@ -68,24 +68,24 @@
                 <table id="grid" class="table table-condensed table-hover table-striped">
                     <thead>
                         <tr>
-         					<th data-column-id="amount">Amount</th>
                             <th data-column-id="from">From</th>
                             <th data-column-id="to">To</th>
                             <th data-column-id="price" data-order="asc">Price</th>
                             <th data-column-id="date" data-type="date">Date</th>
                             <th data-column-id="checkbox">Select</th>
+         					<th data-column-id="amount">Amount</th>
                         </tr>
                     </thead>
                     <tbody>
 						<c:forEach var="ticket" items="${resultTickets}">
 							<tr>
 								<td class="hideTd">${ticket.id }</td>
-								<td><input id="amount" type=text size="1"/></td>
 								<td>${ticket.from_loc.station}</td>
 								<td>${ticket.to_loc.station}</td>
 								<td>${ticket.date}</td>
 								<td>${ticket.price}</td>
 								<td><input id="check" type="checkbox"/></td>
+								<td><input id="amount" type=text size="1" onkeypress='keyboardValidate(event)' maxlength="4" value="0"/></td>
 							</tr>
 						</c:forEach>
                     </tbody>
