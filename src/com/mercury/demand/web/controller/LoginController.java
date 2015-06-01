@@ -68,7 +68,7 @@ public class LoginController {
 		return mav;
 	}	
 	
-	@RequestMapping(value="/payment/payment.html",method=RequestMethod.POST)
+	/*@RequestMapping(value="/payment/payment.html",method=RequestMethod.POST)
 	public ModelAndView payment(@RequestParam("From") String from,
 								@RequestParam("To") String to,
 								@RequestParam("Time") String time,
@@ -80,7 +80,7 @@ public class LoginController {
 		mav.addObject("purchasedTickets", result);
 
 		return mav;
-	}
+	}*/
 	
 	@RequestMapping(value="/content/ticket.html", method = RequestMethod.POST)
 	public ModelAndView ticket(@RequestParam("From") String from, 
