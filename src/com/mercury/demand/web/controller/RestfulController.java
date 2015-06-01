@@ -29,6 +29,7 @@ import com.mercury.demand.service.TicketDetailsService;
 import com.redis.entity.RedisTicket;
 import com.redis.service.TicketService;
 import com.redis.service.impl.TicketServiceImpl;
+import com.redis.util.RelationConverter;
 
 @Controller
 public class RestfulController {
@@ -161,14 +162,30 @@ public class RestfulController {
 														@RequestParam("To") String to,
 														@RequestParam("Time") String time,
 														@RequestParam("Amount") int amount,
-														@RequestParam("Seat") String seatType) {
+														@RequestParam("Price") double price,
+														@RequestParam("Seat") String seatType){
 		
 		System.out.println(from + " " + to + " " + time + " " + amount + " " + seatType);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		try {
+		try 
+		{
 			Date date = dateFormat.parse(time);
-
-		} catch (ParseException e) {
+			
+			RedisTicket ticket = new RedisTicket();
+			ticket.setStart(from);
+			ticket.setDestination(to);
+			ticket.setDate(date);
+			ticket.setPrice(Double.valueOf(price).toString());
+			ticket.setAmount(amount);
+			ticket.setAvailable(true);
+			ticket.setActive("true");
+			
+			ticket.setSeats(RelationConverter.seatGenerator(seatType, amount));
+			
+			ticketService.adminAddTicket(ticket);
+		} 
+		catch (Exception e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

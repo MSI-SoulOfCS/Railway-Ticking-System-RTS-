@@ -51,7 +51,7 @@
     /*This function use to new a ticket*/
     function addTicket() {
     	if($("#AT_From").val().length > 0 && $("#AT_To").val().length > 0 && $("#AT_Date").val().length > 0 && $("#AT_Seat").val().length > 0)
-			var formData = {From : $("#AT_From").val(), To : $("#AT_To").val(), Time : $("#AT_Date").val()+" "+$("#AT_Hour").val()+":"+$("#AT_Min").val(), Amount : $("#AT_Amount").val(), Seat : $("#AT_Seat").val()};
+			var formData = {From : $("#AT_From").val(), To : $("#AT_To").val(), Time : $("#AT_Date").val()+" "+$("#AT_Hour").val()+":"+$("#AT_Min").val(), Amount : $("#AT_Amount").val(), Price: $("#AT_Price").val(), Seat : $("#AT_Seat").val()};
   	    	$.ajax({
   				url: "/Demand1/admin/NewTicket.html",
   				type: "post",
