@@ -22,7 +22,7 @@
     
     
     <script src="<c:url value="/js/jquery-1.11.1.min.js" />"></script>
-
+	
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -30,8 +30,9 @@
     <![endif]-->
 	<script>
 		$(document).ready(function() {
+			alert("hello");
  			$.ajax({
-				url: "/Demand1/restful/Stations.html",
+				url: "/Demand1/restful/Tickets.html",
 				type: "get",
 				dataType: "json",
 				success:showData
@@ -46,13 +47,19 @@
 		});
 		
 		function showData(data) {
+			
 			var rows = "";
-			$("#users").empty();
+			$("#tickets").empty();
 			$(data).each(function(i, item) {
-				var station_id = item.id;
-				var station_name = item.station;
-				rows = "<tr><td>" + station_id + "</td><td>" + station_name + "</td></tr>";
-				$(rows).appendTo("#users");
+				var ticket_id = item.id;
+				var ticket_from = item.from_loc;
+				var ticket_to=item.to_loc;
+				var ticket_date=item.date;
+				var ticket_amount=item.amount;
+				var ticket_availability=item.activate;
+				
+				rows = "<tr><td>" + ticket_id + "</td><td>" + ticket_from.station + "</td><td>"+ticket_to.station+"</td><td>"+ticket_date.get+"</td><td>"+ticket_amount+"</td><td>"+ticket_availability+"</td></tr>";
+				$(rows).appendTo("#tickets");
 			});
 		}
 		
@@ -62,10 +69,37 @@
 			$("#Profile").parent().removeClass("active");
 			
 			$("#MyTripView").hide();
+			$("#HistoryView").hide();
+			$("#ProfileView").hide();
 		}
-		
-		
 	</script>
+	<script src="<c:url value="/js/msi-jquery.js" />"></script>
+	<style>
+		.button {
+		display: inline-block;
+		outline: none;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
+		padding: .5em 2em .55em;
+		text-shadow: 0 1px 1px rgba(0,0,0,.3);
+		-webkit-border-radius: .5em; 
+		-moz-border-radius: .5em;
+		border-radius: .5em;
+		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	}
+	.orange {
+		color: #fef4e9;
+		border: solid 1px #da7c0c;
+		background: #f78d1d;
+		background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+		background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+	}
+	</style>
   </head>
 
   <body>
@@ -103,14 +137,13 @@
             			<li>			   <a id="Profile" href="#Profile">Profile</a>
           			</sec:authorize>
           			<sec:authorize access="hasRole('ROLE_ADMIN')">
-            			<li class="active"><a id="History" href="#History">History</a></li>
+            			<li class="active"><a id="History" href="#History">Tickets Info</a></li>
           			</sec:authorize>	
           		</ul>
         	</div>
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        		<!-- User -->
           		<sec:authorize access="hasRole('ROLE_USER')">
-          		
-
           			<div id="MyTripView">
 	        	 		<h2 class="sub-header">Section title</h2>
 	          			<div class="table-responsive">
@@ -124,13 +157,69 @@
 	                  					<th>Header</th>
 	               					</tr>
 	              				</thead>
-	              					<tbody id="users">
+	              					<tbody id="tickets">
 				  					</tbody>
 	            			</table>
 	          			</div>
 					</div>
 					
+					<div id="HistoryView">
+						<h2 class="sub-header">Update Profile</h2>
+	          			<div>
+	            			<table class="table table-striped">
+	                			<tr>
+	                  				<th>#</th>
+	                  				<th>#</th>
+	                  				<th>#</th>
+	                  				<th>#</th>
+	               				</tr>
+	            			</table>
+	            			<button onclick="#" class="button orange">Search Ticket</button>
+	          			</div>
+					</div>
 					
+					<div id="ProfileView">
+						<h2 class="sub-header">Update Profile</h2>
+	          			<div>
+	            			<table class="table table-striped">
+	                			<tr>
+	                  				<th>FirstName</th>
+	                  				<th>LastName</th>
+	                  				<th>Email</th>
+	                  				<th>Password</th>
+	               				</tr>
+	               				<tr>
+	               					<td><input id="firstName" type="text"/></td>
+	               					<td><input id="lastName" type="text"/></td>
+	               					<td><input id="email" type="text"/></td>
+	               					<td><input id="password" type="text"/></td>
+	               				</tr>
+	            			</table>
+	            			<button onclick="updateUser()" class="button orange">Search Ticket</button>
+	          			</div>
+					</div>
+				<!-- ADMIN -->	
+				</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<div id="ticketInfo">
+						<h2 class="sub-header">Tickets Info</h2>
+	          			<div class="table-responsive">
+	          				<table class="table table-striped">
+	              				<thead>
+	                				<tr>
+	                  					<th>ID</th>
+	                  					<th>From</th>
+	                  					<th>To</th>
+	                  					<th>Date</th>
+	                  					<th>Amount</th>
+	                  					<th>Availability</th>
+	               					</tr>
+	              				</thead>
+	              					<tbody id="tickets">
+				  					</tbody>
+	            			</table>
+	          			</div>
+					</div>
 				</sec:authorize>
 			</div>
 		</div>
