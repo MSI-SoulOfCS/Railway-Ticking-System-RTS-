@@ -32,6 +32,7 @@ public class TicketServiceImpl implements TicketService
 		 */
 		jedis.hset(key, RedisTicket.ACTIVE, ticket.getActive());
 		jedis.hset(key, RedisTicket.PRICE, ticket.getPrice());
+		jedis.hset(key, RedisTicket.AMOUNT, Integer.valueOf(ticket.getAmount()).toString());
 		
 		/*
 		 * set the seats id for seats pool

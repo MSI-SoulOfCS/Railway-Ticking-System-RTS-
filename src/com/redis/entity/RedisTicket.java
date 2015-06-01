@@ -16,6 +16,7 @@ public class RedisTicket
 	public static final String TICKET_SPLITTER = "#";
 	public static final String ACTIVE = "active";
 	public static final String PRICE = "price";
+	public static final String AMOUNT = "amount";
 	
 	private String start;
 	private String destination;
@@ -24,6 +25,7 @@ public class RedisTicket
 	private String price;
 	private String[] seats;
 	private boolean available;
+	private int amount;
 	
 	public RedisTicket(){}
 	
@@ -91,6 +93,12 @@ public class RedisTicket
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
-	
-	
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 }
