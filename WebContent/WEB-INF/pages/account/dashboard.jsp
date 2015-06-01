@@ -30,9 +30,12 @@
     <![endif]-->
 	<script>
 		$(document).ready(function() {
+			/* need to pass username from welcome */
+			var ID={"username":"qiushuidamowang"};
  			$.ajax({
 				url: "/Demand1/restful/Tickets.html",
 				type: "get",
+				data: ID,
 				dataType: "json",
 				success:showData
 			});
@@ -62,18 +65,16 @@
 		});
 		
 		function showData(data) {
-			
 			var rows = "";
 			$("#tickets").empty();
-			$(data).each(function(i, item) {
-				var ticket_id = item.id;
+			$(data).each(function(i,item) {
+				var d = new Date(item.date);
 				var ticket_from = item.from_loc;
 				var ticket_to=item.to_loc;
-				var ticket_date=item.date;
-				var ticket_amount=item.amount;
-				var ticket_availability=item.activate;
-				
-				rows = "<tr><td>" + ticket_id + "</td><td>" + ticket_from.station + "</td><td>"+ticket_to.station+"</td><td>"+ticket_date.get+"</td><td>"+ticket_amount+"</td><td>"+ticket_availability+"</td></tr>";
+				var ticket_price=item.price;
+				rows = "<tr><td>" + ticket_from.station + "</td><td>"+ticket_to.station+"</td><td>"+
+				(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
+				+"	"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"</td><td>"+ticket_price+"</td></tr>";
 				$(rows).appendTo("#tickets");
 			});
 		}
@@ -184,8 +185,6 @@
 	                  					<th>Header</th>
 	               					</tr>
 	              				</thead>
-	              					<tbody id="tickets">
-				  					</tbody>
 	            			</table>
 	          			</div>
 					</div>
@@ -195,13 +194,14 @@
 	          			<div>
 	            			<table class="table table-striped">
 	                			<tr>
-	                  				<th>#</th>
-	                  				<th>#</th>
-	                  				<th>#</th>
-	                  				<th>#</th>
+	                  				<th>From</th>
+	                  				<th>To</th>
+	                  				<th>Date</th>
+	                  				<th>Price</th>
 	               				</tr>
+	               				<tbody id="tickets">
+				  				</tbody>
 	            			</table>
-	            			<button onclick="#" class="button orange">Search Ticket</button>
 	          			</div>
 					</div>
 					

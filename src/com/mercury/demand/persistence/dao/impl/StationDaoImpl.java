@@ -27,5 +27,4 @@ public class StationDaoImpl implements StationDao {
 		String hql = "From Station order by id";
 		return template.find(hql);
 	}
-	
 }

@@ -1,5 +1,6 @@
 package com.mercury.demand.persistence.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.mercury.demand.persistence.dao.TicketDao;
+import com.mercury.demand.persistence.model.History;
+import com.mercury.demand.persistence.model.Person;
 import com.mercury.demand.persistence.model.Ticket;
 
 public class TicketDaoImpl implements TicketDao {
@@ -50,5 +53,15 @@ public class TicketDaoImpl implements TicketDao {
 			return this.getAllTickets();
 		}
 	}
-	
+	@SuppressWarnings({ "unchecked"})
+	@Override
+	public List<Ticket> getTicketsByUser(Person user){
+		String hql="From History where person=?";
+		List<History> historyList=template.find(hql,user);
+		List<Ticket> ticketList=new ArrayList<Ticket>();
+		for(int i=0;i<historyList.size();i++){
+			ticketList.add(historyList.get(i).getTicket());
+		}
+		return ticketList;
+	}
 }

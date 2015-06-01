@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.demand.persistence.dao.PersonDao;
 import com.mercury.demand.persistence.model.CartEntity;
 import com.mercury.demand.persistence.model.History;
 import com.mercury.demand.persistence.model.Person;
@@ -79,8 +80,9 @@ public class RestfulController {
 	//****************************************
 	//Get all tickets
 	@RequestMapping(value="/restful/Tickets.html", method = RequestMethod.GET)
-	public @ResponseBody List<Ticket> getAllTickets() {
-		return ticketDetailsService.getAllTickets();
+	public @ResponseBody List<Ticket> getTicketsByUser(@RequestParam("username") String username) {
+		Person user=userDetailsService.getUserByUsername(username);
+		return ticketDetailsService.getTicketByUser(user);
 	}
 	
 	//Get tickets during a period of time

@@ -30,7 +30,7 @@
   		if(flag){
   			var formData = {firstname : $("#firstName").val(), lastname : $("#lastName").val(), email : $("#email").val() , password : $("#password").val()};
   	    	$.ajax({
-  				url: "/Demand1/restful/UpdateUser.html",
+  				url: "/Demand1/auth/UpdateUser.html",
   				type: "post",
   				data: formData,
   				dataType: "json",

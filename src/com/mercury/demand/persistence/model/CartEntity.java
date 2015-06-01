@@ -22,5 +22,4 @@ public class CartEntity implements Serializable{
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
-
 }
