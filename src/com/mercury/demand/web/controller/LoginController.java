@@ -21,6 +21,9 @@ import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
 import com.mercury.demand.service.StationDetailsService;
 import com.mercury.demand.service.TicketDetailsService;
+import com.redis.entity.RedisTicket;
+import com.redis.service.TicketService;
+import com.redis.service.impl.TicketServiceImpl;
 
 @Controller
 public class LoginController {
@@ -90,13 +93,15 @@ public class LoginController {
 			 				   ModelMap model) {
 		System.out.println("From:"+from+" To:"+to+" Date:"+time);
 
+		TicketService ticketService = new TicketServiceImpl();
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String[] DateAndTime = time.split("/");
 		String[] HourTime = DateAndTime[1].split("-");
 		Date firstDate;
 		Date secondDate;
 		
-		List<Ticket> result = ticketDetailsService.getAllTickets();
+		List<RedisTicket> result = null;
 		if(!DateAndTime[0].equals("")) {
 			if(DateAndTime[1].equals("Anytime")) {
 				try {
@@ -104,7 +109,7 @@ public class LoginController {
 					firstDate = dateFormat.parse(timestamp);
 					timestamp = DateAndTime[0] + " 23:59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);
+					result = null;
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -121,7 +126,7 @@ public class LoginController {
 						timestamp = DateAndTime[0] + " 23:59:59.0";
 
 					secondDate = dateFormat.parse(timestamp);
-					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+					result = ticketService.searchTicket(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -134,13 +139,16 @@ public class LoginController {
 
 					timestamp = DateAndTime[0] + " " + HourTime[0] + ":59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+					result = ticketService.searchTicket(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}				
 			}
-		};
+		}
+		else {
+			result = ticketService.getAllTicket();
+		}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("content/ticket");
 		mav.addObject("resultTickets", result);

@@ -97,11 +97,10 @@
                     <tbody>
 						<c:forEach var="ticket" items="${resultTickets}">
 							<tr>
-								<td class="hideTd">${ticket.id }</td>
-								<td>${ticket.from_loc.station}</td>
-								<td>${ticket.to_loc.station}</td>
-								<td>${ticket.date}</td>
+								<td>${ticket.start }</td>
+								<td>${ticket.destination}</td>
 								<td>${ticket.price}</td>
+								<td>${ticket.date}</td>
 								<td><input id="check" type="checkbox"/></td>
 								<td><input id="amount" type=text size="1" onkeypress='keyboardValidate(event)' maxlength="4" value="0"/></td>
 							</tr>
