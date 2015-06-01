@@ -203,6 +203,14 @@
 										<th>Quantity</th>
 										<th>Price</th>
 									</tr>
+									<%-- <tbody>
+										<c:forEach var="purchased" items="${purchasedTickets}">
+											<td>${purchased....}</td>
+										</c:forEach>
+										<tr>
+										
+										</tr>
+									</tbody> --%>
 									<tr>
 										<td>hello</td>
 										<td>hello...............</td>
