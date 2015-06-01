@@ -30,7 +30,6 @@
     <![endif]-->
 	<script>
 		$(document).ready(function() {
-			alert("hello");
  			$.ajax({
 				url: "/Demand1/restful/Tickets.html",
 				type: "get",
@@ -163,7 +162,7 @@
 	          			</div>
 					</div>
 					
-					<div id="HistoryView">
+					<div id="HistoryView" style="display:none;">
 						<h2 class="sub-header">Update Profile</h2>
 	          			<div>
 	            			<table class="table table-striped">
@@ -178,7 +177,7 @@
 	          			</div>
 					</div>
 					
-					<div id="ProfileView">
+					<div id="ProfileView" style="display:none;">
 						<h2 class="sub-header">Update Profile</h2>
 	          			<div>
 	            			<table class="table table-striped">

@@ -183,7 +183,6 @@ public class RestfulController {
 											 @RequestParam("r_email") String email,
 											 @RequestParam("r_lastname") String lastname,
 											 @RequestParam("r_firstname") String firstname) {
-		
 		String result = userDetailsService.registerNewUser(username, password, email, lastname, firstname);
 		result = "[{\"result\":\"" + result + "\"}]";
 		return result;
@@ -200,14 +199,13 @@ public class RestfulController {
 	}
 	
 	//Update the user data
-	@RequestMapping(value="/auth/UpdatUser.html", method = RequestMethod.POST)
+	@RequestMapping(value="/auth/UpdateUser.html", method = RequestMethod.POST)
 	public @ResponseBody Person updateUser(@RequestParam("firstname") String firstname,
 								   @RequestParam("lastname") String lastname,
 								   @RequestParam("email") String email,
 								   @RequestParam("password") String password) {
 		//get current login user
 	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    
 		return userDetailsService.updateUserProfile(user.getUsername(), password, email, lastname, firstname);
 		
 	}

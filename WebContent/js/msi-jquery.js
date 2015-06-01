@@ -17,8 +17,9 @@
     
     function updateUser(){
     	var formData = {firstname : $("#firstName").val(), lastname : $("#lastName").val(), email : $("#email").val() , password : $("#password").val()};
+    	alert("test");
     	$.ajax({
-			url: "/Demand1/restful/UpdateUser.html",
+			url: "/Demand1/auth/UpdateUser.html",
 			type: "post",
 			data: formData,
 			dataType: "json",
@@ -26,7 +27,7 @@
 		});
     }
     
-    foo(data){
+    function foo(data){
     	alert("hello");
     }
     
