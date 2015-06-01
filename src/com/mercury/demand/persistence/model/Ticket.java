@@ -24,7 +24,7 @@ public class Ticket implements java.io.Serializable {
 	private Station from_loc;
 	private Station to_loc;
 	private int amount;
-	private int activate;
+	private boolean activate;
 	
     @Id
     @Column(name="ID", nullable = false)	
@@ -72,10 +72,10 @@ public class Ticket implements java.io.Serializable {
 		this.amount = amount;
 	}
     @Column(name="ACTIVATE", nullable = false)	
-	public int getActivate() {
+	public boolean getActivate() {
 		return activate;
 	}
-	public void setActivate(int activate) {
+	public void setActivate(boolean activate) {
 		this.activate = activate;
 	}
 

@@ -38,21 +38,17 @@ public class CustomUserDetailsService  implements UserDetailsService{
 		try {
 			Person person = pd.getPersonByUsername(username);
 
-			if(person.isEnabled()) {
-				Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-				authorities.add(new SimpleGrantedAuthority(person.getAuthority()));
-				user = new User(
-						person.getUsername(),
-						person.getPassword(),
-						true,
-						true,
-						true,
-						true,
-						authorities 
-					);
-			}
-			else
-				throw new UsernameNotFoundException("Error in retrieving user");
+			Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+			authorities.add(new SimpleGrantedAuthority(person.getAuthority()));
+			user = new User(
+					person.getUsername(),
+					person.getPassword(),
+					person.isEnabled(),
+					true,
+					true,
+					true,
+					authorities 
+			);
 		} catch (Exception e) {
 			logger.error("Error in retrieving user" + e.getMessage());
 			throw new UsernameNotFoundException("Error in retrieving user");

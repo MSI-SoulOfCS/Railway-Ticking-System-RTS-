@@ -23,5 +23,17 @@ public class ModUserDetailsService {
 	public Person getUserByUsername(String username) {
 		return pd.getPersonByUsername(username);
 	}
+	
+	public String registerNewUser(String username, String password, String email, String lastname, String firstname) {
+		return pd.registerNewUser(username, password, email, lastname, firstname);
+	}
+	
+	public String activateUser(String id) {
+		return pd.activateUser(id);
+	}
+	
+	public Person updateUserProfile(String username, String password, String email, String lastname, String firstname) {
+		return pd.updateUserProfile(username, password, email, lastname, firstname);
+	}
 }
 
