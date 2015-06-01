@@ -80,6 +80,18 @@ public class LoginController {
 		mav.setViewName("content/ticket");
 		return mav;
 	}
+	@RequestMapping(value="/payment/payment.html", method = RequestMethod.GET)
+	public ModelAndView payment(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("payment/payment");
+		return mav;
+	}
+	@RequestMapping(value="/payment/shoppingcart.html", method = RequestMethod.GET)
+	public ModelAndView shoppingcart(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("payment/shoppingcart");
+		return mav;
+	}
 	@RequestMapping(value="/account/account.html", method = RequestMethod.GET)
 	public ModelAndView account(HttpServletRequest request, ModelMap model) {
 		ModelAndView mav = new ModelAndView();
