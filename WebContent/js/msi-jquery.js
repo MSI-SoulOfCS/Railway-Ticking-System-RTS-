@@ -14,6 +14,22 @@
         $("body").append($form);
         $form.submit();
     }
+    
+    function updateUser(){
+    	var formData = {firstname : $("#firstName").val(), lastname : $("#lastName").val(), email : $("#email").val() , password : $("#password").val()};
+    	$.ajax({
+			url: "/Demand1/restful/UpdateUser.html",
+			type: "post",
+			data: formData,
+			dataType: "json",
+			success: foo
+		});
+    }
+    
+    foo(data){
+    	alert("hello");
+    }
+    
     function check(){
     	var formData=[];
     	$('#grid input[type=checkbox]:checked').each(function(){ 

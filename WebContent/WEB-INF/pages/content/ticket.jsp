@@ -18,7 +18,7 @@
     <script src="<c:url value="/js/jquery.bootgrid.js"/>"></script>
     <script src="<c:url value="/js/msi-jquery.js"/>"></script>
     <style>
-        .button {
+    .button {
 		display: inline-block;
 		outline: none;
 		cursor: pointer;

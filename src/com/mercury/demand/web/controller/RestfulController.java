@@ -200,7 +200,7 @@ public class RestfulController {
 	}
 	
 	//Update the user data
-	@RequestMapping(value="/restful/UpdatUser.html", method = RequestMethod.POST)
+	@RequestMapping(value="/restful/UpdateUser.html", method = RequestMethod.POST)
 	public @ResponseBody Person updateUser(@RequestParam("firstname") String firstname,
 								   @RequestParam("lastname") String lastname,
 								   @RequestParam("email") String email,
