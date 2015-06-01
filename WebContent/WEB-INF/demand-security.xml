@@ -45,7 +45,9 @@
   		<property name="filterProcessesUrl" value="/j_spring_security_check"/>
 	</bean> 
     <sec:authentication-manager alias="authenticationManager">
-        <sec:authentication-provider user-service-ref="customUserDetailsService" />
+        <sec:authentication-provider user-service-ref="customUserDetailsService">
+        	<sec:password-encoder hash="md5"/>
+        </sec:authentication-provider>
     </sec:authentication-manager>
    
 	<bean id="postSuccessAuthHandler" class="com.mercury.demand.security.PostSuccessfulAuthenticationHandler">

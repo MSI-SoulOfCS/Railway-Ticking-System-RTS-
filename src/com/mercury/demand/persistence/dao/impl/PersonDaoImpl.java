@@ -41,7 +41,7 @@ public class PersonDaoImpl implements PersonDao {
 		if(existUser == null) {
 			Person newUser = new Person();
 			newUser.setUsername(username);
-			newUser.setPassword(password);
+			newUser.setPassword(MagicCrypt.getInstance().MD5(password));
 			newUser.setEmail(email);
 			newUser.setFirstname(firstname);
 			newUser.setLastname(lastname);
