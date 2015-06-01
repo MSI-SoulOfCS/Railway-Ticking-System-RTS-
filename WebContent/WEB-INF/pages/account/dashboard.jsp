@@ -28,7 +28,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-	<script>
+	<script> 
 		$(document).ready(function() {
 			/* need to pass username from welcome */
 			var ID={"username":"qiushuidamowang"};
@@ -55,13 +55,13 @@
 			for (i=0;i<=23;i++){
 			    select += '<option val=' + addZeros(i) + '>' + addZeros(i) + '</option>';
 			}
-			$('#Hour').html(select);
+			$('#AT_Hour').html(select);
 			
 			var select = '';
 			for (i=0;i<=59;i++){
 			    select += '<option val=' + addZeros(i) + '>' + addZeros(i) + '</option>';
 			}
-			$('#Min').html(select);
+			$('#AT_Min').html(select);
 		});
 		
 		function showData(data) {
@@ -222,10 +222,10 @@
 	                  				<th>Password</th>
 	               				</tr>
 	               				<tr>
-	               					<td><input id="firstName" type="text"/></td>
-	               					<td><input id="lastName" type="text"/></td>
-	               					<td><input id="email" type="text"/></td>
-	               					<td><input id="password" type="password"/></td>
+	               					<td><input id="firstName" type="text" maxlength="20"/></td>
+	               					<td><input id="lastName" type="text"  maxlength="20"/></td>
+	               					<td><input id="email" type="text"  maxlength="50"/></td>
+	               					<td><input id="password" type="password"  maxlength="16"/></td>
 	               				</tr>
 	            			</table>
 	            			<button onclick="updateUser()" class="button orange">Submit</button>
@@ -249,24 +249,24 @@
 										</tr>	
 										
 										<tr>
-											<td><input type="text" style="height:24px" id="From" placeholder="from"></td>
-											<td><input type="text" style="height:24px" id="To" placeholder="to"></td>	
-											<td><input type="date" style="height:24px" id="Leave"></td>
+											<td><input type="text" style="height:24px" id="AT_From" placeholder="from"></td>
+											<td><input type="text" style="height:24px" id="AT_To" placeholder="to"></td>	
+											<td><input type="date" style="height:24px" id="AT_Date"></td>
 											<td>
-												<select id="Hour" style="height:24px">
+												<select id="AT_Hour" style="height:24px">
 												</select> : 
-												<select id="Min" style="height:24px">
+												<select id="AT_Min" style="height:24px">
 												</select>
 											</td>
 											<td>
-												<input type="text" style="height:24px" id="Amount" placeholder="amount">
+												<input type="text" style="height:24px" id="AT_Amount" value="0" placeholder="amount">
 											</td>
-											<td><input type="text" style="height:24px;width:70px;" id="Seat" placeholder="seat type"></td>
+											<td><input type="text" style="height:24px;width:70px;" id="AT_Seat" placeholder="seat type"></td>
 										</tr>
 									</table>
 									<br />
 					          </div>
-							<button onclick="" class="button orange">Add Ticket</button> 
+							<button onclick="addTicket()" class="button orange">Add Ticket</button> 
 							<br />
 							<br />
 	          			</div>

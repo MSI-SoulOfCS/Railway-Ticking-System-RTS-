@@ -21,6 +21,7 @@
     	<sec:intercept-url pattern="/welcome/**" access="permitAll" />
    		<sec:intercept-url pattern="/**" access="permitAll" />
    		<sec:intercept-url pattern="/restful/**" access="permitAll" />
+   		<sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
                 
         <sec:form-login 
         	login-page="/index.html" 

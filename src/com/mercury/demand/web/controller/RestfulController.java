@@ -26,6 +26,9 @@ import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
 import com.mercury.demand.service.StationDetailsService;
 import com.mercury.demand.service.TicketDetailsService;
+import com.redis.entity.RedisTicket;
+import com.redis.service.TicketService;
+import com.redis.service.impl.TicketServiceImpl;
 
 @Controller
 public class RestfulController {
@@ -37,6 +40,14 @@ public class RestfulController {
 	private TicketDetailsService ticketDetailsService;
 	@Autowired
 	private ModUserDetailsService userDetailsService;
+	
+	private TicketService ticketService;
+	
+	public RestfulController() {
+		ticketService = new TicketServiceImpl();
+	}
+	
+	
 
 	public StationDetailsService getStationDetailsService() {
 		return stationDetailsService;
@@ -142,6 +153,26 @@ public class RestfulController {
 			}
 		}
 		return ticketDetailsService.getAllTickets();
+	}
+	
+	//Add new ticket
+	@RequestMapping(value="/admin/NewTicket.html", method = RequestMethod.POST)
+	public @ResponseBody List<RedisTicket> addNewTicket(@RequestParam("From") String from,
+														@RequestParam("To") String to,
+														@RequestParam("Time") String time,
+														@RequestParam("Amount") int amount,
+														@RequestParam("Seat") String seatType) {
+		
+		System.out.println(from + " " + to + " " + time + " " + amount + " " + seatType);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		try {
+			Date date = dateFormat.parse(time);
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this.ticketService.getAllTicket();
 	}
 
 	//****************************************
