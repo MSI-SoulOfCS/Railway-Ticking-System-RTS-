@@ -57,8 +57,10 @@
                     <span class="icon-bar"></span>
                 </button>
                 <span class="navbar-brand" data-i18n="title">Ticket Results</span>
+          		<ul class="nav navbar-nav navbar-right">
+            		 <li><a href="/Demand1/">Home</a></li>
+          		</ul>
             </div>
-            
         </div>
     </header>
     
