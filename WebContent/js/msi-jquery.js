@@ -46,7 +46,17 @@
     	
     }
     /*Update user function end here*/
-    
+
+    /*This function use to load all tickets from db*/
+    function loadAllTicket() {
+    	$.ajax({
+			  url:"/Demand1/restful/Tickets.html",
+			  type:"GET",
+			  dataType:"json",
+			  success:reloadAllTicketAfterNewTicket
+		});
+    }
+    /*load all tickets function end here*/
     
     /*This function use to new a ticket*/
     function addTicket() {
@@ -62,10 +72,17 @@
     }
     
     function reloadAllTicketAfterNewTicket(data) {
-    	alert("ok");
+		var rows = "";
+		$("#ManageTicketTable").empty();
+		$(data).each(function(i,item) {
+			var d = new Date(item.date);
+			rows = "<tr><td>" + item.start + "</td><td>"+item.destination+"</td><td>"+
+			(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
+			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.amount +"</td><td>"+item.price+"</td></tr>";
+			$(rows).appendTo("#ManageTicketTable");
+		});
     }
-    /*new a ticket end function end here*/
-    
+    /*new a ticket function end here*/
     
     /*This function use to add ticket to cart*/
     function check(){

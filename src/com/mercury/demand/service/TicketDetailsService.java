@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mercury.demand.persistence.dao.TicketDao;
-import com.mercury.demand.persistence.model.Person;
 import com.mercury.demand.persistence.model.Ticket;
 
 @Service
@@ -29,8 +28,5 @@ public class TicketDetailsService {
 	
 	public List<Ticket> getPeroidTimeOfTikcets(String from, String to, Date fromDate, Date toDate) {
 		return hd.getTicketsInPeroidOfTime(from, to, fromDate, toDate);
-	}
-	public List<Ticket> getTicketByUser(Person user){
-		return hd.getTicketsByUser(user);
 	}
 }

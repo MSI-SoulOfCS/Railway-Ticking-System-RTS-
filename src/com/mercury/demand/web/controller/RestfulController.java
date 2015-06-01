@@ -90,11 +90,11 @@ public class RestfulController {
 	//****************************************
 	//***************Ticket*******************
 	//****************************************
+	
 	//Get all tickets
 	@RequestMapping(value="/restful/Tickets.html", method = RequestMethod.GET)
-	public @ResponseBody List<Ticket> getTicketsByUser(@RequestParam("username") String username) {
-		Person user=userDetailsService.getUserByUsername(username);
-		return ticketDetailsService.getTicketByUser(user);
+	public @ResponseBody List<RedisTicket> getTicketsByUser() {
+		return ticketService.getAllTicket()	;
 	}
 	
 	//Get tickets during a period of time
@@ -199,6 +199,12 @@ public class RestfulController {
 	@RequestMapping(value="/auth/History.html", method = RequestMethod.GET)
 	public @ResponseBody List<History> getAllHistory() {
 		return historyDetailsService.getAllHistory();
+	}
+	
+	@RequestMapping(value="/auth/UserHistory.html", method = RequestMethod.GET)
+	public @ResponseBody List<Ticket> getUserHistory() {
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return historyDetailsService.getTicketsHistoryByUser(userDetailsService.getUserByUsername(user.getUsername()));
 	}
 	
 	//****************************************
