@@ -49,9 +49,9 @@
 			var rows = "";
 			$("#users").empty();
 			$(data).each(function(i, item) {
-				var user_id = item.id;
-				var user_name = item.station;
-				rows = "<tr><td>" + user_id + "</td><td>" + user_name + "</td></tr>";
+				var station_id = item.id;
+				var station_name = item.station;
+				rows = "<tr><td>" + station_id + "</td><td>" + station_name + "</td></tr>";
 				$(rows).appendTo("#users");
 			});
 		}

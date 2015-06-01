@@ -173,9 +173,6 @@ public class RestfulController {
 	//Get a certain user by username
 	@RequestMapping(value="/auth/GetUser.html", method = RequestMethod.POST)
 	public @ResponseBody Person getCertainUserByUsername(@RequestParam("username") String username) {
-		//get current login user
-//	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//	    System.out.println(user.getUsername()); //get logged in username
 		return userDetailsService.getUserByUsername(username);
 	}
 		
@@ -200,6 +197,19 @@ public class RestfulController {
 		mav.setViewName("content/activation");
 		mav.addObject("Result", userDetailsService.activateUser(id));
 		return mav;
+	}
+	
+	//Update the user data
+	@RequestMapping(value="/restful/UpdatUser.html", method = RequestMethod.POST)
+	public @ResponseBody Person updateUser(@RequestParam("firstname") String firstname,
+								   @RequestParam("lastname") String lastname,
+								   @RequestParam("email") String email,
+								   @RequestParam("password") String password) {
+		//get current login user
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    
+		return userDetailsService.updateUserProfile(user.getUsername(), password, email, lastname, firstname);
+		
 	}
 	
 }

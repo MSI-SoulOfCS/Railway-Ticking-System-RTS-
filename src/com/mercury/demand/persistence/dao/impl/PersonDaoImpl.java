@@ -75,6 +75,20 @@ public class PersonDaoImpl implements PersonDao {
 		return "This account is invalid. Please register an account.";
 		//return "Your account is activated";
 	}
+
+	@Override
+	public Person updateUserProfile(String username, String password,
+			String email, String lastname, String firstname) {
+		// TODO Auto-generated method stub
+		Person updateUser = this.getPersonByUsername(username);
+		updateUser.setUsername(username);
+		updateUser.setPassword(password);
+		updateUser.setEmail(email);
+		updateUser.setFirstname(firstname);
+		updateUser.setLastname(lastname);
+		sessionFactory.getCurrentSession().update(updateUser);
+		return updateUser;
+	}
 	
 
 

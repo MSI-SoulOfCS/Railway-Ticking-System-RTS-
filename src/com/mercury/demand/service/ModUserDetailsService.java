@@ -31,5 +31,9 @@ public class ModUserDetailsService {
 	public String activateUser(String id) {
 		return pd.activateUser(id);
 	}
+	
+	public Person updateUserProfile(String username, String password, String email, String lastname, String firstname) {
+		return pd.updateUserProfile(username, password, email, lastname, firstname);
+	}
 }
 
