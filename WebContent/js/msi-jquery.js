@@ -200,9 +200,9 @@
 				"GA,Appling County,Amtrak Station"
 		    ];
 		    $( "#To" ).autocomplete({
-		      source: availableTags
+		    	source: availableTags
 		    });
 		    $( "#From" ).autocomplete({
-			      source: availableTags
+			    source: availableTags
 			});
 	});

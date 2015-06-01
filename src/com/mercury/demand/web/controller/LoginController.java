@@ -2,6 +2,7 @@ package com.mercury.demand.web.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,6 +74,7 @@ public class LoginController {
 			   				   @RequestParam("To") String to,
 			   				   @RequestParam("Time") String time, 
 			 				   ModelMap model) {
+		System.out.println("From:"+from+" To:"+to+" Date:"+time);
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String[] DateAndTime = time.split("/");
@@ -124,8 +126,7 @@ public class LoginController {
 					e.printStackTrace();
 				}				
 			}
-		}
-		
+		};
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("content/ticket");
 		mav.addObject("resultTickets", result);

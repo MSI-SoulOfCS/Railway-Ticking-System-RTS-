@@ -13,15 +13,15 @@
 
     <title>Dashboard Template for Bootstrap</title>
 
-    <!-- Bootstrap core CSS -->
-    
+    <!-- Bootstrap core CSS -->    
 	 <link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">   
-
     <!-- Custom styles for this template -->
     <link href="<c:url value="/css/dashboard.css" />" rel="stylesheet">
-    
+    <link rel="stylesheet" href="<c:url value="/css/jquery-ui.css"/>">    
     
     <script src="<c:url value="/js/jquery-1.11.1.min.js" />"></script>
+   	<script src="<c:url value="/js/jquery-ui.js"/>"></script>
+  	<script src="<c:url value="/js/msi-jquery.js"/>"></script>
 	
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -43,6 +43,22 @@
 				var viewTag = event.target.id + "View";
 				$("#"+viewTag).show();
 			});
+
+			function addZeros(n) {
+				  return (n < 10)? '0' + n : '' + n;
+			}		
+			
+			var select = '';
+			for (i=0;i<=23;i++){
+			    select += '<option val=' + addZeros(i) + '>' + addZeros(i) + '</option>';
+			}
+			$('#Hour').html(select);
+			
+			var select = '';
+			for (i=0;i<=59;i++){
+			    select += '<option val=' + addZeros(i) + '>' + addZeros(i) + '</option>';
+			}
+			$('#Min').html(select);
 		});
 		
 		function showData(data) {
@@ -70,6 +86,9 @@
 			$("#MyTripView").hide();
 			$("#HistoryView").hide();
 			$("#ProfileView").hide();
+			
+			$("#ManageTicket").parent().removeClass("active");
+			$("#ManageTicketView").hide();
 		}
 	</script>
 	<script src="<c:url value="/js/msi-jquery.js" />"></script>
@@ -99,14 +118,14 @@
 			-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
 			box-shadow: 0 1px 2px rgba(0,0,0,.2);
 		}
-	.orange {
-		color: #fef4e9;
-		border: solid 1px #da7c0c;
-		background: #f78d1d;
-		background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
-		background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
-		filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
-	}
+		.orange {
+			color: #fef4e9;
+			border: solid 1px #da7c0c;
+			background: #f78d1d;
+			background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+			background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+		}
 	</style>
   </head>
 
@@ -145,7 +164,7 @@
             			<li>			   <a id="Profile" href="#Profile">Profile</a>
           			</sec:authorize>
           			<sec:authorize access="hasRole('ROLE_ADMIN')">
-            			<li class="active"><a id="History" href="#History">Tickets Info</a></li>
+            			<li class="active"><a id="ManageTicket" href="#ManageTicket">Manage Ticket</a></li>
           			</sec:authorize>	
           		</ul>
         	</div>
@@ -209,29 +228,47 @@
 	               					<td><input id="password" type="password"/></td>
 	               				</tr>
 	            			</table>
-	            			<button onclick="updateUser()" class="button orange">Search Ticket</button>
+	            			<button onclick="updateUser()" class="button orange">Submit</button>
 	          			</div>
 					</div>
 				<!-- ADMIN -->	
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<div id="ticketInfo">
-						<h2 class="sub-header">Tickets Info</h2>
+					<div id="ManageTicketView">
+						<h2 class="sub-header">Ticket Management</h2>
 	          			<div class="table-responsive">
-	          				<table class="table table-striped">
-	              				<thead>
-	                				<tr>
-	                  					<th>ID</th>
-	                  					<th>From</th>
-	                  					<th>To</th>
-	                  					<th>Date</th>
-	                  					<th>Amount</th>
-	                  					<th>Availability</th>
-	               					</tr>
-	              				</thead>
-	              					<tbody id="tickets">
-				  					</tbody>
-	            			</table>
+					          <div align="left">
+									<table>
+										<tr>
+											<td align="left">From:</td>
+											<td align="left">To:</td>
+											<td align="left">Leave:</td>
+											<td align="left">Time:</td>
+											<td align="left">Amount:</td>
+											<td align="left">SeatType:</td>
+										</tr>	
+										
+										<tr>
+											<td><input type="text" style="height:24px" id="From" placeholder="from"></td>
+											<td><input type="text" style="height:24px" id="To" placeholder="to"></td>	
+											<td><input type="date" style="height:24px" id="Leave"></td>
+											<td>
+												<select id="Hour" style="height:24px">
+												</select> : 
+												<select id="Min" style="height:24px">
+												</select>
+											</td>
+											<td>
+												<input type="text" style="height:24px" id="Amount" placeholder="amount">
+											</td>
+											<td><input type="text" style="height:24px;width:70px;" id="Seat" placeholder="seat type"></td>
+										</tr>
+									</table>
+									<br />
+					          </div>
+							<button onclick="" class="button orange">Add Ticket</button> 
+							<br />
+							<br />
 	          			</div>
 					</div>
 				</sec:authorize>
