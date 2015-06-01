@@ -69,6 +69,20 @@ public class LoginController {
 		return mav;
 	}	
 	
+	/*@RequestMapping(value="/payment/payment.html",method=RequestMethod.POST)
+	public ModelAndView payment(@RequestParam("From") String from,
+								@RequestParam("To") String to,
+								@RequestParam("Time") String time,
+								@RequestParam("Amount") String amount,
+								@RequestParam("Price") String price){
+		List<Ticket> result;
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("payment/payment");
+		mav.addObject("purchasedTickets", result);
+
+		return mav;
+	}*/
+	
 	@RequestMapping(value="/content/ticket.html", method = RequestMethod.POST)
 	public ModelAndView ticket(@RequestParam("From") String from, 
 			   				   @RequestParam("To") String to,
@@ -134,18 +148,20 @@ public class LoginController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/payment/payment.html", method = RequestMethod.GET)
-	public ModelAndView payment(HttpServletRequest request, ModelMap model) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("payment/payment");
-		return mav;
-	}
 	@RequestMapping(value="/payment/shoppingcart.html", method = RequestMethod.GET)
 	public ModelAndView shoppingcart(HttpServletRequest request, ModelMap model) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("payment/shoppingcart");
 		return mav;
 	}	
+	
+	@RequestMapping(value="/payment/successCheckOut.html", method = RequestMethod.GET)
+	public ModelAndView successCheckOut(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("payment/successCheckOut");
+		return mav;
+	}	
+	
 	
 	@RequestMapping(value="/auth/user.html", method = RequestMethod.GET)
 	public ModelAndView account(HttpServletRequest request, ModelMap model) {
