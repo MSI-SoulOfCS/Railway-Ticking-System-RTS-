@@ -245,6 +245,7 @@
 											<td align="left">Leave:</td>
 											<td align="left">Time:</td>
 											<td align="left">Amount:</td>
+											<td align="left">Price:</td>
 											<td align="left">SeatType:</td>
 										</tr>	
 										
@@ -259,8 +260,9 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" style="height:24px" id="AT_Amount" value="0" placeholder="amount">
+												<input type="text" style="height:24px;width:70px;" id="AT_Amount" value="0" placeholder="amount">
 											</td>
+											<td><input type="text" style="height:24px;width:70px;" value="0" id="AT_Price" placeholder="Price"></td>
 											<td><input type="text" style="height:24px;width:70px;" id="AT_Seat" placeholder="seat type"></td>
 										</tr>
 									</table>

@@ -33,7 +33,7 @@ public class TicketServiceTest
 	}
 
 	
-	@Test
+	//@Test
 	public void addTicket() 
 	{
 		String[] seats = new String[100];
@@ -255,7 +255,7 @@ public class TicketServiceTest
 	
 	}
 	
-	//@Test
+	@Test
 	public void testGetAllTicket()
 	{
 		List<RedisTicket> tickets = service.getAllTicket();
@@ -286,5 +286,6 @@ public class TicketServiceTest
 					t.getPrice() + ":" + t.getActive() + ":" + 
 					t.isAvailable());
 		}
+		
 	}
 }

@@ -40,5 +40,28 @@ public class RelationConverter
 				request.getSeatNo() + RedisRequest.REQUEST_SPLITER + 
 				DateFormatUtil.dateToString(request.getDate());
 	}
+	
+	public static String[] seatGenerator(String type,int amount)
+	{
+		if(amount <=0)
+			return null;
+		
+		String[] seats = new String[amount];
+		for(int i=0;i<amount;i++)
+		{
+			if(i<10)
+			{
+				seats[i] = type + "00" + (i+1);
+			}
+			else if(i<100)
+			{
+				seats[i] = type + "0" + (i+1);
+			}
+			else 
+				seats[i] = type + (i+1);
+		}
+		
+		return seats;
+	}
 
 }
