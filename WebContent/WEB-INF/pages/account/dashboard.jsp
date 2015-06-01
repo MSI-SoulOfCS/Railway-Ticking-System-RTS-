@@ -31,14 +31,14 @@
 	<script> 
 		$(document).ready(function() {
 			/* need to pass username from welcome */
-			var ID={"username":"qiushuidamowang"};
+/*			var ID={"username":"qiushuidamowang"};
  			$.ajax({
 				url: "/Demand1/restful/Tickets.html",
 				type: "get",
 				data: ID,
 				dataType: "json",
 				success:showData
-			});
+			});*/
 			
 			$("#navigation-menu li a").on("click", function(event){
 				removeActiveClass();
@@ -47,6 +47,8 @@
 				$("#"+viewTag).show();
 			});
 
+			
+			//This block use to admin page
 			function addZeros(n) {
 				  return (n < 10)? '0' + n : '' + n;
 			}		
@@ -62,9 +64,12 @@
 			    select += '<option val=' + addZeros(i) + '>' + addZeros(i) + '</option>';
 			}
 			$('#AT_Min').html(select);
+			
+			//This block use to load ticket list in admin page
+			loadAllTicket();
 		});
 		
-		function showData(data) {
+/*		function showData(data) {
 			var rows = "";
 			$("#tickets").empty();
 			$(data).each(function(i,item) {
@@ -77,7 +82,7 @@
 				+"	"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"</td><td>"+ticket_price+"</td></tr>";
 				$(rows).appendTo("#tickets");
 			});
-		}
+		}*/
 		
 		function removeActiveClass() {
 			$("#MyTrip").parent().removeClass("active");
@@ -272,6 +277,23 @@
 							<br />
 							<br />
 	          			</div>
+	          			<div class="table-responsive">
+					          <div align="left">
+									<table class="table table-striped">
+										<tr>
+											<th align="left" >From:</th>
+											<th align="left" >To:</th>
+											<th align="left" >Leave:</th>
+											<th align="left" >Amount:</th>
+											<th align="left" >Price:</th>
+										</tr>	
+										
+	               						<tbody id="ManageTicketTable">
+				  						</tbody>
+									</table>
+									<br />
+					          </div>
+						</div>
 					</div>
 				</sec:authorize>
 			</div>
