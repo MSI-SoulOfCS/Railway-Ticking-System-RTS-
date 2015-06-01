@@ -68,6 +68,8 @@ public class LoginController {
 		return mav;
 	}	
 	
+	
+	
 	@RequestMapping(value="/content/ticket.html", method = RequestMethod.POST)
 	public ModelAndView ticket(@RequestParam("From") String from, 
 			   				   @RequestParam("To") String to,
@@ -145,6 +147,14 @@ public class LoginController {
 		mav.setViewName("payment/shoppingcart");
 		return mav;
 	}	
+	
+	@RequestMapping(value="/payment/successCheckOut.html", method = RequestMethod.GET)
+	public ModelAndView successCheckOut(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("payment/successCheckOut");
+		return mav;
+	}	
+	
 	
 	@RequestMapping(value="/auth/user.html", method = RequestMethod.GET)
 	public ModelAndView account(HttpServletRequest request, ModelMap model) {

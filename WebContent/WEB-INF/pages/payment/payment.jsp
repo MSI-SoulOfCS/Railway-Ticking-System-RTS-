@@ -17,18 +17,15 @@
 			<h1>Payment Page</h1>
 		</div>
 	
-		<div id="wrap">
+		 <div id="wrap">
 			<div id="accordian">
-				<div class="step" id="step1">
-					<div class="number">
-						<span>1</span>
-					</div>
+				<!-- <div class="step" id="step1">
 					<div class="title">
-						<h1>Email Address</h1>
+						<h1>Summary</h1>
 					</div>
 				</div>
 				<div>
-					<div class="content" id="email">
+					<div class="content" id="summary">
 						<form class="go-right">
 							<div>
 		        				<input type="email" name="email" value="" id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/>
@@ -38,11 +35,23 @@
 							<button class="create">Create Account</button>
 						</form>
 						<a class="continue" href="#step2">Continue</a>
+						<form class="go-right">
+							<table>
+								<thead>
+									<tr>
+										<th>Tickets</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</form>
 					</div>
-				</div>
+				</div> -->
 				<div class="step" id="step2">
 					<div class="number">
-						<span>2</span>
+						<span>1</span>
 					</div>
 					<div class="title">
 						<h1>Billing Information</h1>
@@ -51,22 +60,22 @@
 				<div class="content" id="address">
 					<form class="go-right">
 						<div>
-							<input type="text" name="first_name" value="" id="first_name" placeholder="John" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your First Name"/>
+							<input type="text" name="first_name" value="" id="first_name" placeholder="first name" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your First Name"/>
 				        </div>
 						<div>
-							<input type="text" name="last_name" value="" id="last_name" placeholder="Smith" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your Last Name"/>
+							<input type="text" name="last_name" value="" id="last_name" placeholder="last name" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your Last Name"/>
 						</div>
 						<div>
-							<input type="text" name="telephone" value="" id="telephone" placeholder="(555)-867-5309" data-trigger="change" data-validation-minlength="1" data-type="number" data-required="true" data-error-message="Enter Your Telephone Number"/>
+							<input type="text" name="telephone" value="" id="telephone" placeholder="phone number" data-trigger="change" data-validation-minlength="1" data-type="number" data-required="true" data-error-message="Enter Your Telephone Number"/>
 						</div>
 						<div>
-							<input type="text" name="company" value="" id="company" placeholder="Company" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="false"/>
+							<input type="text" name="company" value="" id="company" placeholder="company" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="false"/>
 						</div>
 						<div>
-							<input type="text" name="address" value="" id="address" placeholder="123 Main Street" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Billing Address"/>
+							<input type="text" name="address" value="" id="address" placeholder="address" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Billing Address"/>
 						</div>
 						<div>
-							<input type="text" name="city" value="" id="city" placeholder="Everytown" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Billing City"/>
+							<input type="text" name="city" value="" id="city" placeholder="city" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Billing City"/>
 						</div>
 						<div>
 							<div class="state_options">
@@ -81,7 +90,7 @@
 			          		</div>
 						</div>
 						<div>
-							<input type="text" name="zip" value="" id="zip" placeholder="12345" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Billing Zip Code"/>
+							<input type="text" name="zip" value="" id="zip" placeholder="zip code" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Billing Zip Code"/>
 						</div>
 						<div>
 							<div class="country_options">
@@ -100,7 +109,7 @@
 				</div>
 				<div class="step" id="step3">
 					<div class="number">
-						<span>3</span>
+						<span>2</span>
 					</div>
 					<div class="title">
 						<h1>Payment Information</h1>
@@ -171,11 +180,11 @@
 							<p class="security info">What, well you mean like a date? Doc? Am I to understand you're still hanging around with Doctor Emmett Brown, McFly? Tardy slip for you, Miss Parker. And one for you McFly I believe that makes four in a row. Now let me give you a nickle's worth of advice, young man. This so called Doctor Brown is dangerous, he's a real nuttcase.</p>
 						</div>
 					</div>
-					<a class="continue" href="#step4">Continue</a>
+					<a class="continue" href="#">Proceed to checkout</a>
 				</div>
 				<div class="step" id="step4">
 					<div class="number">
-						<span>4</span>
+						<span>3</span>
 					</div>
 					<div class="title">
 						<h1>Finalize Order</h1>
@@ -184,26 +193,38 @@
 				<div class="content" id="final_products">
 					<div class="left" id="ordered">
 						<div class="products">
-							<div class="product_image">
-							<!-- TODO -->
-							</div>
 							<div class="product_details">
-								<span class="product_name">Cherry Bikini</span>
+								<!-- <span class="product_name">Cherry Bikini</span>
 								<span class="quantity">1</span>
-								<span class="price">$45.00</span>
+								<span class="price">$45.00</span> -->
+								<table>
+									<tr>
+										<th>Product name</th>
+										<th>Quantity</th>
+										<th>Price</th>
+									</tr>
+									<tr>
+										<td>hello</td>
+										<td>hello...............</td>
+										<td>hello</td>
+									</tr>
+									<tr>
+										<td>hellosssssssssssssssssssss</td>
+										<td>hello...............</td>
+										<td>hellossssssssssssssssssssssssssss</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 						<div class="totals">
-							<span class="subtitle">Subtotal <span id="sub_price">$45.00</span></span>
-							<span class="subtitle">Tax <span id="sub_tax">$2.00</span></span>
-							<span class="subtitle">Shipping <span id="sub_ship">$4.00</span></span>
+							
 						</div>
 						<div class="final">
 							<span class="title">Total <span id="calculated_total">$51.00</span></span>
 						</div>
 					</div>
-					<div class="right" id="reviewed">
-						<div class="billing">
+					 <div class="right" id="reviewed">
+						<!-- <div class="billing">
 							<span class="title">Billing:</span>
 							<div class="address_reviewed">
 								<span class="name">John Smith</span>
@@ -211,19 +232,19 @@
 								<span class="location">Everytown, USA, 12345</span>
 								<span class="phone">(123)867-5309</span>
 							</div>
-						</div>
-						<div class="payment">
+						</div> -->
+						<!-- <div class="payment">
 							<span class="title">Payment:</span>
 							<div class="payment_reviewed">
 								<span class="method">Visa</span>
 								<span class="number_hidden">xxxx-xxxx-xxxx-1111</span>
 							</div>
-						</div>
+						</div> -->
 						<div id="complete">
-							<a class="big_button" id="complete" href="#">Complete Order</a>
+							<a class="big_button" id="complete" href="/Demand1/payment/successCheckOut.html">Complete Order</a>
 							<span class="sub">By selecting this button you agree to the purchase and subsequent payment for this order.</span> 
 						</div>
-					</div>
+					</div> 
 				</div>
 			</div>
 		</div>

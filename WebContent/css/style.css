@@ -327,11 +327,12 @@ form.go-right input:focus + label.same{
   margin-left: 10%;
 }
 #accordian .products .product_details{
-  width:70%;
+  width:100%;
   display: table;
   vertical-align: middle;
+  text-align: left;
 }
-#accordian .products .product_details span{
+#accordian .products .product_details table{
   display:table-cell;
   vertical-align: middle;
   margin-top:30%;
