@@ -8,19 +8,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mercury.demand.persistence.model.History;
-import com.mercury.demand.persistence.model.Person;
-import com.mercury.demand.persistence.model.Station;
 import com.mercury.demand.persistence.model.Ticket;
 import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
@@ -74,73 +68,19 @@ public class LoginController {
 		return mav;
 	}	
 	
-	@RequestMapping(value="/content/ticket.html", method = RequestMethod.GET)
-	public ModelAndView ticket(HttpServletRequest request, ModelMap model) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("content/ticket");
-		return mav;
-	}
-	@RequestMapping(value="/payment/payment.html", method = RequestMethod.GET)
-	public ModelAndView payment(HttpServletRequest request, ModelMap model) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("payment/payment");
-		return mav;
-	}
-	@RequestMapping(value="/payment/shoppingcart.html", method = RequestMethod.GET)
-	public ModelAndView shoppingcart(HttpServletRequest request, ModelMap model) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("payment/shoppingcart");
-		return mav;
-	}
-	@RequestMapping(value="/account/account.html", method = RequestMethod.GET)
-	public ModelAndView account(HttpServletRequest request, ModelMap model) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("account/dashboard");
-		return mav;
-	}	
-	@RequestMapping(value="/content/main.html", method = RequestMethod.GET)
-	public ModelAndView mainPage() {	
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("content/hello");
-		mav.addObject("title", "Hello, welcome to Customized Spring Security");
-		return mav;
-	}
-	
-	
-	//****************************************
-	//************RESTFUL PART API************
-	//****************************************
-	
-	//****************************************
-	//***************Station******************
-	//****************************************
-	//Get all stations
-	@RequestMapping(value="/restful/Stations.html", method = RequestMethod.GET)
-	public @ResponseBody List<Station> getAllStations() {
-		return stationDetailsService.getAllStations();
-	}
-	
-	//****************************************
-	//***************Ticket*******************
-	//****************************************
-	//Get all tickets
-	@RequestMapping(value="/restful/Tickets.html", method = RequestMethod.GET)
-	public @ResponseBody List<Ticket> getAllTickets() {
-		return ticketDetailsService.getAllTickets();
-	}
-	
-	//Get tickets during a period of time
-	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
-	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 
-																 @RequestParam("To") String to,
-																 @RequestParam("Time") String time) {
-		System.out.println("From:"+from+" To:"+to+" Date:"+time);
+	@RequestMapping(value="/content/ticket.html", method = RequestMethod.POST)
+	public ModelAndView ticket(@RequestParam("From") String from, 
+			   				   @RequestParam("To") String to,
+			   				   @RequestParam("Time") String time, 
+			 				   ModelMap model) {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String[] DateAndTime = time.split("/");
 		String[] HourTime = DateAndTime[1].split("-");
 		Date firstDate;
 		Date secondDate;
+		
+		List<Ticket> result = ticketDetailsService.getAllTickets();
 		if(!DateAndTime[0].equals("")) {
 			if(DateAndTime[1].equals("Anytime")) {
 				try {
@@ -148,7 +88,7 @@ public class LoginController {
 					firstDate = dateFormat.parse(timestamp);
 					timestamp = DateAndTime[0] + " 23:59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);
+					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -165,7 +105,7 @@ public class LoginController {
 						timestamp = DateAndTime[0] + " 23:59:59.0";
 
 					secondDate = dateFormat.parse(timestamp);
-					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -178,44 +118,46 @@ public class LoginController {
 
 					timestamp = DateAndTime[0] + " " + HourTime[0] + ":59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+					result = ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}				
 			}
 		}
-		return ticketDetailsService.getAllTickets();
-	}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("content/ticket");
+		mav.addObject("resultTickets", result);
 
-	//****************************************
-	//***************History******************
-	//****************************************	
-	//Get all history
-	@RequestMapping(value="/auth/History.html", method = RequestMethod.GET)
-	public @ResponseBody List<History> getAllHistory() {
-		return historyDetailsService.getAllHistory();
+		return mav;
 	}
 	
-	//****************************************
-	//***************Users*******************
-	//****************************************
-	//Get a certain user by username
-	@RequestMapping(value="/auth/GetUser.html", method = RequestMethod.POST)
-	public @ResponseBody Person getCertainUserByUsername(@RequestParam("username") String username) {
-		//get current login user
-	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    System.out.println(user.getUsername()); //get logged in username
-		return userDetailsService.getUserByUsername(username);
+	@RequestMapping(value="/payment/payment.html", method = RequestMethod.GET)
+	public ModelAndView payment(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("payment/payment");
+		return mav;
 	}
-		
-	//Register a user
-	@RequestMapping(value="/restful/RegisterUser.html", method = RequestMethod.POST)
-	public @ResponseBody String registerUser(@RequestParam("r_username") String username,
-											 @RequestParam("r_password") String password,
-											 @RequestParam("r_email") String email,
-											 @RequestParam("r_lastname") String lastname,
-											 @RequestParam("r_firstname") String firstname) {
-		return "{}";
+	@RequestMapping(value="/payment/shoppingcart.html", method = RequestMethod.GET)
+	public ModelAndView shoppingcart(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("payment/shoppingcart");
+		return mav;
+	}	
+	
+	@RequestMapping(value="/auth/user.html", method = RequestMethod.GET)
+	public ModelAndView account(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("account/dashboard");
+		return mav;
+	}
+	
+	@RequestMapping(value="/content/main.html", method = RequestMethod.GET)
+	public ModelAndView mainPage() {	
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("content/hello");
+		mav.addObject("title", "Hello, welcome to Customized Spring Security");
+		return mav;
 	}
 }
