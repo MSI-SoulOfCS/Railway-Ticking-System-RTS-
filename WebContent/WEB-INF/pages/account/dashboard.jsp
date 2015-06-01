@@ -30,7 +30,6 @@
     <![endif]-->
 	<script>
 		$(document).ready(function() {
-			alert("hello");
  			$.ajax({
 				url: "/Demand1/restful/Tickets.html",
 				type: "get",
@@ -75,22 +74,31 @@
 	</script>
 	<script src="<c:url value="/js/msi-jquery.js" />"></script>
 	<style>
+		.alert {
+			color: red;
+			background: #fdf1e5;
+			font-size: 10px;
+			line-height: 16px;
+			width: 200px;
+			margin: 10;
+			position: relative;
+		}
 		.button {
-		display: inline-block;
-		outline: none;
-		cursor: pointer;
-		text-align: center;
-		text-decoration: none;
-		font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
-		padding: .5em 2em .55em;
-		text-shadow: 0 1px 1px rgba(0,0,0,.3);
-		-webkit-border-radius: .5em; 
-		-moz-border-radius: .5em;
-		border-radius: .5em;
-		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-		box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	}
+			display: inline-block;
+			outline: none;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			font: 16px/100% 'Microsoft yahei',Arial, Helvetica, sans-serif;
+			padding: .5em 2em .55em;
+			text-shadow: 0 1px 1px rgba(0,0,0,.3);
+			-webkit-border-radius: .5em; 
+			-moz-border-radius: .5em;
+			border-radius: .5em;
+			-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+			-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+			box-shadow: 0 1px 2px rgba(0,0,0,.2);
+		}
 	.orange {
 		color: #fef4e9;
 		border: solid 1px #da7c0c;
@@ -163,7 +171,7 @@
 	          			</div>
 					</div>
 					
-					<div id="HistoryView">
+					<div id="HistoryView" style="display:none">
 						<h2 class="sub-header">Update Profile</h2>
 	          			<div>
 	            			<table class="table table-striped">
@@ -178,9 +186,15 @@
 	          			</div>
 					</div>
 					
-					<div id="ProfileView">
+					<div id="ProfileView" style="display:none">
 						<h2 class="sub-header">Update Profile</h2>
 	          			<div>
+							<div class="alert" style="display:none;" id="v_email">
+								<p>Email is invalid</p>
+							</div>
+							<div class="alert" style="display:none;" id="v_password">
+								<p>Password is length must be between 8 to 16 charactors</p>
+							</div>
 	            			<table class="table table-striped">
 	                			<tr>
 	                  				<th>FirstName</th>
@@ -192,7 +206,7 @@
 	               					<td><input id="firstName" type="text"/></td>
 	               					<td><input id="lastName" type="text"/></td>
 	               					<td><input id="email" type="text"/></td>
-	               					<td><input id="password" type="text"/></td>
+	               					<td><input id="password" type="password"/></td>
 	               				</tr>
 	            			</table>
 	            			<button onclick="updateUser()" class="button orange">Search Ticket</button>
@@ -224,7 +238,6 @@
 			</div>
 		</div>
     </div>
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

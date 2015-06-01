@@ -16,18 +16,31 @@
     }
     
     function updateUser(){
-    	var formData = {firstname : $("#firstName").val(), lastname : $("#lastName").val(), email : $("#email").val() , password : $("#password").val()};
-    	$.ajax({
-			url: "/Demand1/restful/UpdateUser.html",
-			type: "post",
-			data: formData,
-			dataType: "json",
-			success: foo
-		});
+  		$('#v_email').hide();
+  		$("#v_password").hide();
+  		var flag=true;
+  		if(!IsEmail($("#email").val())){
+  			$("#v_email").show();
+  			flag=false;
+  		}
+  		if($("#password").val().length<8||$("#password").val().length>16){
+  			$("#v_password").show();
+  			flag=false;
+  		}
+  		if(flag){
+  			var formData = {firstname : $("#firstName").val(), lastname : $("#lastName").val(), email : $("#email").val() , password : $("#password").val()};
+  	    	$.ajax({
+  				url: "/Demand1/restful/UpdateUser.html",
+  				type: "post",
+  				data: formData,
+  				dataType: "json",
+  				success: foo
+  			});
+  		}
     }
     
-    foo(data){
-    	alert("hello");
+    function foo(data){
+    	
     }
     
     function check(){
@@ -57,6 +70,7 @@
 			window.location = "#failure_addToCart";
 		}
 	}
+	
 	function ticket(){
         url_redirect({url: "/Demand1/content/ticket.html",
            			  method: "post",
