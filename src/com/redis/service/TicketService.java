@@ -6,6 +6,7 @@ import java.util.List;
 import com.redis.entity.CartItem;
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
+import com.redis.entity.Transaction;
 
 
 
@@ -83,4 +84,14 @@ public interface TicketService
 	 * get cart item by user id
 	 */
 	public List<CartItem> getCartItem(String userId);
+	
+	public Transaction stringToTransaction(String transactionInfo);
+	
+	public List<Transaction> getAllTransaction();
+	
+	/*
+	 * get all of the transaction from redis and delete the transaction
+	 * after insert the value into the Oracle
+	 */
+	public List<Transaction> getAllTransactionAndDelete();
 }

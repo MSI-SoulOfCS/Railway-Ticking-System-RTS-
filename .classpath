@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="C:/OpenSource/JarFiles/Redis/jedis-2.1.0.jar/jedis-2.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/OpenSource/JarFiles/Redis/commons-pool-1.5.4.jar/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/OpenSource/JarFiles/JDBC/Oracle/ojdbc14.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
