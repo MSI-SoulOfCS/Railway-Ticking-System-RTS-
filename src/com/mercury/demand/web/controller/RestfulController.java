@@ -110,15 +110,17 @@ public class RestfulController {
 	
 	//Get tickets during a period of time
 	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
-	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 
-																 @RequestParam("To") String to,
-															 @RequestParam("Time") String time) {
+	public @ResponseBody List<RedisTicket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 
+																 	  @RequestParam("To") String to,
+																 	  @RequestParam("Time") String time) {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String[] DateAndTime = time.split("/");
 		String[] HourTime = DateAndTime[1].split("-");
 		Date firstDate;
 		Date secondDate;
+		
+		List<RedisTicket> result = null;
 		if(!DateAndTime[0].equals("")) {
 			if(DateAndTime[1].equals("Anytime")) {
 				try {
@@ -126,7 +128,7 @@ public class RestfulController {
 					firstDate = dateFormat.parse(timestamp);
 					timestamp = DateAndTime[0] + " 23:59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);
+					result = this.ticketService.searchTicket(from, to, firstDate, secondDate);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -143,7 +145,7 @@ public class RestfulController {
 						timestamp = DateAndTime[0] + " 23:59:59.0";
 
 					secondDate = dateFormat.parse(timestamp);
-					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+					result = this.ticketService.searchTicket(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -156,14 +158,17 @@ public class RestfulController {
 
 					timestamp = DateAndTime[0] + " " + HourTime[0] + ":59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
+					result = this.ticketService.searchTicket(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}				
 			}
 		}
-		return ticketDetailsService.getAllTickets();
+		else {
+			result = this.ticketService.getAllTicket();
+		}
+		return result;
 	}
 	
 	//Add new ticket
@@ -282,10 +287,11 @@ public class RestfulController {
 	
 	@RequestMapping(value="/auth/CheckOut.html", method = RequestMethod.POST)
 	public @ResponseBody String checkOut(@RequestBody CartItem[] data) {
-		
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 		for(CartItem item : data) 
 		{
-			ticketService.transactionCompleteWithPool(item.getItemId());
+//			ticketService.transactionCompleteWithPool(item.getItemId());
 		}
 		
 		return null;
