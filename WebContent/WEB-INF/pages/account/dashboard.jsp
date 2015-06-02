@@ -64,13 +64,15 @@
 			for (i=0;i<=23;i++){
 			    select += '<option val=' + addZeros(i) + '>' + addZeros(i) + '</option>';
 			}
-			$('#Hour').html(select);
+			$('#AT_Hour').html(select);
 			
 			var select = '';
 			for (i=0;i<=59;i++){
 			    select += '<option val=' + addZeros(i) + '>' + addZeros(i) + '</option>';
 			}
-			$('#Min').html(select);
+			$('#AT_Min').html(select);
+			
+			loadAllTicket();
 		});
 		
 		function calculate(){
@@ -294,9 +296,45 @@
 							</div>
 						</div>	
 					</div>
-				<!-- ADMIN -->	
 				</sec:authorize>
+				<!-- ADMIN -->	
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<!-- Hidden no use table -->
+						<div style="display:none">
+	          				<table id="grid" class="table table-striped">
+	                			<tr>
+	                  				<th>From</th>
+	                  				<th>To</th>
+	                  				<th>Date</th>
+	                  				<th>Price</th>
+	               				</tr>
+	               				<tr>
+	               					<td>NJ</td>
+	               					<td>IL</td>
+	               					<td>17-MAY-2015</td>
+	               					<td>100</td>
+	               					<td><input id="check" type="checkbox" checked="checked" onclick="calculate()"/></td>
+	               				</tr>
+	               				<tr>
+	               					<td>NJ</td>
+	               					<td>CA</td>
+	               					<td>18-MAY-2015</td>
+	               					<td>200</td>
+	               					<td><input id="check" type="checkbox" checked="checked" onclick="calculate()"/></td>
+	               				</tr>
+	            			</table>
+	          			</div>
+	          			<div align="right" style="display:none">
+							<div class='checkout'>
+								<div><b>Subtotal:</b><span id="subtotal" class="sum js-subtotal">$32.86</span></div>
+								<div><b>Taxes (5%):</b><span id="taxes" class='sum js-taxes'>$1.64</span></div>
+								<div><b>Total:</b><span id="total" class='sum js-total'>$39.50</span></div>
+								<div><button onclick="" class="button orange">Checkout</button></div>
+							</div>
+						</div>	
+						<!-- Hidden no use table -->
+						
+						
 					<div id="ManageTicketView">
 						<h2 class="sub-header">Ticket Management</h2>
 	          			<div class="table-responsive">
@@ -308,31 +346,48 @@
 											<td align="left">Leave:</td>
 											<td align="left">Time:</td>
 											<td align="left">Amount:</td>
+											<td align="left">Price:</td>
 											<td align="left">SeatType:</td>
 										</tr>	
 										
 										<tr>
-											<td><input type="text" style="height:24px" id="From" placeholder="from"></td>
-											<td><input type="text" style="height:24px" id="To" placeholder="to"></td>	
-											<td><input type="date" style="height:24px" id="Leave"></td>
+											<td><input type="text" style="height:24px" id="AT_From" placeholder="from"></td>
+											<td><input type="text" style="height:24px" id="AT_To" placeholder="to"></td>	
+											<td><input type="date" style="height:24px" id="AT_Date"></td>
 											<td>
-												<select id="Hour" style="height:24px">
+												<select id="AT_Hour" style="height:24px">
 												</select> : 
-												<select id="Min" style="height:24px">
+												<select id="AT_Min" style="height:24px">
 												</select>
 											</td>
-											<td>
-												<input type="text" style="height:24px" id="Amount" placeholder="amount">
-											</td>
-											<td><input type="text" style="height:24px;width:70px;" id="Seat" placeholder="seat type"></td>
+											<td><input type="text" style="height:24px" id="AT_Amount" placeholder="amount"></td>
+											<td><input type="text" style="height:24px;width:70px;" id="AT_Price" placeholder="price"></td>
+											<td><input type="text" style="height:24px;width:70px;" id="AT_Seat" placeholder="seat type"></td>
 										</tr>
 									</table>
 									<br />
 					          </div>
-							<button onclick="" class="button orange">Add Ticket</button> 
+							<button onclick="addTicket()" class="button orange">Add Ticket</button> 
 							<br />
 							<br />
 	          			</div>
+	          			<div class="table-responsive">
+					          <div align="left">
+									<table class="table table-striped">
+										<tr>
+											<th align="left" >From:</th>
+											<th align="left" >To:</th>
+											<th align="left" >Leave:</th>
+											<th align="left" >Amount:</th>
+											<th align="left" >Price:</th>
+										</tr>	
+										
+	               						<tbody id="ManageTicketTable">
+				  						</tbody>
+									</table>
+									<br />
+					          </div>
+						</div>
 					</div>
 				</sec:authorize>
 			</div>

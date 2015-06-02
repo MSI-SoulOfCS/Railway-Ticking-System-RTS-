@@ -166,7 +166,7 @@ public class RestfulController {
 	}
 	
 	//Add new ticket
-	@RequestMapping(value="/admin/NewTicket.html", method = RequestMethod.POST)
+	@RequestMapping(value="/admin/NewTicket.html", method = RequestMethod.GET)
 	public @ResponseBody List<RedisTicket> addNewTicket(@RequestParam("From") String from,
 														@RequestParam("To") String to,
 														@RequestParam("Time") String time,
@@ -243,7 +243,12 @@ public class RestfulController {
 				
 				request.setUserId(username);
 				RedisRequest returnedRequest = ticketService.buyTicket(request, ticketKey);
-				
+				if(returnedRequest != null) {
+					System.out.println(returnedRequest.getTicketKey());
+				}
+				else {
+					System.out.println(returnedRequest.getTicketKey());					
+				}
 			}
 			catch(Exception e) {
 				e.printStackTrace();
