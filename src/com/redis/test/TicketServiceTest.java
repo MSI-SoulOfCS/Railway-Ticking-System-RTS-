@@ -2,6 +2,7 @@ package com.redis.test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -34,7 +35,7 @@ public class TicketServiceTest
 	}
 
 	
-	//@Test
+	@Test
 	public void addTicket() 
 	{
 		String[] seats = new String[30];
@@ -296,7 +297,7 @@ public class TicketServiceTest
 		
 	}
 	
-	@Test
+	//@Test
 	public void testGetCartItem()
 	{
 		List<CartItem> items = service.getCartItem("wangwu@gmail.com");
@@ -311,5 +312,19 @@ public class TicketServiceTest
 					+ "seat no:" + item.getSeatNo() + " - "
 					+ "add time" + item.getAddTime());
 		}
+	}
+	
+	//@Test
+	public void testRemoveItem()
+	{
+		List<CartItem> items = service.getCartItem("wangwu@gmail.com");
+		List<String> keys = new ArrayList<String>();
+		
+		for(CartItem item:items)
+		{
+			keys.add(item.getItemId());
+		}
+		
+		service.removeCartItem(keys.get(1));
 	}
 }

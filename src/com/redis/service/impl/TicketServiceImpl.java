@@ -268,6 +268,36 @@ public class TicketServiceImpl implements TicketService
 		}
 		RedisUtil.close();
 	}
+	
+	@Override
+	public void removeCartItem(String requestKey) 
+	{
+		Jedis jedis = RedisUtil.getJedis();
+		
+		String[] arr = requestKey.split(RedisRequest.REQUEST_SPLITER);
+		String userId = arr[0];
+		String addTime = arr[1];
+		
+		List<String> values = jedis.lrange(userId, 0, -1);
+		
+		for(String str:values)
+		{
+			String[] ar = str.split(RedisRequest.REQUEST_SPLITER);
+			String ticketId = ar[0];
+			String seatNo = ar[1];
+			
+			if(str.indexOf(addTime) != -1)
+			{				
+				jedis.lrem(RedisRequest.REQUEST_LIST_NAME, 
+						1, requestKey);
+				
+				jedis.lrem(userId, 1, str);
+				jedis.rpush(RelationConverter.ticketSeatsGenerator(ticketId),seatNo);
+				break;
+			}
+		}
+		RedisUtil.close();	
+	}
 
 
 	@Override
@@ -463,6 +493,43 @@ public class TicketServiceImpl implements TicketService
 		
 		RedisUtil.close();
 		return items;
+	}
+
+
+
+
+	@Override
+	public void enableTicket(String ticketKey) 
+	{
+		Jedis jedis = RedisUtil.getJedis();
+		
+		jedis.hset(ticketKey, RedisTicket.ACTIVE, "true");
+		
+		RedisUtil.close();	
+	}
+
+
+	@Override
+	public void disableTicket(String ticketKey) 
+	{
+		Jedis jedis = RedisUtil.getJedis();
+		
+		jedis.hset(ticketKey, RedisTicket.ACTIVE, "false");
+		
+		RedisUtil.close();		
+	}
+
+
+	@Override
+	public void removeTicket(String ticketKey) 
+	{
+		Jedis jedis = RedisUtil.getJedis();
+		
+		jedis.lrem(RedisTicket.TICKET_POOL_NAME, 1, ticketKey);
+		jedis.del(ticketKey);
+		jedis.del(RelationConverter.ticketSeatsGenerator(ticketKey));
+		
+		RedisUtil.close();
 	}
 
 }

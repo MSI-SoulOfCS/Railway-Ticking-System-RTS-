@@ -24,6 +24,15 @@ public interface TicketService
 	public void adminAddTicket(RedisTicket ticket);
 	
 	/*
+	 * remove ticket
+	 */
+	public void removeTicket(String ticketKey);
+	
+	public void enableTicket(String ticketKey);
+	
+	public void disableTicket(String ticketKey);
+	
+	/*
 	 * 1. add a request to request queue
 	 *    value is user_id and date specify to milli-second
 	 * 2. add record to user_id list
@@ -47,6 +56,8 @@ public interface TicketService
 	public void cartExpire(int expireTimeByMinute);
 	
 	public void removeCartItem(RedisRequest request,String seatNo);
+	
+	public void removeCartItem(String requestKey);
 	
 	public void ticketExpire();
 	public void returnBackTicket(RedisTicket ticket,String seatNo);
