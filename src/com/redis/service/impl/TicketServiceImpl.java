@@ -9,6 +9,7 @@ import redis.clients.jedis.Jedis;
 
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
+import com.redis.entity.Transaction;
 import com.redis.service.TicketService;
 import com.redis.util.DateFormatUtil;
 import com.redis.util.RedisUtil;
@@ -32,6 +33,7 @@ public class TicketServiceImpl implements TicketService
 		 */
 		jedis.hset(key, RedisTicket.ACTIVE, ticket.getActive());
 		jedis.hset(key, RedisTicket.PRICE, ticket.getPrice());
+		jedis.hset(key, RedisTicket.AMOUNT, Integer.valueOf(ticket.getAmount()).toString());
 		
 		/*
 		 * set the seats id for seats pool
@@ -329,6 +331,7 @@ public class TicketServiceImpl implements TicketService
 			ticket.setDestination(arr[1]);
 			ticket.setDate(DateFormatUtil.stringToDateBlur(arr[2]));
 			
+			int amount = Integer.parseInt(jedis.hget(ticketKey, RedisTicket.AMOUNT));
 			boolean available = false;
 			long avaiNumber = jedis.llen(RelationConverter.ticketSeatsGenerator(ticketKey));
 			
@@ -337,12 +340,73 @@ public class TicketServiceImpl implements TicketService
 				available = true;
 			}
 			
+			ticket.setAmount(amount);
+			ticket.setAvaiNumber(avaiNumber);
 			ticket.setAvailable(available);
 			ticket.setActive(jedis.hget(ticketKey, RedisTicket.ACTIVE));
 			ticket.setPrice(jedis.hget(ticketKey, RedisTicket.PRICE));
 		}
 		
 		return ticket;
+	}
+
+
+	@Override
+	public void transactionCompleteWithPool(String keyAndDate) 
+	{
+		Jedis jedis = RedisUtil.getJedis();
+		
+		/*
+		 * remove the record from request list
+		 * keyAndDate: userId + splitter + request time
+		 */
+		jedis.lrem(RedisRequest.REQUEST_LIST_NAME, 1, keyAndDate);
+		
+		String[] arr = keyAndDate.split(RedisRequest.REQUEST_SPLITER);
+		String key = arr[0];
+		String date = arr[1];
+		
+		List<String> values = jedis.lrange(key, 0, -1);
+		
+		String ticketId = "";
+		String seatNo = "";
+		
+		/*
+		 * remove the item that make transaction from cart 
+		 */
+		for(String str:values)
+		{
+			if(str.indexOf(date) != -1)
+			{
+				/*
+				 * get request info
+				 */
+				String[] tempArr = str.split(RedisRequest.REQUEST_SPLITER);
+				ticketId = tempArr[0];
+				seatNo = tempArr[1];
+				
+				jedis.lrem(key, 1, str);
+				break;
+			}
+		}
+		
+		/*
+		 * add the transaction to transaction pool
+		 * userid | ticketid | seatNo| date 
+		 */
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(key);
+		buffer.append(Transaction.TRANSACTION_INFO_SPLITTER);
+		buffer.append(ticketId);
+		buffer.append(Transaction.TRANSACTION_INFO_SPLITTER);
+		buffer.append(seatNo);
+		buffer.append(Transaction.TRANSACTION_INFO_SPLITTER);
+		buffer.append(DateFormatUtil.dateToString(new Date()));
+		
+		jedis.rpush(Transaction.TRANSACTION_POOL_NAME, buffer.toString());
+		
+		RedisUtil.close();
+		
 	}
 
 }

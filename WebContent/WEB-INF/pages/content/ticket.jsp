@@ -3,6 +3,9 @@
 
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -91,7 +94,6 @@
                             <th data-column-id="price" data-order="asc">Price</th>
                             <th data-column-id="date" data-type="date">Date</th>
                             <th data-column-id="checkbox">Select</th>
-         					<th data-column-id="amount">Amount</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,15 +102,18 @@
 								<td>${ticket.start }</td>
 								<td>${ticket.destination}</td>
 								<td>${ticket.price}</td>
-								<td>${ticket.date}</td>
+								<td><fmt:formatDate value="${ticket.date}" type="both" pattern="yyyy-MM-dd HH:mm" /></td>
 								<td><input id="check" type="checkbox"/></td>
-								<td><input id="amount" type=text size="1" onkeypress='keyboardValidate(event)' maxlength="4" value="0"/></td>
 							</tr>
 						</c:forEach>
                     </tbody>
                 </table>
-                <button id="addToCart" name="addToCart" onclick="check()" class="button orange">Add to Cart</button>
-            	<button id="goToMyCart" name="goToMyCart" onclick="#" class="button orange">Go to My Cart</button>
+                <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+                	<button id="addToCart" name="addToCart" onclick="check()" class="button orange">Add to Cart</button>
+                </sec:authorize>
+                <sec:authorize access="isAnonymous()">
+            		<button id="goToMyCart" name="goToMyCart" onclick="#" class="button orange">Go back to login</button>
+            	</sec:authorize>
             </div>
         </div>
     </div>

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.mercury.demand.persistence.dao.HistoryDao;
 import com.mercury.demand.persistence.model.History;
+import com.mercury.demand.persistence.model.Person;
+import com.mercury.demand.persistence.model.Ticket;
 
 @Service
 public class HistoryDetailsService {
@@ -23,5 +25,9 @@ public class HistoryDetailsService {
 	
 	public List<History> getAllHistory(){
 		return hd.getAllHistory();
+	}
+	
+	public List<Ticket> getTicketsHistoryByUser(Person user) {
+		return hd.getTicketsHistoryByUser(user);
 	}
 }

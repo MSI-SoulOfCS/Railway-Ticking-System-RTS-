@@ -8,18 +8,26 @@ public class CartEntity implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer ticket_id;
-	private Integer amount;
-	public Integer getTicket_id() {
-		return ticket_id;
+	private String from;
+	private String to;
+	private String time;
+	public String getFrom() {
+		return from;
 	}
-	public void setTicket_id(Integer ticket_id) {
-		this.ticket_id = ticket_id;
+	public void setFrom(String from) {
+		this.from = from;
 	}
-	public Integer getAmount() {
-		return amount;
+	public String getTo() {
+		return to;
 	}
-	public void setAmount(Integer amount) {
-		this.amount = amount;
+	public void setTo(String to) {
+		this.to = to;
 	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
 }

@@ -15,6 +15,8 @@
         $form.submit();
     }
     
+    /*This function use to update user data*/
+    
     function updateUser(){
   		$('#v_email').hide();
   		$("#v_password").hide();
@@ -42,15 +44,55 @@
     function foo(data){
     	
     }
+    /*Update user function end here*/
+
+    /*This function use to load all tickets from db*/
+    function loadAllTicket() {
+    	$.ajax({
+			  url:"/Demand1/restful/Tickets.html",
+			  type:"GET",
+			  dataType:"json",
+			  success:reloadAllTicketAfterNewTicket
+		});
+    }
+    /*load all tickets function end here*/
     
+    /*This function use to new a ticket*/
+    function addTicket() {
+    	if($("#AT_From").val().length > 0 && $("#AT_To").val().length > 0 && $("#AT_Date").val().length > 0 && $("#AT_Seat").val().length > 0)
+			var formData = {From : $("#AT_From").val(), To : $("#AT_To").val(), Time : $("#AT_Date").val()+" "+$("#AT_Hour").val()+":"+$("#AT_Min").val(), Amount : $("#AT_Amount").val(), Price: $("#AT_Price").val(), Seat : $("#AT_Seat").val()};
+  	    	$.ajax({
+  				url: "/Demand1/admin/NewTicket.html",
+  				type: "post",
+  				data: formData,
+  				dataType: "json",
+  				success: reloadAllTicketAfterNewTicket
+  			});    	
+    }
+    
+    function reloadAllTicketAfterNewTicket(data) {
+		var rows = "";
+		$("#ManageTicketTable").empty();
+		$(data).each(function(i,item) {
+			var d = new Date(item.date);
+			rows = "<tr><td>" + item.start + "</td><td>"+item.destination+"</td><td>"+
+			(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
+			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.amount +"</td><td>"+item.price+"</td></tr>";
+			$(rows).appendTo("#ManageTicketTable");
+		});
+    }
+    /*new a ticket function end here*/
+    
+    /*This function use to add ticket to cart*/
     function check(){
     	var formData=[];
     	$('#grid input[type=checkbox]:checked').each(function(){ 
 			var row = $(this).parent().parent();
 			var rowcells = row.find('td');
 			var item = {};
-			item["ticket_id"] = $(rowcells[0]).html();
-			item["amount"] = $(rowcells[6]).find('input').val();
+			item["from"] = $(rowcells[0]).html();
+			item["to"] = $(rowcells[1]).html();
+			item["time"] =$(rowcells[3]).html();
 			formData.push(item);
 		});
     	$.ajax({
@@ -70,13 +112,17 @@
 			window.location = "#failure_addToCart";
 		}
 	}
+	/*add to cart function end here*/
 	
+	/*This function use to query ticket from db*/
 	function ticket(){
         url_redirect({url: "/Demand1/content/ticket.html",
            			  method: "post",
              		  data: {"From":$("#From").val(), "To":$("#To").val(), "Time":$("#Leave").val()+"/"+$("#At").val()}
 		});
 	}
+	/*Ticket query function end here*/
+	
 	
 	function loginValidation() {
 		$("#usernameAndPasswordReq").hide();
@@ -203,6 +249,12 @@
 		    	source: availableTags
 		    });
 		    $( "#From" ).autocomplete({
+			    source: availableTags
+			});
+		    $( "#AT_To" ).autocomplete({
+		    	source: availableTags
+		    });
+		    $( "#AT_From" ).autocomplete({
 			    source: availableTags
 			});
 	});

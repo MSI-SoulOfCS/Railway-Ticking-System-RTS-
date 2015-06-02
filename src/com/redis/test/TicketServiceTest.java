@@ -33,22 +33,23 @@ public class TicketServiceTest
 	}
 
 	
-	@Test
+	//@Test
 	public void addTicket() 
 	{
-		String[] seats = new String[100];
+		String[] seats = new String[30];
 		
-		for(int i=1;i<=100;i++)
+		for(int i=1;i<=30;i++)
 		{
 			seats[i-1] = "X" + i;
 		}
 		
 		RedisTicket ticket = new RedisTicket();
 	
-		ticket.setStart("FL,Orlando,Orlando Amtrak Train Station");
-		ticket.setDestination("MA,Boston,Haymarket Station");
-		ticket.setDate(DateFormatUtil.stringToDateBlur("201506011630"));
+		ticket.setStart("beijing");
+		ticket.setDestination("xining");
+		ticket.setDate(DateFormatUtil.stringToDateBlur("201505291023"));
 		ticket.setActive("true");
+		ticket.setAmount(30);
 		ticket.setPrice("200");
 		ticket.setSeats(seats);
 		
@@ -60,7 +61,7 @@ public class TicketServiceTest
 		
 	}
 	
-	//@Test
+	@Test
 	public void testBuyTicket()
 	{
 		RedisRequest request = new RedisRequest();
@@ -101,7 +102,7 @@ public class TicketServiceTest
 	//@Test
 	public void testBuyTicketMultiThread()
 	{
-		//final Random random = new Random();
+		final Random random = new Random();
 		
 		for(int i=0;i<600;i++)
 		{
@@ -122,6 +123,8 @@ public class TicketServiceTest
 						
 						if(r != null)
 						{
+							//Thread.sleep(1000*random.nextInt(10));
+							service.transactionCompleteWithPool(RelationConverter.requestKeyGenerator(r));
 							System.out.println(r.getUserId() + "---" + 
 									r.getTicketKey() + "---" + 
 									r.getSeatNo() + "---" + 
@@ -255,17 +258,20 @@ public class TicketServiceTest
 	
 	}
 	
-	//@Test
+	@Test
 	public void testGetAllTicket()
 	{
 		List<RedisTicket> tickets = service.getAllTicket();
 		
 		for(RedisTicket t:tickets)
 		{
-			System.out.println(t.getStart() + ":" + 
-					t.getDestination() + ":" + t.getDate() + ":" +
-					t.getPrice() + ":" + t.getActive() + ":" + 
-					t.isAvailable());
+			System.out.println("start:" + t.getStart() + "---" 
+					+ "destination:" + t.getDestination() + "---"
+					+ "price" + t.getPrice() + "----"
+					+ "amount" + t.getAmount() + "----"
+					+ "available number" + t.getAvaiNumber() + "----"
+					+ "date:" + t.getDate() + "----"
+					+ "active:" + t.getActive() + "----");
 		}
 	}
 	
@@ -286,5 +292,12 @@ public class TicketServiceTest
 					t.getPrice() + ":" + t.getActive() + ":" + 
 					t.isAvailable());
 		}
+		
+	}
+	
+	//@Test
+	public void testGetTickets()
+	{
+		
 	}
 }

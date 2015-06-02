@@ -9,13 +9,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.demand.persistence.model.CartEntity;
 import com.mercury.demand.persistence.model.Ticket;
 import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
@@ -35,6 +40,12 @@ public class LoginController {
 	private TicketDetailsService ticketDetailsService;
 	@Autowired
 	private ModUserDetailsService userDetailsService;
+	
+	private TicketService ticketService;
+	
+	public LoginController() {
+		ticketService = new TicketServiceImpl();
+	}
 
 	public StationDetailsService getStationDetailsService() {
 		return stationDetailsService;
@@ -83,8 +94,6 @@ public class LoginController {
 			   				   @RequestParam("Time") String time, 
 			 				   ModelMap model) {
 		System.out.println("From:"+from+" To:"+to+" Date:"+time);
-
-		TicketService ticketService = new TicketServiceImpl();
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String[] DateAndTime = time.split("/");
@@ -117,7 +126,7 @@ public class LoginController {
 						timestamp = DateAndTime[0] + " 23:59:59.0";
 
 					secondDate = dateFormat.parse(timestamp);
-					result = ticketService.searchTicket(from, to, firstDate, secondDate);			
+					result = this.ticketService.searchTicket(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -130,7 +139,7 @@ public class LoginController {
 
 					timestamp = DateAndTime[0] + " " + HourTime[0] + ":59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					result = ticketService.searchTicket(from, to, firstDate, secondDate);			
+					result = this.ticketService.searchTicket(from, to, firstDate, secondDate);			
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -138,7 +147,7 @@ public class LoginController {
 			}
 		}
 		else {
-			result = ticketService.getAllTicket();
+			result = this.ticketService.getAllTicket();
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("content/ticket");
@@ -174,6 +183,34 @@ public class LoginController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("content/hello");
 		mav.addObject("title", "Hello, welcome to Customized Spring Security");
+		return mav;
+	}
+	
+	@RequestMapping(value="/auth/cart.html", method = RequestMethod.POST, headers = {"Content-type=application/json"})
+	public ModelAndView addTicketToCart(@RequestBody CartEntity[] data) {
+		
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String username = user.getUsername();
+		System.out.println(username+" buy following tickets:");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		for(CartEntity entity : data) {
+			try 
+			{
+				Date date = dateFormat.parse(entity.getTime());
+				String from = entity.getFrom();
+				String to = entity.getTo();
+				System.out.println(date);
+				System.out.println(from);
+				System.out.println(to);
+				System.out.println("------------");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("account/dashboard");
 		return mav;
 	}
 }

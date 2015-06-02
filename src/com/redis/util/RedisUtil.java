@@ -17,7 +17,7 @@ public class RedisUtil
 	static
 	{
 		
-		config.setMaxActive(500);
+		config.setMaxActive(5000);
 		config.setMaxIdle(5);
 		config.setMaxWait(200*1000);
 		

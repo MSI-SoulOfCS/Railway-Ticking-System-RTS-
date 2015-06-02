@@ -26,6 +26,11 @@ import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
 import com.mercury.demand.service.StationDetailsService;
 import com.mercury.demand.service.TicketDetailsService;
+import com.redis.entity.RedisRequest;
+import com.redis.entity.RedisTicket;
+import com.redis.service.TicketService;
+import com.redis.service.impl.TicketServiceImpl;
+import com.redis.util.RelationConverter;
 
 @Controller
 public class RestfulController {
@@ -37,6 +42,14 @@ public class RestfulController {
 	private TicketDetailsService ticketDetailsService;
 	@Autowired
 	private ModUserDetailsService userDetailsService;
+	
+	private TicketService ticketService;
+	
+	public RestfulController() {
+		ticketService = new TicketServiceImpl();
+	}
+	
+	
 
 	public StationDetailsService getStationDetailsService() {
 		return stationDetailsService;
@@ -78,19 +91,19 @@ public class RestfulController {
 	//****************************************
 	//***************Ticket*******************
 	//****************************************
+	
 	//Get all tickets
 	
 	@RequestMapping(value="/restful/Tickets.html", method = RequestMethod.GET)
-	public @ResponseBody List<Ticket> getTicketsByUser(@RequestParam("username") String username) {
-		Person user=userDetailsService.getUserByUsername(username);
-		return ticketDetailsService.getTicketByUser(user);
+	public @ResponseBody List<RedisTicket> getTicketsByUser() {
+		return ticketService.getAllTicket()	;
 	}
 	
 	//Get tickets during a period of time
 	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
 	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 
 																 @RequestParam("To") String to,
-																 @RequestParam("Time") String time) {
+															 @RequestParam("Time") String time) {
 		System.out.println("From:"+from+" To:"+to+" Date:"+time);
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -144,6 +157,41 @@ public class RestfulController {
 		}
 		return ticketDetailsService.getAllTickets();
 	}
+	
+	//Add new ticket
+	@RequestMapping(value="/admin/NewTicket.html", method = RequestMethod.POST)
+	public @ResponseBody List<RedisTicket> addNewTicket(@RequestParam("From") String from,
+														@RequestParam("To") String to,
+														@RequestParam("Time") String time,
+														@RequestParam("Amount") int amount,
+														@RequestParam("Price") double price,
+														@RequestParam("Seat") String seatType){
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		try 
+		{
+			Date date = dateFormat.parse(time);
+			
+			RedisTicket ticket = new RedisTicket();
+			ticket.setStart(from);
+			ticket.setDestination(to);
+			ticket.setDate(date);
+			ticket.setPrice(Double.valueOf(price).toString());
+			ticket.setAmount(amount);
+			ticket.setAvailable(true);
+			ticket.setActive("true");
+			
+			ticket.setSeats(RelationConverter.seatGenerator(seatType, amount));
+			
+			ticketService.adminAddTicket(ticket);
+		} 
+		catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this.ticketService.getAllTicket();
+	}
 
 	//****************************************
 	//***************History******************
@@ -154,14 +202,45 @@ public class RestfulController {
 		return historyDetailsService.getAllHistory();
 	}
 	
+	@RequestMapping(value="/auth/UserHistory.html", method = RequestMethod.GET)
+	public @ResponseBody List<Ticket> getUserHistory() {
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return historyDetailsService.getTicketsHistoryByUser(userDetailsService.getUserByUsername(user.getUsername()));
+	}
+	
 	//****************************************
 	//***************Cart*********************
 	//****************************************		
 	@RequestMapping(value="/auth/AddCart.html", method = RequestMethod.POST, headers = {"Content-type=application/json"})
 	public @ResponseBody String addTicketToUser(@RequestBody CartEntity[] data) {
 
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String username = user.getUsername();
+		System.out.println(username+" buy following tickets:");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		for(CartEntity entity : data) {
-			System.out.println(entity.getTicket_id() + " " + entity.getAmount());
+			try 
+			{
+				Date date = dateFormat.parse(entity.getTime());
+				String from = entity.getFrom();
+				String to = entity.getTo();
+				
+				RedisTicket ticket = new RedisTicket();
+				ticket.setStart(from);
+				ticket.setDestination(to);
+				ticket.setDate(date);
+				
+				String ticketKey = RelationConverter.ticketKeyGenerator(ticket);
+				
+				RedisRequest request = new RedisRequest(); 
+				
+				request.setUserId(username);
+				RedisRequest returnedRequest = ticketService.buyTicket(request, ticketKey);
+				
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return "[{\"result\":\"" + "yes" + "\"}]";
