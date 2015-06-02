@@ -26,6 +26,7 @@ public class RedisTicket
 	private String[] seats;
 	private boolean available;
 	private int amount;
+	private long avaiNumber;
 	
 	public RedisTicket(){}
 	
@@ -101,4 +102,13 @@ public class RedisTicket
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+
+	public long getAvaiNumber() {
+		return avaiNumber;
+	}
+
+	public void setAvaiNumber(long avaiNumber) {
+		this.avaiNumber = avaiNumber;
+	}
+
 }

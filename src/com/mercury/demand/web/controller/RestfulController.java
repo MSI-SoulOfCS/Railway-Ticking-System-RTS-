@@ -26,6 +26,7 @@ import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
 import com.mercury.demand.service.StationDetailsService;
 import com.mercury.demand.service.TicketDetailsService;
+import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
 import com.redis.service.TicketService;
 import com.redis.service.impl.TicketServiceImpl;
@@ -101,7 +102,7 @@ public class RestfulController {
 	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
 	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 
 																 @RequestParam("To") String to,
-																 @RequestParam("Time") String time) {
+															 @RequestParam("Time") String time) {
 		System.out.println("From:"+from+" To:"+to+" Date:"+time);
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
@@ -222,10 +223,19 @@ public class RestfulController {
 				Date date = dateFormat.parse(entity.getTime());
 				String from = entity.getFrom();
 				String to = entity.getTo();
-				System.out.println(date);
-				System.out.println(from);
-				System.out.println(to);
-				System.out.println("------------");
+				
+				RedisTicket ticket = new RedisTicket();
+				ticket.setStart(from);
+				ticket.setDestination(to);
+				ticket.setDate(date);
+				
+				String ticketKey = RelationConverter.ticketKeyGenerator(ticket);
+				
+				RedisRequest request = new RedisRequest(); 
+				
+				request.setUserId(username);
+				RedisRequest returnedRequest = ticketService.buyTicket(request, ticketKey);
+				
 			}
 			catch(Exception e) {
 				e.printStackTrace();

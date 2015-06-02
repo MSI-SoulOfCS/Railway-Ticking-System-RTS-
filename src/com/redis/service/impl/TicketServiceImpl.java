@@ -331,6 +331,7 @@ public class TicketServiceImpl implements TicketService
 			ticket.setDestination(arr[1]);
 			ticket.setDate(DateFormatUtil.stringToDateBlur(arr[2]));
 			
+			int amount = Integer.parseInt(jedis.hget(ticketKey, RedisTicket.AMOUNT));
 			boolean available = false;
 			long avaiNumber = jedis.llen(RelationConverter.ticketSeatsGenerator(ticketKey));
 			
@@ -339,6 +340,8 @@ public class TicketServiceImpl implements TicketService
 				available = true;
 			}
 			
+			ticket.setAmount(amount);
+			ticket.setAvaiNumber(avaiNumber);
 			ticket.setAvailable(available);
 			ticket.setActive(jedis.hget(ticketKey, RedisTicket.ACTIVE));
 			ticket.setPrice(jedis.hget(ticketKey, RedisTicket.PRICE));

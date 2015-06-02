@@ -33,7 +33,7 @@ public class TicketServiceTest
 	}
 
 	
-	@Test
+	//@Test
 	public void addTicket() 
 	{
 		String[] seats = new String[30];
@@ -46,9 +46,10 @@ public class TicketServiceTest
 		RedisTicket ticket = new RedisTicket();
 	
 		ticket.setStart("beijing");
-		ticket.setDestination("baotou");
+		ticket.setDestination("xining");
 		ticket.setDate(DateFormatUtil.stringToDateBlur("201505291023"));
 		ticket.setActive("true");
+		ticket.setAmount(30);
 		ticket.setPrice("200");
 		ticket.setSeats(seats);
 		
@@ -60,7 +61,7 @@ public class TicketServiceTest
 		
 	}
 	
-	//@Test
+	@Test
 	public void testBuyTicket()
 	{
 		RedisRequest request = new RedisRequest();
@@ -257,17 +258,20 @@ public class TicketServiceTest
 	
 	}
 	
-	//@Test
+	@Test
 	public void testGetAllTicket()
 	{
 		List<RedisTicket> tickets = service.getAllTicket();
 		
 		for(RedisTicket t:tickets)
 		{
-			System.out.println(t.getStart() + ":" + 
-					t.getDestination() + ":" + t.getDate() + ":" +
-					t.getPrice() + ":" + t.getActive() + ":" + 
-					t.isAvailable());
+			System.out.println("start:" + t.getStart() + "---" 
+					+ "destination:" + t.getDestination() + "---"
+					+ "price" + t.getPrice() + "----"
+					+ "amount" + t.getAmount() + "----"
+					+ "available number" + t.getAvaiNumber() + "----"
+					+ "date:" + t.getDate() + "----"
+					+ "active:" + t.getActive() + "----");
 		}
 	}
 	
@@ -288,6 +292,12 @@ public class TicketServiceTest
 					t.getPrice() + ":" + t.getActive() + ":" + 
 					t.isAvailable());
 		}
+		
+	}
+	
+	//@Test
+	public void testGetTickets()
+	{
 		
 	}
 }
