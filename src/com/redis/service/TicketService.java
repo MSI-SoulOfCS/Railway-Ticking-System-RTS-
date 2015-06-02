@@ -31,7 +31,13 @@ public interface TicketService
 	public RedisRequest buyTicket(RedisRequest request,String ticketKey);
 	
 	public RedisRequest buyTicketSimple(RedisRequest request,String ticketKey);
+	
 	public void transactionComplete(String keyAndDate);
+	
+	/*
+	 * complete transaction with transaction pool
+	 */
+	public void transactionCompleteWithPool(String keyAndDate);
 	
 	/*
 	 * Quartz will use this this method to iterator the 
