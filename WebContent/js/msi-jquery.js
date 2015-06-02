@@ -15,6 +15,20 @@
         $form.submit();
     }
     
+    function urlbody_redirect(options) {
+    	var $form = $("<form />");
+        
+        $form.attr("action",options.url);
+        $form.attr("method",options.method);
+        
+        for (var data in options.data)
+        $form.append('<input type="hidden" name="'+data+'" value="'+options.data[data]+'" />');
+         
+        $("body").append($form);
+        $form.submit();
+    	
+    }
+    
     /*This function use to update user data*/
     
     function updateUser(){
@@ -77,7 +91,7 @@
 			var d = new Date(item.date);
 			rows = "<tr><td>" + item.start + "</td><td>"+item.destination+"</td><td>"+
 			(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
-			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.amount +"</td><td>"+item.price+"</td></tr>";
+			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price+"</td></tr>";
 			$(rows).appendTo("#ManageTicketTable");
 		});
     }

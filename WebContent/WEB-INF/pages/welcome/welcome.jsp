@@ -61,7 +61,6 @@
 		$("#signin").on("click", loginValidation);
 		$("#signup").on("click", signUpValidation);
 	});
-
 </script>
 </head>
 <body background="<c:url value="/img/15.jpg" />">

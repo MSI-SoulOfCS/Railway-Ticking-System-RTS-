@@ -19,7 +19,9 @@
     <script src="<c:url value="/js/jquery-1.11.1.js"/>"></script>
     <script src="<c:url value="/js/bootstrap.js"/>"></script>
     <script src="<c:url value="/js/jquery.bootgrid.js"/>"></script>
+   	<script src="<c:url value="/js/jquery-ui.js"/>"></script>
     <script src="<c:url value="/js/msi-jquery.js"/>"></script>
+
     <style>
     .button {
 		display: inline-block;
@@ -49,6 +51,13 @@
 		display:none;
 	}
     </style>
+	<script>
+		$(document).ready(function() {
+			$('#BackToLogin').click(function(){
+				window.location.href='http://localhost:8080/Demand1/#login_form';
+			})		
+		});
+	</script>
 </head>
 <body>
    <header id="header" class="navbar navbar-default navbar-fixed-top">
@@ -112,7 +121,7 @@
                 	<button id="addToCart" name="addToCart" onclick="check()" class="button orange">Add to Cart</button>
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
-            		<button id="goToMyCart" name="goToMyCart" onclick="#" class="button orange">Go back to login</button>
+            		<button id="BackToLogin" class="button orange">Go back to login</button>
             	</sec:authorize>
             </div>
         </div>
