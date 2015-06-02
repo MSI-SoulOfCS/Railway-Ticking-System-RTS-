@@ -59,6 +59,42 @@
     	
     }
     /*Update user function end here*/
+    
+    
+    /*Load User's Cart*/
+    function loadAllUserCart() {
+		var formData = {username : $("#currentUser").text()};
+
+	    $.ajax({
+  			url: "/Demand1/auth/GetCartItemByUser.html",
+  			type: "post",
+  			data: formData,
+  			dataType: "json",
+  			success: renderUserCart
+  		});
+    }
+    function renderUserCart(data) {
+		$(data).each(function(i,item) {
+			var d = new Date(item.start);
+			rows = "<tr><td style=\"display:none\">" + item.itemId + "</td><td>" + item.from + "</td><td>"+item.to+"</td><td>"+
+			(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
+			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.seatNo +"</td><td>"+item.price+"</td><td><input id=\"check\" type=\"checkbox\" checked=\"checked\" onclick=\"calculate()\"/></td></tr>";
+			$(rows).appendTo("#CartTicket");
+		});
+		var add=0;
+		$('#CartTicket input[type=checkbox]:checked').each(function(){ 
+				var row = $(this).parent().parent();
+				var rowcells = row.find('td');
+				add+=parseInt($(rowcells[5]).html());
+		});
+		subtotal.innerHTML=add.toFixed(2);
+		var taxesResult=add*0.05;
+		taxes.innerHTML=taxesResult.toFixed(2);
+		var totalResult=taxesResult+add;
+		total.innerHTML=totalResult.toFixed(2);
+    }
+    /*Load User's Cart function end here*/
+    
 
     /*This function use to load all tickets from db*/
     function loadAllTicket() {

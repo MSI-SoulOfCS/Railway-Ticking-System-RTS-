@@ -30,18 +30,7 @@
     <![endif]-->
 	<script>
 		$(document).ready(function() {
-			var add=0;
-			$('#grid input[type=checkbox]:checked').each(function(){ 
-					
-					var row = $(this).parent().parent();
-					var rowcells = row.find('td');
-					add+=parseInt($(rowcells[3]).html());
-			});
-			subtotal.innerHTML=add.toFixed(2);
-			var taxesResult=add*0.05;
-			taxes.innerHTML=taxesResult.toFixed(2);
-			var totalResult=taxesResult+add;
-			total.innerHTML=totalResult.toFixed(2);
+			loadAllUserCart();
 			
  			$.ajax({
 				url: "/Demand1/restful/history.html",
@@ -81,7 +70,7 @@
 					
 					var row = $(this).parent().parent();
 					var rowcells = row.find('td');
-					add+=parseInt($(rowcells[3]).html());
+					add+=parseInt($(rowcells[5]).html());
 			});
 			subtotal.innerHTML=add.toFixed(2);
 			var taxesResult=add*0.05;
@@ -175,6 +164,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
+          	<li id="currentUser" style="display:none">${user.username}</li>
           	<li><a>${user.username}'s Account</a></li>
             <li><a href="/Demand1/">Home</a></li>
             <li><a href="<c:url value='/j_spring_security_logout'/>">Logout</a></li>
@@ -269,29 +259,18 @@
 	                  				<th>From</th>
 	                  				<th>To</th>
 	                  				<th>Date</th>
+	                  				<th>Seat</th>
 	                  				<th>Price</th>
 	               				</tr>
-	               				<tr>
-	               					<td>NJ</td>
-	               					<td>IL</td>
-	               					<td>17-MAY-2015</td>
-	               					<td>100</td>
-	               					<td><input id="check" type="checkbox" checked="checked" onclick="calculate()"/></td>
-	               				</tr>
-	               				<tr>
-	               					<td>NJ</td>
-	               					<td>CA</td>
-	               					<td>18-MAY-2015</td>
-	               					<td>200</td>
-	               					<td><input id="check" type="checkbox" checked="checked" onclick="calculate()"/></td>
-	               				</tr>
+	               				<tbody id="CartTicket">
+				  				</tbody>
 	            			</table>
 	          			</div>
 	          			<div align="right">
 							<div class='checkout'>
-								<div><b>Subtotal:</b><span id="subtotal" class="sum js-subtotal">$32.86</span></div>
-								<div><b>Taxes (5%):</b><span id="taxes" class='sum js-taxes'>$1.64</span></div>
-								<div><b>Total:</b><span id="total" class='sum js-total'>$39.50</span></div>
+								<div><b>Subtotal:</b><span id="subtotal" class="sum js-subtotal">$0</span></div>
+								<div><b>Taxes (5%):</b><span id="taxes" class='sum js-taxes'>$0</span></div>
+								<div><b>Total:</b><span id="total" class='sum js-total'>$0</span></div>
 								<div><button onclick="" class="button orange">Checkout</button></div>
 							</div>
 						</div>	
