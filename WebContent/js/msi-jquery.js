@@ -15,7 +15,6 @@
         $form.submit();
     }
     
-    
     /*This function use to update user data*/
     
     function updateUser(){
@@ -91,8 +90,9 @@
 			var row = $(this).parent().parent();
 			var rowcells = row.find('td');
 			var item = {};
-			item["ticket_id"] = $(rowcells[0]).html();
-			item["amount"] = $(rowcells[6]).find('input').val();
+			item["from"] = $(rowcells[0]).html();
+			item["to"] = $(rowcells[1]).html();
+			item["time"] =$(rowcells[3]).html();
 			formData.push(item);
 		});
     	$.ajax({

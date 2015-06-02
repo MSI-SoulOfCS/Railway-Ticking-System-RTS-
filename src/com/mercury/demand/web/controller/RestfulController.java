@@ -165,7 +165,6 @@ public class RestfulController {
 														@RequestParam("Price") double price,
 														@RequestParam("Seat") String seatType){
 		
-		System.out.println(from + " " + to + " " + time + " " + amount + " " + seatType);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		try 
 		{
@@ -213,8 +212,24 @@ public class RestfulController {
 	@RequestMapping(value="/auth/AddCart.html", method = RequestMethod.POST, headers = {"Content-type=application/json"})
 	public @ResponseBody String addTicketToUser(@RequestBody CartEntity[] data) {
 
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String username = user.getUsername();
+		System.out.println(username+" buy following tickets:");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		for(CartEntity entity : data) {
-			System.out.println(entity.getTicket_id() + " " + entity.getAmount());
+			try 
+			{
+				Date date = dateFormat.parse(entity.getTime());
+				String from = entity.getFrom();
+				String to = entity.getTo();
+				System.out.println(date);
+				System.out.println(from);
+				System.out.println(to);
+				System.out.println("------------");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return "[{\"result\":\"" + "yes" + "\"}]";

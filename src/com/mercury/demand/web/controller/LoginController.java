@@ -9,13 +9,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mercury.demand.persistence.model.CartEntity;
 import com.mercury.demand.persistence.model.Ticket;
 import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
@@ -173,6 +178,34 @@ public class LoginController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("content/hello");
 		mav.addObject("title", "Hello, welcome to Customized Spring Security");
+		return mav;
+	}
+	
+	@RequestMapping(value="/auth/cart.html", method = RequestMethod.POST, headers = {"Content-type=application/json"})
+	public ModelAndView addTicketToCart(@RequestBody CartEntity[] data) {
+		
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String username = user.getUsername();
+		System.out.println(username+" buy following tickets:");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		for(CartEntity entity : data) {
+			try 
+			{
+				Date date = dateFormat.parse(entity.getTime());
+				String from = entity.getFrom();
+				String to = entity.getTo();
+				System.out.println(date);
+				System.out.println(from);
+				System.out.println(to);
+				System.out.println("------------");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("account/dashboard");
 		return mav;
 	}
 }
