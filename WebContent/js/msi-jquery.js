@@ -77,13 +77,14 @@
     	$("#CartTicket").empty();
 		$(data).each(function(i,item) {
 			var d = new Date(item.start);
+			var id=item.itemId;
 			rows = "<tr><td style=\"display:none\">" + item.itemId + "</td><td>" + item.from + "</td><td>"+item.to+"</td><td>"+
 			(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
-			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.seatNo +"</td><td>"+item.price+"</td><td><input id=\"check\" type=\"checkbox\" checked=\"checked\" onclick=\"calculate()\"/></td></tr>";
+			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.seatNo +"</td><td>"+item.price+"</td><td><input id=\"check\" type=\"button\" value=\"remove\" onclick=\"calculate()\"/></td></tr>";
 			$(rows).appendTo("#CartTicket");
 		});
 		var add=0;
-		$('#CartTicket input[type=checkbox]:checked').each(function(){ 
+		$('#CartTicket').each(function(){ 
 				var row = $(this).parent().parent();
 				var rowcells = row.find('td');
 				add+=parseInt($(rowcells[5]).html());
@@ -156,6 +157,7 @@
     }
 	function checkResult(data) {
 		alert(data.length);
+		window.location.href="/Demand1/auth/user.html";
 /*		if(data[0].result == "yes") {
 			location.href = "#success_addToCart";
 		}
