@@ -72,8 +72,7 @@ public class PersonDaoImpl implements PersonDao {
 		
 		activateUser.setEnabled(true);
 		sessionFactory.getCurrentSession().update(activateUser);
-		return "This account is invalid. Please register an account.";
-		//return "Your account is activated";
+		return "Your account is activated";
 	}
 
 	@Override

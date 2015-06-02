@@ -27,7 +27,7 @@ public class HistoryDetailsService {
 		return hd.getAllHistory();
 	}
 	
-	public List<Ticket> getTicketsHistoryByUser(Person user) {
-		return hd.getTicketsHistoryByUser(user);
+	public List<Ticket> getTicketsHistoryByUser(Person person) {
+		return hd.getTicketsHistoryByUser(person);
 	}
 }

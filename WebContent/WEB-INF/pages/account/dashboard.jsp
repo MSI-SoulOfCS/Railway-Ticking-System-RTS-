@@ -42,13 +42,10 @@
 			taxes.innerHTML=taxesResult.toFixed(2);
 			var totalResult=taxesResult+add;
 			total.innerHTML=totalResult.toFixed(2);
-			/* need to pass username from welcome */
-			var ID={"username":"qiushuidamowang"};
+			
  			$.ajax({
-				url: "/Demand1/restful/Tickets.html",
+				url: "/Demand1/restful/history.html",
 				type: "get",
-				data: ID,
-				dataType: "json",
 				success:showData
 			});
 			

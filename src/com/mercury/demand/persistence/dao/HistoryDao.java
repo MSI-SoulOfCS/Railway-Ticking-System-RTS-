@@ -8,5 +8,5 @@ import com.mercury.demand.persistence.model.Ticket;
 
 public interface HistoryDao {
 	public List<History> getAllHistory();
-	public List<Ticket> getTicketsHistoryByUser(Person user);
+	public List<Ticket> getTicketsHistoryByUser(Person person);
 }

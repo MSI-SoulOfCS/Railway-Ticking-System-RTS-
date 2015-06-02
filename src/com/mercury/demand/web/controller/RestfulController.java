@@ -99,6 +99,13 @@ public class RestfulController {
 		return ticketService.getAllTicket()	;
 	}
 	
+	@RequestMapping(value="/restful/history.html", method = RequestMethod.GET)
+	public @ResponseBody List<Ticket> getTicketsByUserID() {
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Person person=userDetailsService.getUserByUsername(user.getUsername());
+		return historyDetailsService.getTicketsHistoryByUser(person);
+	}
+	
 	//Get tickets during a period of time
 	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
 	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 

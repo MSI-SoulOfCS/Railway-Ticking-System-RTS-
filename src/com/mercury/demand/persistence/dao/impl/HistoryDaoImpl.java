@@ -32,9 +32,9 @@ public class HistoryDaoImpl implements HistoryDao{
 	}
 	@SuppressWarnings({ "unchecked"})
 	@Override
-	public List<Ticket> getTicketsHistoryByUser(Person user){
+	public List<Ticket> getTicketsHistoryByUser(Person person){
 		String hql="From History where person=?";
-		List<History> historyList=template.find(hql,user);
+		List<History> historyList=template.find(hql,person);
 		List<Ticket> ticketList=new ArrayList<Ticket>();
 		for(int i=0;i<historyList.size();i++){
 			ticketList.add(historyList.get(i).getTicket());
