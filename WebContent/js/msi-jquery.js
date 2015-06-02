@@ -178,6 +178,20 @@
 	}
 	/*Ticket query function end here*/
 	
+	function checkoutPage(){
+    	var formData=[];
+    	$('#CartTicket tr').each(function(){ 
+			var rowcells = $(this).find('td');
+			var item = {};
+			alert($(rowcells[0]).html());
+			item["from"] = $(rowcells[0]).html();
+			item["to"] = $(rowcells[1]).html();
+			item["time"] =$(rowcells[3]).html();
+			formData.push(item);
+			
+		});	
+    	
+	}
 	
 	function loginValidation() {
 		$("#usernameAndPasswordReq").hide();

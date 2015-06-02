@@ -156,6 +156,13 @@ public class LoginController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/payment/payment.html",method=RequestMethod.GET)
+	public ModelAndView payment(HttpServletRequest request, ModelMap model){
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("payment/payment");
+		return mav;
+	}
+	
 	@RequestMapping(value="/payment/shoppingcart.html", method = RequestMethod.GET)
 	public ModelAndView shoppingcart(HttpServletRequest request, ModelMap model) {
 		ModelAndView mav = new ModelAndView();

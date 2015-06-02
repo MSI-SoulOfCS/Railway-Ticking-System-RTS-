@@ -254,7 +254,7 @@
 					<div id="ShoppingCartView">
 						<h2 class="sub-header">Shopping Cart</h2>
 	          			<div>
-	          				<table id="grid" class="table table-striped">
+	          				<table id="gridCheckOut" class="table table-striped">
 	                			<tr>
 	                  				<th>From</th>
 	                  				<th>To</th>
@@ -271,7 +271,7 @@
 								<div><b>Subtotal:</b><span id="subtotal" class="sum js-subtotal">$0</span></div>
 								<div><b>Taxes (5%):</b><span id="taxes" class='sum js-taxes'>$0</span></div>
 								<div><b>Total:</b><span id="total" class='sum js-total'>$0</span></div>
-								<div><button onclick="" class="button orange">Checkout</button></div>
+								<div><button onclick="checkoutPage()" class="button orange">Checkout</button></div>
 							</div>
 						</div>	
 					</div>
