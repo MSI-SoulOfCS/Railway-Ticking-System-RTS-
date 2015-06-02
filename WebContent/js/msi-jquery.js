@@ -74,6 +74,7 @@
   		});
     }
     function renderUserCart(data) {
+    	$("#CartTicket").empty();
 		$(data).each(function(i,item) {
 			var d = new Date(item.start);
 			rows = "<tr><td style=\"display:none\">" + item.itemId + "</td><td>" + item.from + "</td><td>"+item.to+"</td><td>"+

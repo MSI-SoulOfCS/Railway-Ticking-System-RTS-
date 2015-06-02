@@ -113,7 +113,6 @@ public class RestfulController {
 	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 
 																 @RequestParam("To") String to,
 															 @RequestParam("Time") String time) {
-		System.out.println("From:"+from+" To:"+to+" Date:"+time);
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String[] DateAndTime = time.split("/");
@@ -225,7 +224,6 @@ public class RestfulController {
 
 	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    String username = user.getUsername();
-		System.out.println(username+" buy following tickets:");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		List<RedisTicket> unCartList = new ArrayList<RedisTicket>();
 		for(CartEntity entity : data) {
