@@ -30,6 +30,18 @@
     <![endif]-->
 	<script>
 		$(document).ready(function() {
+			var add=0;
+			$('#grid input[type=checkbox]:checked').each(function(){ 
+					
+					var row = $(this).parent().parent();
+					var rowcells = row.find('td');
+					add+=parseInt($(rowcells[3]).html());
+			});
+			subtotal.innerHTML=add.toFixed(2);
+			var taxesResult=add*0.05;
+			taxes.innerHTML=taxesResult.toFixed(2);
+			var totalResult=taxesResult+add;
+			total.innerHTML=totalResult.toFixed(2);
 			/* need to pass username from welcome */
 			var ID={"username":"qiushuidamowang"};
  			$.ajax({
@@ -64,6 +76,21 @@
 			$('#Min').html(select);
 		});
 		
+		function calculate(){
+			var add=0;
+			$('#grid input[type=checkbox]:checked').each(function(){ 
+					
+					var row = $(this).parent().parent();
+					var rowcells = row.find('td');
+					add+=parseInt($(rowcells[3]).html());
+			});
+			subtotal.innerHTML=add.toFixed(2);
+			var taxesResult=add*0.05;
+			taxes.innerHTML=taxesResult.toFixed(2);
+			var totalResult=taxesResult+add;
+			total.innerHTML=totalResult.toFixed(2);
+		}
+		
 		function showData(data) {
 			var rows = "";
 			$("#tickets").empty();
@@ -83,10 +110,12 @@
 			$("#MyTrip").parent().removeClass("active");
 			$("#History").parent().removeClass("active");
 			$("#Profile").parent().removeClass("active");
+			$("#ShoppingCart").parent().removeClass("active");
 			
 			$("#MyTripView").hide();
 			$("#HistoryView").hide();
 			$("#ProfileView").hide();
+			$("#ShoppingCartView").hide();
 			
 			$("#ManageTicket").parent().removeClass("active");
 			$("#ManageTicketView").hide();
@@ -163,6 +192,7 @@
             			<li class="active"><a id="MyTrip" href="#MyTrip">My Trip</a></li>
             			<li>			   <a id="History" href="#History">History</a></li>
             			<li>			   <a id="Profile" href="#Profile">Profile</a>
+          				<li>			   <a id="ShoppingCart" href="#ShoppingCart">Shopping Cart</a>
           			</sec:authorize>
           			<sec:authorize access="hasRole('ROLE_ADMIN')">
             			<li class="active"><a id="ManageTicket" href="#ManageTicket">Manage Ticket</a></li>
@@ -230,6 +260,42 @@
 	            			</table>
 	            			<button onclick="updateUser()" class="button orange">Submit</button>
 	          			</div>
+					</div>
+					
+					<div id="ShoppingCartView" style="display:none">
+						<h2 class="sub-header">Shopping Cart</h2>
+	          			<div>
+	          				<table id="grid" class="table table-striped">
+	                			<tr>
+	                  				<th>From</th>
+	                  				<th>To</th>
+	                  				<th>Date</th>
+	                  				<th>Price</th>
+	               				</tr>
+	               				<tr>
+	               					<td>NJ</td>
+	               					<td>IL</td>
+	               					<td>17-MAY-2015</td>
+	               					<td>100</td>
+	               					<td><input id="check" type="checkbox" checked="checked" onclick="calculate()"/></td>
+	               				</tr>
+	               				<tr>
+	               					<td>NJ</td>
+	               					<td>CA</td>
+	               					<td>18-MAY-2015</td>
+	               					<td>200</td>
+	               					<td><input id="check" type="checkbox" checked="checked" onclick="calculate()"/></td>
+	               				</tr>
+	            			</table>
+	          			</div>
+	          			<div align="right">
+							<div class='checkout'>
+								<div><b>Subtotal:</b><span id="subtotal" class="sum js-subtotal">$32.86</span></div>
+								<div><b>Taxes (5%):</b><span id="taxes" class='sum js-taxes'>$1.64</span></div>
+								<div><b>Total:</b><span id="total" class='sum js-total'>$39.50</span></div>
+								<div><button onclick="" class="button orange">Checkout</button></div>
+							</div>
+						</div>	
 					</div>
 				<!-- ADMIN -->	
 				</sec:authorize>

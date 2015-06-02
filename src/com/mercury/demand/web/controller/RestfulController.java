@@ -79,6 +79,7 @@ public class RestfulController {
 	//***************Ticket*******************
 	//****************************************
 	//Get all tickets
+	
 	@RequestMapping(value="/restful/Tickets.html", method = RequestMethod.GET)
 	public @ResponseBody List<Ticket> getTicketsByUser(@RequestParam("username") String username) {
 		Person user=userDetailsService.getUserByUsername(username);

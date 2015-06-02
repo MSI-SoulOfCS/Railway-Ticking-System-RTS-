@@ -65,6 +65,11 @@ public class LoginController {
 		return "security/login";
 	}
 	
+	@RequestMapping(value="/account/test.html", method = RequestMethod.GET)
+	public String test(ModelMap model) {
+		return "account/test";
+	}
+	
 	@RequestMapping(value="/index.html", method = RequestMethod.GET)
 	public ModelAndView welcome(HttpServletRequest request, ModelMap model) {
 		ModelAndView mav = new ModelAndView();
