@@ -63,37 +63,40 @@
     
     /*Load User's Cart*/
     function loadAllUserCart() {
-		var formData = {username : $("#currentUser").text()};
-
 	    $.ajax({
   			url: "/Demand1/auth/GetCartItemByUser.html",
-  			type: "post",
-  			data: formData,
+  			type: "GET",
   			dataType: "json",
   			success: renderUserCart
   		});
     }
     function renderUserCart(data) {
+    	var add=0;
     	$("#CartTicket").empty();
 		$(data).each(function(i,item) {
 			var d = new Date(item.start);
-			var id=item.itemId;
 			rows = "<tr><td style=\"display:none\">" + item.itemId + "</td><td>" + item.from + "</td><td>"+item.to+"</td><td>"+
 			(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
-			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.seatNo +"</td><td>"+item.price+"</td><td><input id=\"check\" type=\"button\" value=\"remove\" onclick=\"calculate()\"/></td></tr>";
+			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.seatNo +"</td><td>"+item.price+"</td><td><input id=" + item.itemId + " type=\"button\" value=\"remove\" onclick=\"sendID(id)\"/></td></tr>";
 			$(rows).appendTo("#CartTicket");
-		});
-		var add=0;
-		$('#CartTicket').each(function(){ 
-				var row = $(this).parent().parent();
-				var rowcells = row.find('td');
-				add+=parseInt($(rowcells[5]).html());
+			add+=parseInt(item.price);
 		});
 		subtotal.innerHTML=add.toFixed(2);
 		var taxesResult=add*0.05;
 		taxes.innerHTML=taxesResult.toFixed(2);
 		var totalResult=taxesResult+add;
 		total.innerHTML=totalResult.toFixed(2);
+    }
+    
+    function sendID(data){
+    	var id={CartItem:data};
+    	$.ajax({
+    		url: "/Demand1/auth/RemoveCartItem.html",
+  			type: "post",
+  			data: id,
+  			dataType: "json",
+  			success: renderUserCart
+    	});
     }
     /*Load User's Cart function end here*/
     
@@ -156,7 +159,6 @@
 		});
     }
 	function checkResult(data) {
-		alert(data.length);
 		window.location.href="/Demand1/auth/user.html";
 /*		if(data[0].result == "yes") {
 			location.href = "#success_addToCart";
@@ -176,6 +178,20 @@
 	}
 	/*Ticket query function end here*/
 	
+	function checkoutPage(){
+    	var formData=[];
+    	$('#CartTicket tr').each(function(){ 
+			var rowcells = $(this).find('td');
+			var item = {};
+			alert($(rowcells[0]).html());
+			item["from"] = $(rowcells[0]).html();
+			item["to"] = $(rowcells[1]).html();
+			item["time"] =$(rowcells[3]).html();
+			formData.push(item);
+			
+		});	
+    	
+	}
 	
 	function loginValidation() {
 		$("#usernameAndPasswordReq").hide();

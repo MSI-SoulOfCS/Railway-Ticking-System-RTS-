@@ -64,9 +64,10 @@
 			loadAllTicket();
 		});
 		
-		function calculate(){
+		/* function calculate(){
+			
 			var add=0;
-			$('#grid input[type=checkbox]:checked').each(function(){ 
+			$('#grid').each(function(){ 
 					
 					var row = $(this).parent().parent();
 					var rowcells = row.find('td');
@@ -77,7 +78,7 @@
 			taxes.innerHTML=taxesResult.toFixed(2);
 			var totalResult=taxesResult+add;
 			total.innerHTML=totalResult.toFixed(2);
-		}
+		} */
 		
 		function showData(data) {
 			var rows = "";
@@ -164,7 +165,6 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-          	<li id="currentUser" style="display:none">${user.username}</li>
           	<li><a>${user.username}'s Account</a></li>
             <li><a href="/Demand1/">Home</a></li>
             <li><a href="<c:url value='/j_spring_security_logout'/>">Logout</a></li>
@@ -254,7 +254,7 @@
 					<div id="ShoppingCartView">
 						<h2 class="sub-header">Shopping Cart</h2>
 	          			<div>
-	          				<table id="grid" class="table table-striped">
+	          				<table id="gridCheckOut" class="table table-striped">
 	                			<tr>
 	                  				<th>From</th>
 	                  				<th>To</th>
@@ -271,7 +271,7 @@
 								<div><b>Subtotal:</b><span id="subtotal" class="sum js-subtotal">$0</span></div>
 								<div><b>Taxes (5%):</b><span id="taxes" class='sum js-taxes'>$0</span></div>
 								<div><b>Total:</b><span id="total" class='sum js-total'>$0</span></div>
-								<div><button onclick="" class="button orange">Checkout</button></div>
+								<div><button onclick="checkoutPage()" class="button orange">Checkout</button></div>
 							</div>
 						</div>	
 					</div>
