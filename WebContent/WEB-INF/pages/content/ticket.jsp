@@ -55,7 +55,11 @@
 		$(document).ready(function() {
 			$('#BackToLogin').click(function(){
 				window.location.href='http://localhost:8080/Demand1/#login_form';
+			})
+			$('#GoToUserAccount').click(function(){
+				window.location.href='http://localhost:8080/Demand1/auth/user.html';
 			})		
+
 		});
 	</script>
 </head>
@@ -119,6 +123,7 @@
                 </table>
                 <sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
                 	<button id="addToCart" name="addToCart" onclick="check()" class="button orange">Add to Cart</button>
+                	<button id="GoToUserAccount" name="GoToUserAccount" class="button orange">Go to My Cart</button>
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
             		<button id="BackToLogin" class="button orange">Go back to login</button>

@@ -188,10 +188,10 @@
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul id="navigation-menu" class="nav nav-sidebar">
 					<sec:authorize access="hasRole('ROLE_USER')">
-            			<li class="active"><a id="MyTrip" href="#MyTrip">My Trip</a></li>
+          				<li class="active"><a id="ShoppingCart" href="#ShoppingCart">Shopping Cart</a>
+            			<li>			   <a id="MyTrip" href="#MyTrip">My Trip</a></li>
             			<li>			   <a id="History" href="#History">History</a></li>
             			<li>			   <a id="Profile" href="#Profile">Profile</a>
-          				<li>			   <a id="ShoppingCart" href="#ShoppingCart">Shopping Cart</a>
           			</sec:authorize>
           			<sec:authorize access="hasRole('ROLE_ADMIN')">
             			<li class="active"><a id="ManageTicket" href="#ManageTicket">Manage Ticket</a></li>
@@ -201,7 +201,7 @@
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         		<!-- User -->
           		<sec:authorize access="hasRole('ROLE_USER')">
-          			<div id="MyTripView">
+          			<div id="MyTripView" style="display:none">
 	        	 		<h2 class="sub-header">Section title</h2>
 	          			<div class="table-responsive">
 	            			<table class="table table-striped">
@@ -261,7 +261,7 @@
 	          			</div>
 					</div>
 					
-					<div id="ShoppingCartView" style="display:none">
+					<div id="ShoppingCartView">
 						<h2 class="sub-header">Shopping Cart</h2>
 	          			<div>
 	          				<table id="grid" class="table table-striped">
