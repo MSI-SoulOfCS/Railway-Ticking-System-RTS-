@@ -22,6 +22,7 @@
     <script src="<c:url value="/js/jquery-1.11.1.min.js" />"></script>
    	<script src="<c:url value="/js/jquery-ui.js"/>"></script>
   	<script src="<c:url value="/js/msi-jquery.js"/>"></script>
+  	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
 	
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -45,6 +46,12 @@
 				$("#"+viewTag).show();
 			});
 
+			$.ajax({
+				url:"/restful/Tickets.html",
+				type:"get",
+				success:showData
+			});
+			
 			function addZeros(n) {
 				  return (n < 10)? '0' + n : '' + n;
 			}		
@@ -68,22 +75,6 @@
 			})
 		});
 		
-		/* function calculate(){
-			
-			var add=0;
-			$('#grid').each(function(){ 
-					
-					var row = $(this).parent().parent();
-					var rowcells = row.find('td');
-					add+=parseInt($(rowcells[5]).html());
-			});
-			subtotal.innerHTML=add.toFixed(2);
-			var taxesResult=add*0.05;
-			taxes.innerHTML=taxesResult.toFixed(2);
-			var totalResult=taxesResult+add;
-			total.innerHTML=totalResult.toFixed(2);
-		} */
-		
 		function showData(data) {
 			var rows = "";
 			$("#tickets").empty();
@@ -97,6 +88,10 @@
 				+"	"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"</td><td>"+ticket_price+"</td></tr>";
 				$(rows).appendTo("#tickets");
 			});
+		}
+		
+		function showPieChart(data){
+			
 		}
 		
 		function removeActiveClass() {
@@ -189,6 +184,7 @@
           			</sec:authorize>
           			<sec:authorize access="hasRole('ROLE_ADMIN')">
             			<li class="active"><a id="ManageTicket" href="#ManageTicket">Manage Ticket</a></li>
+            			<li>			   <a id="Analysis" href="#Analysis">Analysis</a></li>
           			</sec:authorize>	
           		</ul>
         	</div>
@@ -371,6 +367,23 @@
 									<br />
 					          </div>
 						</div>
+					</div>
+					
+					<div id="AnalysisView">
+						<h3 class="sub-header">Tickets</h2>
+	          			<div>
+	          				<table id="gridCheckOut" class="table table-striped">
+	                			<tr>
+	                  				<th>From</th>
+	                  				<th>To</th>
+	                  				<th>Date</th>
+	                  				<th>Seat</th>
+	                  				<th>Price</th>
+	               				</tr>
+	               				<tbody id="CartTicket">
+				  				</tbody>
+	            			</table>
+	          			</div>
 					</div>
 				</sec:authorize>
 			</div>
