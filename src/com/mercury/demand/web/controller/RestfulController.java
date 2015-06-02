@@ -282,9 +282,12 @@ public class RestfulController {
 	
 	@RequestMapping(value="/auth/CheckOut.html", method = RequestMethod.POST)
 	public @ResponseBody String checkOut(@RequestBody CartItem[] data) {
-		for(CartItem item : data) {
-			System.out.println(item.getItemId() + " " + item.getStart().toString() + " " + item.getPrice() + " " + item.getFrom() + " " + item.getTo());
+		
+		for(CartItem item : data) 
+		{
+			ticketService.transactionCompleteWithPool(item.getItemId());
 		}
+		
 		return null;
 	}
 	

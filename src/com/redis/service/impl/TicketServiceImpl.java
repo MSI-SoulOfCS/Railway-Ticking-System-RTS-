@@ -69,6 +69,11 @@ public class TicketServiceImpl implements TicketService
 		 */
 		String seatNo =  jedis.lpop(seatsKey);
 		
+		if(seatNo == null)
+		{
+			return null;
+		}
+		
 		/*
 		 * set value for request
 		 */
@@ -531,5 +536,75 @@ public class TicketServiceImpl implements TicketService
 		
 		RedisUtil.close();
 	}
+
+
+	@Override
+	public Transaction stringToTransaction(String transactionInfo) 
+	{
+		Transaction transaction = new Transaction();
+		
+		String[] arr = transactionInfo.split(Transaction.TRANSACTION_INFO_SPLITTER);
+		
+		transaction.setUserId(arr[0]);
+		transaction.setTicketId(arr[1]);
+		transaction.setSeatNo(arr[2]);
+		transaction.setDate(DateFormatUtil.stringToDate(arr[3]));
+		
+		return transaction;
+	}
+
+
+	@Override
+	public List<Transaction> getAllTransaction() 
+	{
+		Jedis jedis = RedisUtil.getJedis();
+		
+		List<String> values = jedis.lrange(Transaction.TRANSACTION_POOL_NAME, 0, -1);
+		
+		if(values.size() == 0)
+			return null;
+
+		List<Transaction> trans = new ArrayList<Transaction>();
+		
+		for(String str:values)
+		{
+	
+			Transaction tran = stringToTransaction(str);
+			trans.add(tran);	
+			System.out.println(str);
+	
+		}
+		
+		RedisUtil.close();
+		
+		return trans;
+	}
+
+
+	@Override
+	public List<Transaction> getAllTransactionAndDelete() 
+	{
+		Jedis jedis = RedisUtil.getJedis();
+		
+		List<String> values = jedis.lrange(Transaction.TRANSACTION_POOL_NAME, 0, -1);
+		
+		if(values.size() == 0)
+			return null;
+
+		List<Transaction> trans = new ArrayList<Transaction>();
+		
+		for(String str:values)
+		{
+	
+			Transaction tran = stringToTransaction(str);
+			trans.add(tran);		
+			jedis.lrem(Transaction.TRANSACTION_POOL_NAME, 1, str);
+		}
+		
+		RedisUtil.close();
+		
+		return trans;
+	}
+
 
 }

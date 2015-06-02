@@ -13,9 +13,11 @@ import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
 
+import com.mercury.demand.service.TransactionService;
 import com.redis.entity.CartItem;
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
+import com.redis.entity.Transaction;
 import com.redis.service.TicketService;
 import com.redis.service.impl.TicketServiceImpl;
 import com.redis.util.DateFormatUtil;
@@ -35,7 +37,7 @@ public class TicketServiceTest
 	}
 
 	
-	@Test
+	//@Test
 	public void addTicket() 
 	{
 		String[] seats = new String[30];
@@ -48,7 +50,7 @@ public class TicketServiceTest
 		RedisTicket ticket = new RedisTicket();
 	
 		ticket.setStart("beijing");
-		ticket.setDestination("xining");
+		ticket.setDestination("nanjing");
 		ticket.setDate(DateFormatUtil.stringToDateBlur("201505291023"));
 		ticket.setActive("true");
 		ticket.setAmount(30);
@@ -69,7 +71,7 @@ public class TicketServiceTest
 		RedisRequest request = new RedisRequest();
 		
 		request.setUserId("wangwu@gmail.com");
-		String ticketKey = "beijing#xining#201505291023";
+		String ticketKey = "beijing#nanjing#201505291023";
 		service.buyTicket(request, ticketKey);
 	}
 	
@@ -260,22 +262,7 @@ public class TicketServiceTest
 	
 	}
 	
-	//@Test
-	public void testGetAllTicket()
-	{
-		List<RedisTicket> tickets = service.getAllTicket();
-		
-		for(RedisTicket t:tickets)
-		{
-			System.out.println("start:" + t.getStart() + "---" 
-					+ "destination:" + t.getDestination() + "---"
-					+ "price" + t.getPrice() + "----"
-					+ "amount" + t.getAmount() + "----"
-					+ "available number" + t.getAvaiNumber() + "----"
-					+ "date:" + t.getDate() + "----"
-					+ "active:" + t.getActive() + "----");
-		}
-	}
+	
 	
 	//@Test
 	public void testSearchTicket()
@@ -327,4 +314,66 @@ public class TicketServiceTest
 		
 		service.removeCartItem(keys.get(1));
 	}
+	
+	//@Test
+	public void testSetTicket()
+	{
+		//service.removeTicket("beijing#xining#201505291023");
+		
+		//service.disableTicket("beijing#nanjing#201505291023");
+		service.enableTicket("beijing#nanjing#201505291023");
+	}
+	
+	//@Test
+	public void testGetAllTicket()
+	{
+		List<RedisTicket> tickets = service.getAllTicket();
+		
+		for(RedisTicket t:tickets)
+		{
+			System.out.println("start:" + t.getStart() + "---" 
+					+ "destination:" + t.getDestination() + "---"
+					+ "price" + t.getPrice() + "----"
+					+ "amount" + t.getAmount() + "----"
+					+ "available number" + t.getAvaiNumber() + "----"
+					+ "date:" + t.getDate() + "----"
+					+ "active:" + t.getActive() + "----");
+		}
+	}
+	
+	//@Test
+	public void test11()
+	{
+		List<Transaction> list = service.getAllTransaction();
+		//System.out.println(list.size());
+		
+		/*
+		String[] arr = "Thread-9&beijing#nanjing#201505291023&X8&20150602132956229".split("&");
+		
+		System.out.println(arr.length);
+		*/
+
+		/*
+		for(String str:arr)
+		{
+			System.out.println(str);
+		}
+		*/
+		
+	
+		for(Transaction t:list)
+		{
+			System.out.println("id:" + t.getUserId() + 
+					" " + "ticketid:" + t.getTicketId() + 
+					" " + "seatNo" + t.getSeatNo() + 
+					" " + "date" + t.getDate());
+		}
+	}
+	
+	@Test
+	public void test22()
+	{
+		TransactionService.completeTransaction();
+	}
+	
 }

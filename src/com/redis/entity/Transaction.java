@@ -5,11 +5,11 @@ import java.util.Date;
 public class Transaction 
 {
 	public static final String TRANSACTION_POOL_NAME = "transactionPool";
-	public static final String TRANSACTION_INFO_SPLITTER= "$";
+	public static final String TRANSACTION_INFO_SPLITTER = "&";
 	
 	private String userId;
 	private String ticketId;
-	private String seatNo;
+	private String seatNo; 
 	private Date date;
 	
 	public Transaction(){}
