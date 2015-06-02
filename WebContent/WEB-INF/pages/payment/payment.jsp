@@ -8,9 +8,20 @@
 	<link href="<c:url value="/css/style.css" />" rel="stylesheet">
 	<link href="<c:url value="/css/font.css" />" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	
+    <script src="<c:url value="/js/jquery-1.11.1.min.js" />"></script>
+   	<script src="<c:url value="/js/jquery-ui.js"/>"></script>
+  	<script src="<c:url value="/js/msi-jquery.js"/>"></script>
+
 	<title>Payment</title>
+	
+	<script>
+		$(document).ready(function() {
+			loadAllUserCart();
+		    $("#complete").click(function(){
+		    	checkoutPage();
+		   	});
+		});
+	</script>
 	</head>
 	<body>
 		<div class="headline">
@@ -168,29 +179,14 @@
 								<span class="quantity">1</span>
 								<span class="price">$45.00</span> -->
 								<table>
-									<tr>
-										<th>Product name</th>
-										<th>Quantity</th>
-										<th>Price</th>
-									</tr>
-									<%-- <tbody>
-										<c:forEach var="purchased" items="${purchasedTickets}">
-											<td>${purchased....}</td>
-										</c:forEach>
-										<tr>
-										
-										</tr>
-									</tbody> --%>
-									<tr>
-										<td>hello</td>
-										<td>hello...............</td>
-										<td>hello</td>
-									</tr>
-									<tr>
-										<td>hellosssssssssssssssssssss</td>
-										<td>hello...............</td>
-										<td>hellossssssssssssssssssssssssssss</td>
-									</tr>
+	                				<tr>
+	                  					<th>From</th>
+	                  					<th>To</th>
+	                  					<th>Date</th>
+	                  					<th>Price</th>
+	               					</tr>
+	               					<tbody id="CartTicket">
+				  					</tbody>
 								</table>
 							</div>
 						</div>
@@ -198,28 +194,14 @@
 							
 						</div>
 						<div class="final">
-							<span class="title">Total <span id="calculated_total">$51.00</span></span>
+							<div><b>Subtotal:</b><span id="subtotal" class="sum js-subtotal">$0</span></div>
+							<div><b>Taxes (5%):</b><span id="taxes" class='sum js-taxes'>$0</span></div>
+							<div><b>Total:</b><span id="total" class='sum js-total'>$0</span></div>
 						</div>
 					</div>
 					 <div class="right" id="reviewed">
-						<!-- <div class="billing">
-							<span class="title">Billing:</span>
-							<div class="address_reviewed">
-								<span class="name">John Smith</span>
-								<span class="address">123 Main Street</span>
-								<span class="location">Everytown, USA, 12345</span>
-								<span class="phone">(123)867-5309</span>
-							</div>
-						</div> -->
-						<!-- <div class="payment">
-							<span class="title">Payment:</span>
-							<div class="payment_reviewed">
-								<span class="method">Visa</span>
-								<span class="number_hidden">xxxx-xxxx-xxxx-1111</span>
-							</div>
-						</div> -->
 						<div id="complete">
-							<a class="big_button" id="complete" href="/Demand1/auth/successCheckOut.html">Complete Order</a>
+							<a class="big_button" id="complete" href="#complete">Complete Order</a>
 							<span class="sub">By selecting this button you agree to the purchase and subsequent payment for this order.</span> 
 						</div>
 					</div> 
