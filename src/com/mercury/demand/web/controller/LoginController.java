@@ -156,20 +156,19 @@ public class LoginController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/payment/shoppingcart.html", method = RequestMethod.GET)
-	public ModelAndView shoppingcart(HttpServletRequest request, ModelMap model) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("payment/shoppingcart");
-		return mav;
-	}	
-	
-	@RequestMapping(value="/payment/successCheckOut.html", method = RequestMethod.GET)
+	@RequestMapping(value="/auth/successCheckOut.html", method = RequestMethod.GET)
 	public ModelAndView successCheckOut(HttpServletRequest request, ModelMap model) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("payment/successCheckOut");
 		return mav;
 	}	
 	
+	@RequestMapping(value="/auth/checkOut.html", method = RequestMethod.GET)
+	public ModelAndView checkOut(HttpServletRequest request, ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("payment/payment");
+		return mav;		
+	}
 	
 	@RequestMapping(value="/auth/user.html", method = RequestMethod.GET)
 	public ModelAndView account(HttpServletRequest request, ModelMap model) {

@@ -19,36 +19,6 @@
 	
 		 <div id="wrap">
 			<div id="accordian">
-				<!-- <div class="step" id="step1">
-					<div class="title">
-						<h1>Summary</h1>
-					</div>
-				</div>
-				<div>
-					<div class="content" id="summary">
-						<form class="go-right">
-							<div>
-		        				<input type="email" name="email" value="" id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/>
-		   
-		       				</div>
-							<button class="login">Login</button>
-							<button class="create">Create Account</button>
-						</form>
-						<a class="continue" href="#step2">Continue</a>
-						<form class="go-right">
-							<table>
-								<thead>
-									<tr>
-										<th>Tickets</th>
-									</tr>
-								</thead>
-								<tbody>
-									
-								</tbody>
-							</table>
-						</form>
-					</div>
-				</div> -->
 				<div class="step" id="step2">
 					<div class="number">
 						<span>1</span>
@@ -249,7 +219,7 @@
 							</div>
 						</div> -->
 						<div id="complete">
-							<a class="big_button" id="complete" href="/Demand1/payment/successCheckOut.html">Complete Order</a>
+							<a class="big_button" id="complete" href="/Demand1/auth/successCheckOut.html">Complete Order</a>
 							<span class="sub">By selecting this button you agree to the purchase and subsequent payment for this order.</span> 
 						</div>
 					</div> 

@@ -273,6 +273,7 @@ public class RestfulController {
 		ticketService.removeCartItem(cartItem);
 		
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 		return ticketService.getCartItem(user.getUsername());
 	}
 	
