@@ -32,7 +32,7 @@
 	<script>
 		$(document).ready(function() {
 			loadAllUserCart();
-			
+			loadAllTicket();			
  			$.ajax({
 				url: "/Demand1/restful/history.html",
 				type: "get",
@@ -44,17 +44,10 @@
 				$(event.target).parent().addClass("active");
 				var viewTag = event.target.id + "View";
 				$("#"+viewTag).show();
-			});
-
-			$.ajax({
-				url:"/restful/Tickets.html",
-				type:"get",
-				success:showData
-			});
-			
-			function addZeros(n) {
-				  return (n < 10)? '0' + n : '' + n;
-			}		
+				if(viewTag=="AnalysisView"){
+					loadAllTicketForAnalysis();
+				}
+			});	
 			
 			var select = '';
 			for (i=0;i<=23;i++){
@@ -67,9 +60,7 @@
 			    select += '<option val=' + addZeros(i) + '>' + addZeros(i) + '</option>';
 			}
 			$('#AT_Min').html(select);
-			
-			loadAllTicket();
-			
+						
 			$('#checkoutBtn').click(function(){
 				window.location.href='http://localhost:8080/Demand1/auth/checkOut.html';
 			})
@@ -84,14 +75,10 @@
 				var ticket_to=item.to_loc;
 				var ticket_price=item.price;
 				rows = "<tr><td>" + ticket_from.station + "</td><td>"+ticket_to.station+"</td><td>"+
-				(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
-				+"	"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"</td><td>"+ticket_price+"</td></tr>";
+				d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate()) + 
+				+"	"+ addZeros(d.getHours())+":"+ addZeros(d.getMinutes())+":"+ addZeros(d.getSeconds())+"</td><td>"+ticket_price+"</td></tr>";
 				$(rows).appendTo("#tickets");
 			});
-		}
-		
-		function showPieChart(data){
-			
 		}
 		
 		function removeActiveClass() {
@@ -99,6 +86,7 @@
 			$("#History").parent().removeClass("active");
 			$("#Profile").parent().removeClass("active");
 			$("#ShoppingCart").parent().removeClass("active");
+
 			
 			$("#MyTripView").hide();
 			$("#HistoryView").hide();
@@ -107,6 +95,8 @@
 			
 			$("#ManageTicket").parent().removeClass("active");
 			$("#ManageTicketView").hide();
+			$("#Analysis").parent().removeClass("active");
+			$("#AnalysisView").hide();
 		}
 	</script>
 	<script src="<c:url value="/js/msi-jquery.js" />"></script>
@@ -369,10 +359,10 @@
 						</div>
 					</div>
 					
-					<div id="AnalysisView">
-						<h3 class="sub-header">Tickets</h2>
+					<div id="AnalysisView" style="display:none">
+						<h3 class="sub-header">Tickets</h3>
 	          			<div>
-	          				<table id="gridCheckOut" class="table table-striped">
+	          				<table id="gridAnalysis" class="table table-striped">
 	                			<tr>
 	                  				<th>From</th>
 	                  				<th>To</th>
@@ -380,7 +370,7 @@
 	                  				<th>Seat</th>
 	                  				<th>Price</th>
 	               				</tr>
-	               				<tbody id="CartTicket">
+	               				<tbody id="analysisTicket">
 				  				</tbody>
 	            			</table>
 	          			</div>

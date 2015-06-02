@@ -14,7 +14,9 @@
         $("body").append($form);
         $form.submit();
     }
-    
+	function addZeros(n) {
+		  return (n < 10)? '0' + n : '' + n;
+	}	
     /*This function use to update user data*/
     
     function updateUser(){
@@ -96,6 +98,15 @@
 			  success:reloadAllTicketAfterNewTicket
 		});
     }
+    //
+    function loadAllTicketForAnalysis() {
+    	$.ajax({
+			  url:"/Demand1/restful/Tickets.html",
+			  type:"GET",
+			  dataType:"json",
+			  success:reloadAllTicketAfterNewTicketForAnalysis
+		});
+    }
     /*load all tickets function end here*/
     
     /*This function use to new a ticket*/
@@ -116,11 +127,39 @@
 		$(data).each(function(i,item) {
 			var d = new Date(item.date);
 			rows = "<tr><td>" + item.start + "</td><td>"+item.destination+"</td><td>"+
-			(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
-			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price+"</td></tr>";
+			d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate()) + 
+			" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price+"</td></tr>";
 			$(rows).appendTo("#ManageTicketTable");
 		});
     }
+    
+    function reloadAllTicketAfterNewTicketForAnalysis(data) {
+		var rows = "";
+		$("#analysisTicket").empty();
+		$(data).each(function(i,item) {
+			var d = new Date(item.date);
+			var str=item.start +"+"+item.destination+"+" + d.getFullYear()+"-"+addZeros((d.getMonth()+1))+ "-"+ addZeros(d.getDate())
+			+" "+addZeros(d.getHours())+":"+addZeros(d.getMinutes())+":00.0";
+			str=str.replace(/ /g, "_");
+			rows = "<tr><td>" + item.start + "</td><td>"+item.destination+"</td><td>"+
+			d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate()) + 
+			" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price + 
+			"</td><td><input id=" +str+ " type=\"button\" value=\"show pie chart\" onclick=\"sendIDforPieChart(id)\"/>"+"</td></tr>";
+			$(rows).appendTo("#analysisTicket");
+			
+		});
+    }
+    
+    function sendIDforPieChart(data){
+    	var id={ticketItem:data};
+    	$.ajax({
+    		url: "/Demand1/restful/PeroidTickets.html",
+  			type: "post",
+  			data: id,
+  			dataType: "json",
+  			success: foo
+    	});
+	}
     /*new a ticket function end here*/
     
     /*This function use to add ticket to cart*/

@@ -110,11 +110,16 @@ public class RestfulController {
 	
 	//Get tickets during a period of time
 	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
-	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("From") String from, 
-																 @RequestParam("To") String to,
-															 @RequestParam("Time") String time) {
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("ticketItem") String ticketItem) {
+		ticketItem=ticketItem.replace('_', ' ');
+		String[] str=ticketItem.split("\\+");
+		//This is from and to!!!
+		String from=str[0];
+		String to=str[1];
+		//This is date!!!
+		String date=str[2];
+		System.out.println(date);
+/*		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String[] DateAndTime = time.split("/");
 		String[] HourTime = DateAndTime[1].split("-");
 		Date firstDate;
@@ -162,7 +167,7 @@ public class RestfulController {
 					e.printStackTrace();
 				}				
 			}
-		}
+		}*/
 		return ticketDetailsService.getAllTickets();
 	}
 	
@@ -278,6 +283,18 @@ public class RestfulController {
 			result = new ArrayList<CartItem>();
 
 		return result;
+	}
+	
+	@RequestMapping(value="/auth/FindTicket.html",method=RequestMethod.POST)
+	public @ResponseBody RedisTicket getTicket(@RequestParam("ticketItem") String ticketItem){
+		ticketItem=ticketItem.replace('_', ' ');
+		System.out.println(ticketItem);
+		String[] str=ticketItem.split("\\+");
+		
+		for(int i=0;i<str.length;i++)System.out.println(str[i]);
+		
+		return new RedisTicket();
+		
 	}
 	
 	@RequestMapping(value="/auth/CheckOut.html", method = RequestMethod.POST)
