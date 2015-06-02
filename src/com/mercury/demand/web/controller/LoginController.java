@@ -109,7 +109,7 @@ public class LoginController {
 					firstDate = dateFormat.parse(timestamp);
 					timestamp = DateAndTime[0] + " 23:59:59.0";
 					secondDate = dateFormat.parse(timestamp);
-					result = null;
+					result = this.ticketService.searchTicket(from, to, firstDate, secondDate);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

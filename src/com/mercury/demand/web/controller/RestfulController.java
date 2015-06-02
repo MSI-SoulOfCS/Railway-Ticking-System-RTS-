@@ -263,7 +263,23 @@ public class RestfulController {
 	@RequestMapping(value="/auth/GetCartItemByUser.html", method = RequestMethod.POST)
 	public @ResponseBody List<CartItem> getCartItemByUser(@RequestParam("username") String username) 
 	{
-		return ticketService.getCartItem(username);
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return ticketService.getCartItem(user.getUsername());
+	}
+	
+	@RequestMapping(value="/auth/RemoveCartItem.html", method = RequestMethod.POST)
+	public @ResponseBody List<CartItem> removeCartItem(@RequestParam("CartItem") String cartItem) {
+		
+		ticketService.removeCartItem(cartItem);
+		
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return ticketService.getCartItem(user.getUsername());
+	}
+	
+	@RequestMapping(value="/auth/CheckOut.html", method = RequestMethod.POST)
+	public @ResponseBody String checkOut(@RequestBody CartItem[] data) {
+		
+		return null;
 	}
 	
 	//****************************************
