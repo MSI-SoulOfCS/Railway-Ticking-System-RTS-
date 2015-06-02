@@ -260,8 +260,8 @@ public class RestfulController {
 		return unCartList;
 	}
 	
-	@RequestMapping(value="/auth/GetCartItemByUser.html", method = RequestMethod.POST)
-	public @ResponseBody List<CartItem> getCartItemByUser(@RequestParam("username") String username) 
+	@RequestMapping(value="/auth/GetCartItemByUser.html", method = RequestMethod.GET)
+	public @ResponseBody List<CartItem> getCartItemByUser() 
 	{
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return ticketService.getCartItem(user.getUsername());
@@ -273,8 +273,11 @@ public class RestfulController {
 		ticketService.removeCartItem(cartItem);
 		
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<CartItem> result = ticketService.getCartItem(user.getUsername());
+		if(result == null)
+			result = new ArrayList<CartItem>();
 
-		return ticketService.getCartItem(user.getUsername());
+		return result;
 	}
 	
 	@RequestMapping(value="/auth/CheckOut.html", method = RequestMethod.POST)

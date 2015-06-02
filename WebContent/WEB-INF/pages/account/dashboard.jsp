@@ -62,6 +62,10 @@
 			$('#AT_Min').html(select);
 			
 			loadAllTicket();
+			
+			$('#checkoutBtn').click(function(){
+				window.location.href='http://localhost:8080/Demand1/auth/checkOut.html';
+			})
 		});
 		
 		/* function calculate(){
@@ -271,7 +275,7 @@
 								<div><b>Subtotal:</b><span id="subtotal" class="sum js-subtotal">$0</span></div>
 								<div><b>Taxes (5%):</b><span id="taxes" class='sum js-taxes'>$0</span></div>
 								<div><b>Total:</b><span id="total" class='sum js-total'>$0</span></div>
-								<div><button onclick="checkoutPage()" class="button orange">Checkout</button></div>
+								<div><button id="checkoutBtn" class="button orange">Checkout</button></div>
 							</div>
 						</div>	
 					</div>
@@ -308,7 +312,7 @@
 								<div><b>Subtotal:</b><span id="subtotal" class="sum js-subtotal">$32.86</span></div>
 								<div><b>Taxes (5%):</b><span id="taxes" class='sum js-taxes'>$1.64</span></div>
 								<div><b>Total:</b><span id="total" class='sum js-total'>$39.50</span></div>
-								<div><button onclick="" class="button orange">Checkout</button></div>
+								<div><button id="checkoutBtn" class="button orange">Checkout</button></div>
 							</div>
 						</div>	
 						<!-- Hidden no use table -->

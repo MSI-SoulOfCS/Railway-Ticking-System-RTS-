@@ -15,20 +15,6 @@
         $form.submit();
     }
     
-    function urlbody_redirect(options) {
-    	var $form = $("<form />");
-        
-        $form.attr("action",options.url);
-        $form.attr("method",options.method);
-        
-        for (var data in options.data)
-        $form.append('<input type="hidden" name="'+data+'" value="'+options.data[data]+'" />');
-         
-        $("body").append($form);
-        $form.submit();
-    	
-    }
-    
     /*This function use to update user data*/
     
     function updateUser(){
@@ -76,7 +62,7 @@
 		$(data).each(function(i,item) {
 			var d = new Date(item.start);
 			rows = "<tr><td style=\"display:none\">" + item.itemId + "</td><td>" + item.from + "</td><td>"+item.to+"</td><td>"+
-			(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
+			d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate() 
 			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.seatNo +"</td><td>"+item.price+"</td><td><input id=" + item.itemId + " type=\"button\" value=\"remove\" onclick=\"sendID(id)\"/></td></tr>";
 			$(rows).appendTo("#CartTicket");
 			add+=parseInt(item.price);
@@ -183,14 +169,23 @@
     	$('#CartTicket tr').each(function(){ 
 			var rowcells = $(this).find('td');
 			var item = {};
-			alert($(rowcells[0]).html());
-			item["from"] = $(rowcells[0]).html();
-			item["to"] = $(rowcells[1]).html();
-			item["time"] =$(rowcells[3]).html();
+			item["itemId"] = $(rowcells[0]).html();
+			item["from"] = $(rowcells[1]).html();
+			item["to"] = $(rowcells[2]).html();
+			item["start"] = $(rowcells[3]).html();
+			item["seatNo"] = $(rowcells[4]).html();
+			item["price"] = $(rowcells[5]).html();
+			item["addTime"] = $(rowcells[3]).html();
 			formData.push(item);
-			
 		});	
-    	
+/*    	$.ajax({
+			  url:"/Demand1/auth/AddCart.html",
+			  contentType: 'application/json',
+			  type:"post",
+			  data: JSON.stringify(formData),
+			  dataType:"json",
+			  success:checkResult
+		});*/
 	}
 	
 	function loginValidation() {
