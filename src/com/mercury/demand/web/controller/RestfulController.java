@@ -110,18 +110,28 @@ public class RestfulController {
 	
 	//Get tickets during a period of time
 	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
-
-	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("ticketItem") String ticketItem) {
+	public @ResponseBody List<RedisTicket> getTicketsDuringPeriodTime(@RequestParam("ticketItem") String ticketItem) {
 		ticketItem=ticketItem.replace('_', ' ');
 		String[] str=ticketItem.split("\\+");
 		//This is from and to!!!
-		String from=str[0];
-		String to=str[1];
+		String from = str[0];
+		String to = str[1];
 		//This is date!!!
 		String date=str[2];
-		System.out.println(date);
-
-		return ticketDetailsService.getAllTickets();
+		
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		Date ticketDate;
+		try {
+			ticketDate = dateFormat.parse(date);
+			System.out.println(ticketDate);
+			List<RedisTicket> result = this.ticketService.searchTicket(from, to, ticketDate, ticketDate);
+			return result;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<RedisTicket>();
 	}
 	
 	//Add new ticket
