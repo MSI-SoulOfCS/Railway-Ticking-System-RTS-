@@ -263,10 +263,9 @@ public class RestfulController {
 	}
 	
 	@RequestMapping(value="/auth/GetCartItemByUser.html", method = RequestMethod.POST)
-	public @ResponseBody List<CartItem> getCartItemByUser(@RequestParam("username") String username) {
-		
-		
-		return null;
+	public @ResponseBody List<CartItem> getCartItemByUser(@RequestParam("username") String username) 
+	{
+		return ticketService.getCartItem(username);
 	}
 	
 	//****************************************
