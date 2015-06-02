@@ -64,7 +64,8 @@
 			loadAllTicket();
 		});
 		
-		function calculate(){
+		/* function calculate(){
+			
 			var add=0;
 			$('#grid').each(function(){ 
 					
@@ -77,7 +78,7 @@
 			taxes.innerHTML=taxesResult.toFixed(2);
 			var totalResult=taxesResult+add;
 			total.innerHTML=totalResult.toFixed(2);
-		}
+		} */
 		
 		function showData(data) {
 			var rows = "";
@@ -164,7 +165,6 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-          	<li id="currentUser" style="display:none">${user.username}</li>
           	<li><a>${user.username}'s Account</a></li>
             <li><a href="/Demand1/">Home</a></li>
             <li><a href="<c:url value='/j_spring_security_logout'/>">Logout</a></li>
