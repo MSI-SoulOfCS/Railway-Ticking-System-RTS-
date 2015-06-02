@@ -71,21 +71,15 @@
   		});
     }
     function renderUserCart(data) {
-    	alert(data.length);
-    	var rows = '';
+    	var add=0;
     	$("#CartTicket").empty();
 		$(data).each(function(i,item) {
 			var d = new Date(item.start);
-			rows = rows + "<tr><td style=\"display:none\">" + item.itemId + "</td><td>" + item.from + "</td><td>"+item.to+"</td><td>"+
+			rows = "<tr><td style=\"display:none\">" + item.itemId + "</td><td>" + item.from + "</td><td>"+item.to+"</td><td>"+
 			(d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear()
 			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.seatNo +"</td><td>"+item.price+"</td><td><input id=" + item.itemId + " type=\"button\" value=\"remove\" onclick=\"sendID(id)\"/></td></tr>";
-		});
-		$(rows).appendTo("#CartTicket");
-		var add=0;
-		$('#CartTicket').each(function(){ 
-				var row = $(this).parent().parent();
-				var rowcells = row.find('td');
-				add+=parseInt($(rowcells[5]).html());
+			$(rows).appendTo("#CartTicket");
+			add+=parseInt(item.price);
 		});
 		subtotal.innerHTML=add.toFixed(2);
 		var taxesResult=add*0.05;
@@ -165,7 +159,6 @@
 		});
     }
 	function checkResult(data) {
-		alert(data.length);
 		window.location.href="/Demand1/auth/user.html";
 /*		if(data[0].result == "yes") {
 			location.href = "#success_addToCart";
