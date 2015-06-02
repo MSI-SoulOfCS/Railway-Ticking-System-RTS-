@@ -12,6 +12,7 @@ import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
 
+import com.redis.entity.CartItem;
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
 import com.redis.service.TicketService;
@@ -61,7 +62,7 @@ public class TicketServiceTest
 		
 	}
 	
-	@Test
+	//@Test
 	public void testBuyTicket()
 	{
 		RedisRequest request = new RedisRequest();
@@ -258,7 +259,7 @@ public class TicketServiceTest
 	
 	}
 	
-	@Test
+	//@Test
 	public void testGetAllTicket()
 	{
 		List<RedisTicket> tickets = service.getAllTicket();
@@ -295,9 +296,20 @@ public class TicketServiceTest
 		
 	}
 	
-	//@Test
-	public void testGetTickets()
+	@Test
+	public void testGetCartItem()
 	{
+		List<CartItem> items = service.getCartItem("wangwu@gmail.com");
 		
+		for(CartItem item:items)
+		{
+			System.out.println("itemId:" + item.getItemId() + " - "
+					+ "from:" + item.getFrom() + " - "
+					+ "to:" + item.getTo() + " - "
+					+ "price:" + item.getPrice() + " - "
+					+ "start time:" + item.getStart() + " - "
+					+ "seat no:" + item.getSeatNo() + " - "
+					+ "add time" + item.getAddTime());
+		}
 	}
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import redis.clients.jedis.Jedis;
 
+import com.redis.entity.CartItem;
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
 import com.redis.entity.Transaction;
@@ -407,6 +408,61 @@ public class TicketServiceImpl implements TicketService
 		
 		RedisUtil.close();
 		
+	}
+
+
+	@Override
+	public List<CartItem> getCartItem(String userId) 
+	{
+		Jedis jedis = RedisUtil.getJedis();
+		List<String> values = jedis.lrange(userId, 0, -1);
+		
+		if(values.size() == 0)
+			return null;
+		
+		List<CartItem> items = new ArrayList<CartItem>();
+		
+		for(String str : values)
+		{
+			CartItem item = new CartItem();
+			
+			String[] arr = str.split(RedisRequest.REQUEST_SPLITER);
+			
+			String ticketId = arr[0];
+			String seatNo = arr[1];
+			String time = arr[2];
+			
+			String[] ar = ticketId.split(RedisTicket.TICKET_SPLITTER);
+			String from = ar[0];
+			String to = ar[1];
+			String start = ar[2];
+			
+			String price = jedis.hget(ticketId, RedisTicket.PRICE);
+			
+			/*
+			 *  private String itemId;
+				private String from;
+				private String to;
+				private Date start;
+				private String seatNo;
+				private double price;
+				private Date addTime;
+			 */
+			
+			item.setItemId(RelationConverter
+					.requestKeyGeneratorByIdAndTime(userId, time));
+			item.setFrom(from);
+			item.setTo(to);
+			item.setStart(DateFormatUtil.stringToDateBlur(start));
+			item.setSeatNo(seatNo);
+			item.setPrice(Double.parseDouble(price));
+			item.setAddTime(DateFormatUtil.stringToDate(time));
+	
+			items.add(item);
+		}
+		
+		RedisUtil.close();
+		return items;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.redis.service;
 import java.util.Date;
 import java.util.List;
 
+import com.redis.entity.CartItem;
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
 
@@ -66,4 +67,9 @@ public interface TicketService
 	 * parse string to RedisTicket object
 	 */
 	public RedisTicket stringToRedisTicket(String ticketKey);
+	
+	/*
+	 * get cart item by user id
+	 */
+	public List<CartItem> getCartItem(String userId);
 }

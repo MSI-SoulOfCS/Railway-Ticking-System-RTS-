@@ -34,6 +34,12 @@ public class RelationConverter
 				DateFormatUtil.dateToString(request.getDate());			
 	}
 	
+	public static String requestKeyGeneratorByIdAndTime(String userId, String time)
+	{
+		return userId + RedisRequest.REQUEST_SPLITER 
+				+ time;
+	}
+
 	public static String cartInfoGenerator(RedisRequest request)
 	{
 		return request.getTicketKey() + RedisRequest.REQUEST_SPLITER + 
