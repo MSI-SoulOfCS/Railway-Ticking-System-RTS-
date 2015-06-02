@@ -102,7 +102,7 @@
                             <th data-column-id="to">To</th>
                             <th data-column-id="price" data-order="asc">Price</th>
                             <th data-column-id="date" data-type="date">Date</th>
-                            <th data-column-id="checkbox">Select</th>
+                            <th data-column-id="checkbox">Purchase</th>
                         </tr>
                     </thead>
                     <tbody>

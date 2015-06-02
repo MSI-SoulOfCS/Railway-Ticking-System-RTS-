@@ -2,6 +2,7 @@ package com.mercury.demand.web.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -219,12 +220,13 @@ public class RestfulController {
 	//***************Cart*********************
 	//****************************************		
 	@RequestMapping(value="/auth/AddCart.html", method = RequestMethod.POST, headers = {"Content-type=application/json"})
-	public @ResponseBody String addTicketToUser(@RequestBody CartEntity[] data) {
+	public @ResponseBody List<RedisTicket> addTicketToUser(@RequestBody CartEntity[] data) {
 
 	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	    String username = user.getUsername();
 		System.out.println(username+" buy following tickets:");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		List<RedisTicket> unCartList = new ArrayList<RedisTicket>();
 		for(CartEntity entity : data) {
 			try 
 			{
@@ -243,11 +245,12 @@ public class RestfulController {
 				
 				request.setUserId(username);
 				RedisRequest returnedRequest = ticketService.buyTicket(request, ticketKey);
-				if(returnedRequest != null) {
-					System.out.println(returnedRequest.getTicketKey());
-				}
-				else {
-					System.out.println(returnedRequest.getTicketKey());					
+				if(returnedRequest == null) {
+					RedisTicket unpurchaseTicket = new RedisTicket();
+					unpurchaseTicket.setStart(from);
+					unpurchaseTicket.setDestination(to);
+					unpurchaseTicket.setDate(date);
+					unCartList.add(unpurchaseTicket);
 				}
 			}
 			catch(Exception e) {
@@ -255,7 +258,7 @@ public class RestfulController {
 			}
 		}
 		
-		return "[{\"result\":\"" + "yes" + "\"}]";
+		return unCartList;
 	}
 	
 	//****************************************

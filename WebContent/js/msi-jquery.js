@@ -118,12 +118,13 @@
 		});
     }
 	function checkResult(data) {
-		if(data[0].result == "yes") {
+		alert(data.length);
+/*		if(data[0].result == "yes") {
 			location.href = "#success_addToCart";
 		}
 		else{
 			window.location = "#failure_addToCart";
-		}
+		}*/
 	}
 	/*add to cart function end here*/
 	
