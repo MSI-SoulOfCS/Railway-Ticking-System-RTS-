@@ -66,7 +66,7 @@
 		
 		function calculate(){
 			var add=0;
-			$('#grid input[type=checkbox]:checked').each(function(){ 
+			$('#grid').each(function(){ 
 					
 					var row = $(this).parent().parent();
 					var rowcells = row.find('td');

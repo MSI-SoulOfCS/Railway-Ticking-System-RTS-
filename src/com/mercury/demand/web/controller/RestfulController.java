@@ -174,7 +174,7 @@ public class RestfulController {
 														@RequestParam("Amount") int amount,
 														@RequestParam("Price") double price,
 														@RequestParam("Seat") String seatType){
-		
+		System.out.println(price + " " + amount);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		try 
 		{
