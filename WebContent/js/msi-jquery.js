@@ -87,15 +87,15 @@
     /*Load User's Cart function end here*/
 
     /*Show Payment function*/
-    function loadAllUserCart() {
+    function loadCheckOutUserCart() {
 	    $.ajax({
   			url: "/Demand1/auth/GetCartItemByUser.html",
   			type: "GET",
   			dataType: "json",
-  			success: renderUserCart
+  			success: renderCheckOutUserCart
   		});
     }
-    function renderUserCart(data) {
+    function renderCheckOutUserCart(data) {
     	var add=0;
     	$("#CartTicket").empty();
 		$(data).each(function(i,item) {

@@ -16,7 +16,7 @@
 	
 	<script>
 		$(document).ready(function() {
-			loadAllUserCart();
+			loadCheckOutUserCart();
 		    $("#complete").click(function(){
 		    	checkoutPage();
 		   	});
