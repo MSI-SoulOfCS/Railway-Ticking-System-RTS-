@@ -60,6 +60,7 @@
 		}
 		$("#signin").on("click", loginValidation);
 		$("#signup").on("click", signUpValidation);
+		$("#forgetpwd").on("click", forgetPWDValidation);
 	});
 </script>
 </head>
@@ -191,11 +192,55 @@
 								<button class="button orange" id="signin" type="submit">Login</button>
 							</td>
 						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<a href="#forget_form" style="color:#000000;">forget password</a>
+							</td>
+						</tr>
 		            </table>
 		            	            
 	 			</form>
 	            <a class="close" href="/Demand1/"></a>
 	       </div>
+	       
+	       
+          <!-- popup form #1 -->
+	       <a href="/Demand1/" class="overlay" id="forget_form"></a>
+			<div class="popup">
+		       <!-- Alerts for missing form info  --> 
+				<div class="alert" style="display:none;" id="rs_emailReq">
+					<p>Email is invalid</p>
+				</div>	
+				<!-- Alerts for missing form end -->
+				<h2>Please enter your e-mail</h2>
+				<table>
+					<tr>
+		            	<td>Email address: </td>
+						<td><input type="email" maxlength="50" id="rs_email"/></td>
+		            </tr>
+					<tr>
+						<td>
+						</td>
+						<td>
+							<button id="forgetpwd" class="button orange">Submit</button>
+						</td>
+					</tr>
+		            </table>
+	            <a class="close" href="/Demand1/"></a>
+	           </div>
+          <!-- popup form #1 -->	       
+
+          <!-- popup form #1 -->
+	       <a href="/Demand1/" class="overlay" id="ResetSuccess_form"></a>
+	       
+	       <div class="popup">
+	            <h2>Reset Password success!</h2>
+	            <p>Please check your e-mail to get your new password and login to change it!</p>
+	            <a class="close" href="/Demand1/"></a>
+	       </div>	
+	       <!-- ----------- -->
+	       
 
           <!-- popup form #1 -->
 	       <a href="/Demand1/" class="overlay" id="Success_form"></a>
@@ -205,7 +250,7 @@
 	            <p>Please check your e-mail to activate your account!</p>
 	            <a class="close" href="/Demand1/"></a>
 	       </div>	
-	       
+	       <!-- ----------- -->
 	       
 			
           <div align="center">

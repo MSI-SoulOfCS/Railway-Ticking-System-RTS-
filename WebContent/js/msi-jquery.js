@@ -87,7 +87,34 @@
     	});
     }
     /*Load User's Cart function end here*/
-    
+
+    /*Show Payment function*/
+    function loadCheckOutUserCart() {
+	    $.ajax({
+  			url: "/Demand1/auth/GetCartItemByUser.html",
+  			type: "GET",
+  			dataType: "json",
+  			success: renderCheckOutUserCart
+  		});
+    }
+    function renderCheckOutUserCart(data) {
+    	var add=0;
+    	$("#CartTicket").empty();
+		$(data).each(function(i,item) {
+			var d = new Date(item.start);
+			rows = "<tr><td style=\"display:none\">" + item.itemId + "</td><td>" + item.from + "</td><td>"+item.to+"</td><td>"+
+			d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate() 
+			+"-"+d.getHours()+":"+d.getMinutes()+ "</td><td style=\"display:none\">"+ item.seatNo +"</td><td>"+ "$" + item.price+"</td></tr>";
+			$(rows).appendTo("#CartTicket");
+			add+=parseInt(item.price);
+		});
+		subtotal.innerHTML=add.toFixed(2);
+		var taxesResult=add*0.05;
+		taxes.innerHTML=taxesResult.toFixed(2);
+		var totalResult=taxesResult+add;
+		total.innerHTML=totalResult.toFixed(2);
+    }
+    /*Show Payment function end here*/
 
     /*This function use to load all tickets from db*/
     function loadAllTicket() {
@@ -207,24 +234,31 @@
     	var formData=[];
     	$('#CartTicket tr').each(function(){ 
 			var rowcells = $(this).find('td');
+			var dateVar = $(rowcells[3]).text();
+			var dsplit = dateVar.split("/");
+			var tsplit = dsplit[2].split("-");
+			var hmsplit = tsplit[1].split(":");
+			var time = dsplit[0] + "-" + dsplit[1] + "-" + tsplit[0] + "T" +  parseInt(hmsplit[0], 10) + ":" +  parseInt(hmsplit[1], 10) + ":00.000Z";
+			var price = $(rowcells[5]).html().split("$");
+			alert(time);
 			var item = {};
 			item["itemId"] = $(rowcells[0]).html();
 			item["from"] = $(rowcells[1]).html();
 			item["to"] = $(rowcells[2]).html();
-			item["start"] = $(rowcells[3]).html();
+			item["start"] = time;
 			item["seatNo"] = $(rowcells[4]).html();
-			item["price"] = $(rowcells[5]).html();
-			item["addTime"] = $(rowcells[3]).html();
+			item["price"] = price[1];
+			item["addTime"] = time;
 			formData.push(item);
 		});	
-/*    	$.ajax({
-			  url:"/Demand1/auth/AddCart.html",
+    	$.ajax({
+			  url:"/Demand1/auth/CheckOut.html",
 			  contentType: 'application/json',
 			  type:"post",
 			  data: JSON.stringify(formData),
 			  dataType:"json",
 			  success:checkResult
-		});*/
+		});
 	}
 	
 	function loginValidation() {
@@ -291,6 +325,7 @@
 			});
 		}
 	}
+
 	function registerResult(data) {
 		if(data[0].result == "yes") {
 			window.location.href = "/Demand1/#Success_form";
@@ -305,6 +340,40 @@
 	  		$("#r_alreadyexisted").show();
 		}
 	}
+	
+	function forgetPWDValidation() {
+		$("#rs_emailReq").hide();
+	  	if (!IsEmail($("#rs_email").val())) {
+	  		$("#rs_emailReq").show();
+	  	}
+	  	else {
+ 			var formData = {email : $("#rs_email").val()};
+			$.ajax({
+				url: "/Demand1/restful/ResetPwd.html",
+				type: "post",
+				data: formData,
+				dataType: "json",
+				success:resetResult
+			});	  		
+	  	}
+	}	
+
+	function resetResult(data) {
+		if(data[0].result == "yes") {
+			window.location.href = "/Demand1/#ResetSuccess_form";
+		}
+		else {
+	  		$("#r_usernameReq").hide();
+	  		$("#r_passwordReq").hide();
+	  		$('#r_retypepasswordReq').hide();
+	  		$("#r_emailReq").hide();
+	  		$("#r_lastnameReq").hide();
+	  		$("#r_firstnameReq").hide();
+	  		$("#r_alreadyexisted").show();
+		}
+	}
+	
+	
 	function keyboardValidate(evt) {
 		  var theEvent = evt || window.event;
 		  var key = theEvent.keyCode || theEvent.which;
@@ -317,9 +386,9 @@
 	}
 	$(function() {
 		    var availableTags = [
-				"NY,NewYork,Penn Station",
-				"NY,NewYork,Jamaica",
-				"NY, NewYork,Yonkers Amtrak",
+				"NY,New York,Penn Station",
+				"NY,New York,Jamaica",
+				"NY,NewYork,Yonkers Amtrak",
 				"NJ,Princeton,West Trenton",
 				"NJ,Princeton,Joe's Train Station",
 				"NJ,Princeton,Princeton Junction",

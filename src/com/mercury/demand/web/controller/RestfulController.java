@@ -110,6 +110,7 @@ public class RestfulController {
 	
 	//Get tickets during a period of time
 	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
+
 	public @ResponseBody List<Ticket> getTicketsDuringPeriodTime(@RequestParam("ticketItem") String ticketItem) {
 		ticketItem=ticketItem.replace('_', ' ');
 		String[] str=ticketItem.split("\\+");
@@ -119,55 +120,7 @@ public class RestfulController {
 		//This is date!!!
 		String date=str[2];
 		System.out.println(date);
-/*		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-		String[] DateAndTime = time.split("/");
-		String[] HourTime = DateAndTime[1].split("-");
-		Date firstDate;
-		Date secondDate;
-		if(!DateAndTime[0].equals("")) {
-			if(DateAndTime[1].equals("Anytime")) {
-				try {
-					String timestamp = DateAndTime[0] + " 00:00:00.0";
-					firstDate = dateFormat.parse(timestamp);
-					timestamp = DateAndTime[0] + " 23:59:59.0";
-					secondDate = dateFormat.parse(timestamp);
-					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} 
-			else if(HourTime.length == 2) {
-				try {
-					String timestamp = DateAndTime[0] + " " + HourTime[0] + ":00:00.0";
-					firstDate = dateFormat.parse(timestamp);
 
-					if(HourTime[1] != "24")
-						timestamp = DateAndTime[0] + " " + HourTime[1] + ":00:00.0";
-					else
-						timestamp = DateAndTime[0] + " 23:59:59.0";
-
-					secondDate = dateFormat.parse(timestamp);
-					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			else {
-				try {
-					String timestamp = DateAndTime[0] + " " + HourTime[0] + ":00:00.0";
-					firstDate = dateFormat.parse(timestamp);
-
-					timestamp = DateAndTime[0] + " " + HourTime[0] + ":59:59.0";
-					secondDate = dateFormat.parse(timestamp);
-					return ticketDetailsService.getPeroidTimeOfTikcets(from, to, firstDate, secondDate);			
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}				
-			}
-		}*/
 		return ticketDetailsService.getAllTickets();
 	}
 	
@@ -299,6 +252,12 @@ public class RestfulController {
 	
 	@RequestMapping(value="/auth/CheckOut.html", method = RequestMethod.POST)
 	public @ResponseBody String checkOut(@RequestBody CartItem[] data) {
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		for(CartItem item : data) 
+		{
+//			ticketService.transactionCompleteWithPool(item.getItemId());
+		}
 		
 		return null;
 	}
@@ -337,13 +296,18 @@ public class RestfulController {
 	//Update the user data
 	@RequestMapping(value="/auth/UpdateUser.html", method = RequestMethod.POST)
 	public @ResponseBody Person updateUser(@RequestParam("firstname") String firstname,
-								   @RequestParam("lastname") String lastname,
-								   @RequestParam("email") String email,
-								   @RequestParam("password") String password) {
+								   		   @RequestParam("lastname") String lastname,
+								   		   @RequestParam("email") String email,
+								   		   @RequestParam("password") String password) {
 		//get current login user
 	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return userDetailsService.updateUserProfile(user.getUsername(), password, email, lastname, firstname);
 		
 	}
 	
+	//Reset Password for the user
+	@RequestMapping(value="/restful/ResetPwd.html", method = RequestMethod.POST)
+	public @ResponseBody String resetUserPwd(@RequestParam("email") String email) {
+		return "[{\"result\":\"" + userDetailsService.resetUserPwd(email) + "\"}]";
+	}
 }

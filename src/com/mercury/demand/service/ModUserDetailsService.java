@@ -35,5 +35,9 @@ public class ModUserDetailsService {
 	public Person updateUserProfile(String username, String password, String email, String lastname, String firstname) {
 		return pd.updateUserProfile(username, password, email, lastname, firstname);
 	}
+	
+	public String resetUserPwd(String email) {
+		return pd.resetUserPwd(email);
+	}
 }
 

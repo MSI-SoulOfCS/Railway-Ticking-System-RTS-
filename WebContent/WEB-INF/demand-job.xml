@@ -4,10 +4,11 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
- 
-	<bean id="runMeTask" class="com.mercury.demand.job.RunMeTask" />
+ <bean id="runMeTask" class="com.mercury.demand.job.RunMeTask" />
+ <bean id="ticketService" class="com.redis.test.TestService"/>
  
 	<!-- Spring Quartz -->
+	<!-- 
 	<bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 		<property name="jobClass" value="com.mercury.demand.job.RunMeJob" />
 		<property name="jobDataAsMap">
@@ -16,14 +17,32 @@
 		  	</map>
 		</property>
 	</bean>
- 
-	<!-- 
+ 	 -->
+ 	 
+	 
 	<bean id="runMeJob" 
             class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
 		<property name="targetObject" ref="runMeTask" /> 
 		<property name="targetMethod" value="printMe" /> 
 	</bean> 
-	-->
+	
+	<bean id="ticketTask" 
+            class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
+		<property name="targetObject" ref="ticketService" /> 
+		<property name="targetMethod" value="ticketManager" /> 
+	</bean> 
+	
+	<bean id="requestTask" 
+            class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
+		<property name="targetObject" ref="ticketService" /> 
+		<property name="targetMethod" value="requestAndCart" /> 
+	</bean> 
+	
+	<bean id="transactionTask" 
+            class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
+		<property name="targetObject" ref="ticketService" /> 
+		<property name="targetMethod" value="transactionPool" /> 
+	</bean> 
  
 	<!-- Simple Trigger, run every 5 seconds -->
 	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
@@ -37,17 +56,38 @@
 		<property name="jobDetail" ref="runMeJob" />
 		<property name="cronExpression" value="0/5 * * * * ?" />
 	</bean>
+	
+	<bean id="ticketTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="ticketTask" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	
+	<bean id="requestTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="requestTask" />
+		<property name="cronExpression" value="0/8 * * * * ?" />
+	</bean>
+	
+	<bean id="transactionTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="transactionTask" />
+		<property name="cronExpression" value="0/10 * * * * ?" />
+	</bean>
  
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="jobDetails">
 			<list>
 				<ref bean="runMeJob" />
+				<ref bean="ticketTask" />
+				<ref bean="requestTask" />
+				<ref bean="transactionTask" />
 			</list>
 		</property>
  
 		<property name="triggers">
 			<list>
 				<ref bean="cronTrigger" />
+				<ref bean="ticketTrigger" />
+				<ref bean="requestTrigger" />
+				<ref bean="transactionTrigger" />
 			</list>
 		</property>
 	</bean>
