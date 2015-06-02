@@ -13,8 +13,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/OpenSourse/JarFiles/Redis/commons-pool-1.5.4.jar/commons-pool-1.5.4.jar"/>
-	<classpathentry kind="lib" path="C:/OpenSourse/JarFiles/Redis/jedis-2.1.0.jar/jedis-2.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/OpenSource/JarFiles/Redis/jedis-2.1.0.jar/jedis-2.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/OpenSource/JarFiles/Redis/commons-pool-1.5.4.jar/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
