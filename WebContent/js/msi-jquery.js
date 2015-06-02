@@ -286,6 +286,7 @@
 			});
 		}
 	}
+
 	function registerResult(data) {
 		if(data[0].result == "yes") {
 			window.location.href = "/Demand1/#Success_form";
@@ -300,6 +301,40 @@
 	  		$("#r_alreadyexisted").show();
 		}
 	}
+	
+	function forgetPWDValidation() {
+		$("#rs_emailReq").hide();
+	  	if (!IsEmail($("#rs_email").val())) {
+	  		$("#rs_emailReq").show();
+	  	}
+	  	else {
+ 			var formData = {email : $("#rs_email").val()};
+			$.ajax({
+				url: "/Demand1/restful/ResetPwd.html",
+				type: "post",
+				data: formData,
+				dataType: "json",
+				success:resetResult
+			});	  		
+	  	}
+	}	
+
+	function resetResult(data) {
+		if(data[0].result == "yes") {
+			window.location.href = "/Demand1/#ResetSuccess_form";
+		}
+		else {
+	  		$("#r_usernameReq").hide();
+	  		$("#r_passwordReq").hide();
+	  		$('#r_retypepasswordReq').hide();
+	  		$("#r_emailReq").hide();
+	  		$("#r_lastnameReq").hide();
+	  		$("#r_firstnameReq").hide();
+	  		$("#r_alreadyexisted").show();
+		}
+	}
+	
+	
 	function keyboardValidate(evt) {
 		  var theEvent = evt || window.event;
 		  var key = theEvent.keyCode || theEvent.which;
@@ -312,9 +347,9 @@
 	}
 	$(function() {
 		    var availableTags = [
-				"NY,NewYork,Penn Station",
-				"NY,NewYork,Jamaica",
-				"NY, NewYork,Yonkers Amtrak",
+				"NY,New York,Penn Station",
+				"NY,New York,Jamaica",
+				"NY,NewYork,Yonkers Amtrak",
 				"NJ,Princeton,West Trenton",
 				"NJ,Princeton,Joe's Train Station",
 				"NJ,Princeton,Princeton Junction",

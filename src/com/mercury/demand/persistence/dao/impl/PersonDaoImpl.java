@@ -1,11 +1,15 @@
 package com.mercury.demand.persistence.dao.impl;
 
+import java.util.List;
+
+import org.apache.commons.lang.RandomStringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.mercury.demand.mail.MailAppBean;
@@ -51,7 +55,7 @@ public class PersonDaoImpl implements PersonDao {
 			
 			String encryptStr = MagicCrypt.getInstance().encrypt(username);
 			encryptStr = MagicCrypt.getInstance().httpGetStringConvert(encryptStr);
-			mailApp.sendMail(firstname + " " + lastname, "http://localhost:8080/Demand1/restful/UserActivate.html?id="+encryptStr, email);
+			mailApp.sendMail(firstname + " " + lastname, "	Please click the following link to activate your account.\nhttp://localhost:8080/Demand1/restful/UserActivate.html?id="+encryptStr, email);
 			
 			return "yes";
 		}
@@ -87,6 +91,30 @@ public class PersonDaoImpl implements PersonDao {
 		updateUser.setLastname(lastname);
 		sessionFactory.getCurrentSession().update(updateUser);
 		return updateUser;
+	}
+
+	@Override
+	public String resetUserPwd(String email) {
+		// TODO Auto-generated method stub
+		HibernateTemplate template = new HibernateTemplate(sessionFactory);
+		@SuppressWarnings("unchecked")
+		List<Person> list = template.find("From Person Where email = ?", email);
+		if(list.size() != 0) {
+			String content = "The following account's password has been resettd.\n";
+			for(Person person : list) {
+				if(!person.getAuthority().equals("ROLE_ADMIN")) {
+					String generatedString = RandomStringUtils.random(8, true, true);
+					person.setPassword(MagicCrypt.getInstance().MD5(generatedString));
+					content = content + "username:" + person.getUsername() + "  password:" +  generatedString + "\n";
+							
+					template.update(person);
+				}
+			}
+			mailApp.sendMail(list.get(0).getFirstname() + " " + list.get(0).getLastname(), content, list.get(0).getEmail());
+			return "yes";
+		}
+		else
+			return "no";
 	}
 	
 

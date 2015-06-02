@@ -322,13 +322,18 @@ public class RestfulController {
 	//Update the user data
 	@RequestMapping(value="/auth/UpdateUser.html", method = RequestMethod.POST)
 	public @ResponseBody Person updateUser(@RequestParam("firstname") String firstname,
-								   @RequestParam("lastname") String lastname,
-								   @RequestParam("email") String email,
-								   @RequestParam("password") String password) {
+								   		   @RequestParam("lastname") String lastname,
+								   		   @RequestParam("email") String email,
+								   		   @RequestParam("password") String password) {
 		//get current login user
 	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return userDetailsService.updateUserProfile(user.getUsername(), password, email, lastname, firstname);
 		
 	}
 	
+	//Reset Password for the user
+	@RequestMapping(value="/restful/ResetPwd.html", method = RequestMethod.POST)
+	public @ResponseBody String resetUserPwd(@RequestParam("email") String email) {
+		return "[{\"result\":\"" + userDetailsService.resetUserPwd(email) + "\"}]";
+	}
 }

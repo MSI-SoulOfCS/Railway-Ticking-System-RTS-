@@ -29,9 +29,8 @@
 		<property name="text">
 		<value>
 			<![CDATA[
-				Dear %s,
-				Please click the following link to activate your account.
-				%s
+Dear %s,
+	%s
 			]]>
 		</value>
     </property>
