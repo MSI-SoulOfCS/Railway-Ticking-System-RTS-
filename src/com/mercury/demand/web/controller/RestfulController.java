@@ -27,6 +27,7 @@ import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
 import com.mercury.demand.service.StationDetailsService;
 import com.mercury.demand.service.TicketDetailsService;
+import com.redis.entity.CartItem;
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
 import com.redis.service.TicketService;
@@ -259,6 +260,13 @@ public class RestfulController {
 		}
 		
 		return unCartList;
+	}
+	
+	@RequestMapping(value="/auth/GetCartItemByUser.html", method = RequestMethod.POST)
+	public @ResponseBody List<CartItem> getCartItemByUser(@RequestParam("username") String username) {
+		
+		
+		return null;
 	}
 	
 	//****************************************
