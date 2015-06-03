@@ -37,7 +37,7 @@ public class TicketServiceTest
 	}
 
 	
-	//@Test
+	@Test
 	public void addTicket() 
 	{
 		String[] seats = new String[30];

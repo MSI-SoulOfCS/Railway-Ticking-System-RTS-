@@ -318,8 +318,25 @@ public class RestfulController {
 	//***TEST MULTI-THREAD BUY TICKET*********
 	//****************************************
 	@RequestMapping(value="/restful/TestTicket.html", method = RequestMethod.POST)
-	public void testTicket(@RequestParam("userid") String userid, @RequestParam("ticketid") String ticketid) {
+	public void testTicket(@RequestParam("userid") String userid, @RequestParam("ticketid") String ticketid) 
+	{
+		RedisRequest request = new RedisRequest();
 		
+		request.setUserId(userid);
+		
+		//System.out.println(Thread.currentThread().getName());
+		RedisRequest r = 
+				ticketService.buyTicket(request, ticketid);
+		
+		if(r != null)
+		{
+			//Thread.sleep(1000*random.nextInt(10));
+			ticketService.transactionCompleteWithPool(RelationConverter.requestKeyGenerator(r));
+			System.out.println(r.getUserId() + "---" + 
+					r.getTicketKey() + "---" + 
+					r.getSeatNo() + "---" + 
+					r.getDate());
+		}
 	}
 	
 }

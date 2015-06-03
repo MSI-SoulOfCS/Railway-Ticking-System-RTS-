@@ -30,20 +30,20 @@ public class TestTransactionPool1
 		jedis = RedisUtil.getJedis();
 	}
 
-	//@Test
+	@Test
 	public void addTicket() 
 	{
 		String[] seats = new String[100];
 		
 		for(int i=1;i<=100;i++)
 		{
-			seats[i-1] = "X" + i;
+			seats[i-1] = "B" + i;
 		}
 		
 		RedisTicket ticket = new RedisTicket();
 	
 		ticket.setStart("beijing");
-		ticket.setDestination("xian");
+		ticket.setDestination("baotou");
 		ticket.setDate(DateFormatUtil.stringToDateBlur("201505291023"));
 		ticket.setActive("true");
 		ticket.setAmount(30);
@@ -69,7 +69,7 @@ public class TestTransactionPool1
 		service.transactionCompleteWithPool("wangwu@gmail.com%20150602103424829");
 	}
 	
-	@Test
+	//@Test
 	public void testBuyTicketMultiThread()
 	{
 			//final Random random = new Random();
@@ -133,7 +133,7 @@ public class TestTransactionPool1
 			
 		}
 	
-	@Test
+	//@Test
 	public void testBuyTicketMultiThreadByMoreTicket()
 	{
 			final Random random = new Random();
