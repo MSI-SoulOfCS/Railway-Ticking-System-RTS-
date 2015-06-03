@@ -17,12 +17,14 @@ public class TransactionService
 	
 	public static void complete()
 	{
-		TicketService service = 
-				new TicketServiceImpl();
+		TicketService service = new TicketServiceImpl();
 		
 		List<RedisTransaction> trans = service.getAllTransactionAndDelete();
-
-		OracleTransaction.getInstance().addTransactionToOracle(trans);
+		if(trans != null)
+			OracleTransaction.getInstance().addTransactionToOracle(trans);
+		else
+			System.out.println("no data");
+			
 
 //		OracleUtil.save(trans);
 	}

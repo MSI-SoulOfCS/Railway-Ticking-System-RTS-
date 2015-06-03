@@ -35,7 +35,7 @@ public class HistoryDaoImpl implements HistoryDao{
 	@Override
 	public List<Transaction> getUserTransaction(String username) {
 		// TODO Auto-generated method stub
-		String hql = "From Transaction where user_id = ?";
+		String hql = "From Transaction where user_id = ? order by tran_time desc";
 		return template.find(hql,username);
 	}
 

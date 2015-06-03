@@ -233,6 +233,15 @@
 		});
     }
 	function checkResult(data) {
+		
+		$(data).each(function(i,item) {
+			var d = new Date(item.date);
+			var rows = "From " + item.start + "\nTO "+item.destination+"\n"+
+			d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate()) + 
+			" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "\nTicket  already sold out.";
+			alert(rows);
+		});		
+		
 		window.location.href="/Demand1/auth/user.html";
 /*		if(data[0].result == "yes") {
 			location.href = "#success_addToCart";
@@ -279,8 +288,12 @@
 			  type:"post",
 			  data: JSON.stringify(formData),
 			  dataType:"json",
-			  success:checkResult
+			  success:checkOutResult
 		});
+	}
+	
+	function checkOutResult(data) {
+		window.location.href="/Demand1/auth/user.html";		
 	}
 	/*check out function end here*/
 	

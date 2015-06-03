@@ -9,6 +9,11 @@ public class RequestManager
 	 * if the item stay at cart over 2 minutes 
 	 * it will be removed 
 	 */
+	
+	public RequestManager() {
+		System.out.println("New Request Manager");
+	}
+	
 	public void removeExpiredRequest()
 	{
 		TicketService service = 

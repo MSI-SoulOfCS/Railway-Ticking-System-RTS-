@@ -35,7 +35,7 @@
 	<script>
 		$(document).ready(function(){
 			loadAllUserCart();
-			loadAllTicket();
+			loadAllTicket();				
 
 			$("#navigation-menu li a").on("click", function(event){
 				removeActiveClass();
@@ -51,6 +51,8 @@
 					loadAllTicket();					
 				} else if(viewTag=="ProfileView") {
 					loadUserInfo();					
+				} else if(viewTag=="ShoppingCartView") {
+					loadAllUserCart();					
 				}
 				
 			});	
