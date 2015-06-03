@@ -90,11 +90,12 @@ public class LoginController {
 	
 	@RequestMapping(value="/account/pieChart.html",method=RequestMethod.POST)
 	public ModelAndView pieChart(@RequestParam("Amount") String amount,
-								@RequestParam("Avaliable") String avaliable)
+								@RequestParam("Available") String available)
 	{
 		List<Integer> result=new ArrayList<Integer>();
 		result.add(Integer.parseInt(amount));
-		result.add(Integer.parseInt(avaliable));
+		result.add(Integer.parseInt(available));
+		System.out.println(result);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("account/pieChart");
 		mav.addObject("resultTicketInfo", result);

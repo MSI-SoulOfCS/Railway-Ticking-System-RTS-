@@ -101,24 +101,32 @@
 	    }
 		 function sendIDforPieChart(data){
 		    	var id={ticketItem:data};
+		    	 
 		    	$.ajax({
 		    		url: "/Demand1/restful/PeroidTickets.html",
 		  			type: "post",
 		  			data: id,
 		  			dataType: "json",
-		  			success: drawChart
+		  			success: redirectToPieChart
 		  			
 		    	});
 		    	
 		}
 		 
-		 function drawChart(data) {
+		 function redirectToPieChart(data){
 			 var saled=0;
 			 var available=0;
 			 $(data).each(function(i,item){
 				 saled=item.amount-item.avaiNumber;
 				 available=item.avaiNumber;
 			 });
+			 url_redirect({url: "/Demand1/account/pieChart.html",
+     			  method: "post",
+       		  	  data: {"Amount":saled, "Available":available}
+			});
+		 }
+		 
+		 function drawChart(data) {
 		      var data1 = google.visualization.arrayToDataTable([
 		        ['Sales', 'Amount'],
 		        ['Saled', saled],
