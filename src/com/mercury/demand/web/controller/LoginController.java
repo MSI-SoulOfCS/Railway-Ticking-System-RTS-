@@ -88,20 +88,6 @@ public class LoginController {
 		return mav;
 	}	
 	
-	@RequestMapping(value="/account/pieChart.html",method=RequestMethod.POST)
-	public ModelAndView pieChart(@RequestParam("Amount") String amount,
-								@RequestParam("Available") String available)
-	{
-		List<Integer> result=new ArrayList<Integer>();
-		result.add(Integer.parseInt(amount));
-		result.add(Integer.parseInt(available));
-		System.out.println(result);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("account/pieChart");
-		mav.addObject("resultTicketInfo", result);
-		return mav;
-	}
-	
 	@RequestMapping(value="/content/ticket.html", method = RequestMethod.POST)
 	public ModelAndView ticket(@RequestParam("From") String from, 
 			   				   @RequestParam("To") String to,

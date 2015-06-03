@@ -109,26 +109,19 @@
 		  			type: "post",
 		  			data: id,
 		  			dataType: "json",
-		  			success: redirectToPieChart
+		  			success: drawChart
 		  			
 		    	});
 		    	
 		}
 		 
-		 function redirectToPieChart(data){
+		 function drawChart(data) {
 			 var saled=0;
 			 var available=0;
 			 $(data).each(function(i,item){
 				 saled=item.amount-item.avaiNumber;
 				 available=item.avaiNumber;
 			 });
-			 url_redirect({url: "/Demand1/account/pieChart.html",
-     			  method: "post",
-       		  	  data: {"Amount":saled, "Available":available}
-			});
-		 }
-		 
-		 function drawChart(data) {
 		      var data1 = google.visualization.arrayToDataTable([
 		        ['Sales', 'Amount'],
 		        ['Saled', saled],
