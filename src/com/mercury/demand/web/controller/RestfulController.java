@@ -273,6 +273,13 @@ public class RestfulController {
 	public @ResponseBody Person getCertainUserByUsername(@RequestParam("username") String username) {
 		return userDetailsService.getUserByUsername(username);
 	}
+	
+	//Get current user
+	@RequestMapping(value="/auth/GetCurrentUser.html", method = RequestMethod.GET)
+	public @ResponseBody Person getCurrentUser() {
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return userDetailsService.getUserByUsername(user.getUsername());
+	}
 		
 	//Register a user
 	@RequestMapping(value="/restful/RegisterUser.html", method = RequestMethod.POST)
@@ -300,11 +307,10 @@ public class RestfulController {
 	@RequestMapping(value="/auth/UpdateUser.html", method = RequestMethod.POST)
 	public @ResponseBody Person updateUser(@RequestParam("firstname") String firstname,
 								   		   @RequestParam("lastname") String lastname,
-								   		   @RequestParam("email") String email,
-								   		   @RequestParam("password") String password) {
+								   		   @RequestParam("email") String email) {
 		//get current login user
 	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return userDetailsService.updateUserProfile(user.getUsername(), password, email, lastname, firstname);
+		return userDetailsService.updateUserProfile(user.getUsername(), email, lastname, firstname);
 		
 	}
 	
@@ -312,6 +318,13 @@ public class RestfulController {
 	@RequestMapping(value="/restful/ResetPwd.html", method = RequestMethod.POST)
 	public @ResponseBody String resetUserPwd(@RequestParam("email") String email) {
 		return "[{\"result\":\"" + userDetailsService.resetUserPwd(email) + "\"}]";
+	}
+	
+	//Update the user Password
+	@RequestMapping(value="/auth/UpdatePassword.html", method = RequestMethod.POST)
+	public @ResponseBody String updatePassword(@RequestParam("password") String password) {
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return "[{\"result\":\"" + userDetailsService.updateUserPassword(user.getUsername(), password) + "\"}]";
 	}
 	
 	//****************************************

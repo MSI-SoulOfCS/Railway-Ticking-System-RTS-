@@ -16,36 +16,71 @@
     }
 	function addZeros(n) {
 		  return (n < 10)? '0' + n : '' + n;
-	}	
+	}
+	
+	/*Load Current User Info*/
+	function loadUserInfo() {
+  	    $.ajax({
+  			url: "/Demand1/auth/GetCurrentUser.html",
+  			type: "GET",
+  			dataType: "json",
+  			success:initUserData
+  		});		
+	}
+	
+	function initUserData(data) {
+		$("#u_firstName").val(data.firstname);
+		$("#u_lastName").val(data.lastname);
+		$("#u_email").val(data.email);
+	}
+	
     /*This function use to update user data*/
     
     function updateUser(){
   		$('#v_email').hide();
-  		$("#v_password").hide();
-  		var flag=true;
-  		if(!IsEmail($("#email").val())){
+
+  		if(!IsEmail($("#u_email").val())){
   			$("#v_email").show();
-  			flag=false;
+  			return false;
   		}
-  		if($("#password").val().length<8||$("#password").val().length>16){
+  		var formData = {firstname : $("#u_firstName").val(), lastname : $("#u_lastName").val(), email : $("#u_email").val()};
+  	    $.ajax({
+  			url: "/Demand1/auth/UpdateUser.html",
+  			type: "post",
+  			data: formData,
+  			dataType: "json",
+  			success: foo
+  		});
+
+    }
+        
+    function updatePassword() {
+  		$("#v_password").hide();
+  		$("#ve_password").hide();
+  		if($("#u_password").val().length<8||$("#u_password").val().length>16){
   			$("#v_password").show();
-  			flag=false;
+  			return false;
   		}
-  		if(flag){
-  			var formData = {firstname : $("#firstName").val(), lastname : $("#lastName").val(), email : $("#email").val() , password : $("#password").val()};
-  	    	$.ajax({
-  				url: "/Demand1/auth/UpdateUser.html",
-  				type: "post",
-  				data: formData,
-  				dataType: "json",
-  				success: foo
-  			});
+  		else if($("#u_password").val() != $("#cu_password").val()) {
+  			$("#ve_password").show();
+  			return false;
   		}
+  		var formData = {password : $("#u_password").val()};
+  	    $.ajax({
+  			url: "/Demand1/auth/UpdatePassword.html",
+  			type: "post",
+  			data: formData,
+  			dataType: "json",
+  			success: foo
+  		});
     }
     
     function foo(data){
-    	
+    	alert("Update Success!");
+    	$("#u_password").val("");
+    	$("#cu_password").val("");
     }
+
     /*Update user function end here*/
     
     
@@ -128,6 +163,28 @@
     //
     
     /*load all tickets function end here*/
+    function loadUserHistory() {
+		$.ajax({
+			url: "/Demand1/auth/UserHistory.html",
+			type: "get",
+			success:loadHistory
+		});   	
+    }
+	function loadHistory(data) {
+		var rows = "";
+		$("#tickets").empty();
+		$(data).each(function(i,item) {
+			var d = new Date(item.tran_time);
+			rows = "<tr><td>" + item.ticket_id + "</td><td>"+item.seat_no+"</td><td>"+
+			d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate())
+			+"	"+ addZeros(d.getHours())+":"+ addZeros(d.getMinutes())+ "</td></tr>";
+			$(rows).appendTo("#tickets");
+		});
+	}
+    /*This function use to load user's transaction from oracle*/
+    
+    /*load history function end here*/
+    
     
     /*This function use to new a ticket*/
     function addTicket() {
@@ -151,15 +208,7 @@
 			" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price+"</td></tr>";
 			$(rows).appendTo("#ManageTicketTable");
 		});
-    }
-    
-    
-    
-   
-    
-    
-    
-    
+    } 
     /*new a ticket function end here*/
     
     /*This function use to add ticket to cart*/
@@ -203,6 +252,7 @@
 	}
 	/*Ticket query function end here*/
 	
+	/*This function use to check out*/
 	function checkoutPage(){
     	var formData=[];
     	$('#CartTicket tr').each(function(){ 
@@ -232,6 +282,7 @@
 			  success:checkResult
 		});
 	}
+	/*check out function end here*/
 	
 	function loginValidation() {
 		$("#usernameAndPasswordReq").hide();

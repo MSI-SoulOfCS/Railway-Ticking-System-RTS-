@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>User Account Info</title>
 
     <!-- Bootstrap core CSS -->    
 	 <link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">   
@@ -22,6 +22,7 @@
     <script src="<c:url value="/js/jquery-1.11.1.min.js" />"></script>
    	<script src="<c:url value="/js/jquery-ui.js"/>"></script>
   	<script src="<c:url value="/js/msi-jquery.js"/>"></script>
+
   	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
   	
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -37,13 +38,9 @@
 		var available=0;
 		$(document).ready(function(){
 			loadAllUserCart();
-			loadAllTicket();			
- 			$.ajax({
-				url: "/Demand1/restful/history.html",
-				type: "get",
-				success:showData
-			});
-			
+			loadAllTicket();
+			loadUserHistory();
+			loadUserInfo();
 			$("#navigation-menu li a").on("click", function(event){
 				removeActiveClass();
 				$(event.target).parent().addClass("active");
@@ -51,7 +48,12 @@
 				$("#"+viewTag).show();
 				if(viewTag=="AnalysisView"){
 					loadAllTicketForAnalysis();
+				} else if(viewTag=="HistoryView") {
+					loadUserHistory();					
+				} else if(veiwTag=="ManageTicketView") {
+					loadAllTicket();					
 				}
+				
 			});	
 			
 			var select = '';
@@ -101,6 +103,7 @@
 	    }
 		 function sendIDforPieChart(data){
 		    	var id={ticketItem:data};
+		    	 
 		    	$.ajax({
 		    		url: "/Demand1/restful/PeroidTickets.html",
 		  			type: "post",
@@ -134,30 +137,13 @@
 		      chart.draw(data1, options);
 		      $("#piechart_3d").show();
 		}
-		  
-		function showData(data) {
-			var rows = "";
-			$("#tickets").empty();
-			$(data).each(function(i,item) {
-				var d = new Date(item.date);
-				var ticket_from = item.from_loc;
-				var ticket_to=item.to_loc;
-				var ticket_price=item.price;
-				rows = "<tr><td>" + ticket_from.station + "</td><td>"+ticket_to.station+"</td><td>"+
-				d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate()) + 
-				+"	"+ addZeros(d.getHours())+":"+ addZeros(d.getMinutes())+":"+ addZeros(d.getSeconds())+"</td><td>"+ticket_price+"</td></tr>";
-				$(rows).appendTo("#tickets");
-			});
-		}
 		
 		function removeActiveClass() {
-			$("#MyTrip").parent().removeClass("active");
 			$("#History").parent().removeClass("active");
 			$("#Profile").parent().removeClass("active");
 			$("#ShoppingCart").parent().removeClass("active");
 
 			
-			$("#MyTripView").hide();
 			$("#HistoryView").hide();
 			$("#ProfileView").hide();
 			$("#ShoppingCartView").hide();
@@ -210,7 +196,7 @@
 	</style>
   </head>
 
-  <body>
+  <body>  
 	<sec:authentication var="user" property="principal" />  
   
   
@@ -241,79 +227,36 @@
 				<ul id="navigation-menu" class="nav nav-sidebar">
 					<sec:authorize access="hasRole('ROLE_USER')">
           				<li class="active"><a id="ShoppingCart" href="#ShoppingCart">Shopping Cart</a>
-            			<li>			   <a id="MyTrip" href="#MyTrip">My Trip</a></li>
             			<li>			   <a id="History" href="#History">History</a></li>
-            			<li>			   <a id="Profile" href="#Profile">Profile</a>
           			</sec:authorize>
           			<sec:authorize access="hasRole('ROLE_ADMIN')">
             			<li class="active"><a id="ManageTicket" href="#ManageTicket">Manage Ticket</a></li>
             			<li>			   <a id="Analysis" href="#Analysis">Analysis</a></li>
-          			</sec:authorize>	
+          			</sec:authorize>
+					<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+            			<li>			   <a id="Profile" href="#Profile">Profile</a>
+					</sec:authorize>
           		</ul>
         	</div>
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         		<!-- User -->
           		<sec:authorize access="hasRole('ROLE_USER')">
-          			<div id="MyTripView" style="display:none">
-	        	 		<h2 class="sub-header">Section title</h2>
-	          			<div class="table-responsive">
-	            			<table class="table table-striped">
-	              				<thead>
-	                				<tr>
-	                  					<th>#</th>
-	                  					<th>Header</th>
-	                  					<th>Header</th>
-	                  					<th>Header</th>
-	                  					<th>Header</th>
-	               					</tr>
-	              				</thead>
-	            			</table>
-	          			</div>
-					</div>
 					
 					<div id="HistoryView" style="display:none">
-						<h2 class="sub-header">Update Profile</h2>
+						<h2 class="sub-header">Transaction History</h2>
 	          			<div>
 	            			<table class="table table-striped">
 	                			<tr>
-	                  				<th>From</th>
-	                  				<th>To</th>
-	                  				<th>Date</th>
-	                  				<th>Price</th>
+	                  				<th>Ticket ID</th>
+	                  				<th>Seat</th>
+	                  				<th>Transaction Date</th>
 	               				</tr>
 	               				<tbody id="tickets">
 				  				</tbody>
 	            			</table>
 	          			</div>
 					</div>
-					
-					<div id="ProfileView" style="display:none">
-						<h2 class="sub-header">Update Profile</h2>
-	          			<div>
-							<div class="alert" style="display:none;" id="v_email">
-								<p>Email is invalid</p>
-							</div>
-							<div class="alert" style="display:none;" id="v_password">
-								<p>Password is length must be between 8 to 16 charactors</p>
-							</div>
-	            			<table class="table table-striped">
-	                			<tr>
-	                  				<th>FirstName</th>
-	                  				<th>LastName</th>
-	                  				<th>Email</th>
-	                  				<th>Password</th>
-	               				</tr>
-	               				<tr>
-	               					<td><input id="firstName" type="text"/></td>
-	               					<td><input id="lastName" type="text"/></td>
-	               					<td><input id="email" type="text"/></td>
-	               					<td><input id="password" type="password"/></td>
-	               				</tr>
-	            			</table>
-	            			<button onclick="updateUser()" class="button orange">Submit</button>
-	          			</div>
-					</div>
-					
+										
 					<div id="ShoppingCartView">
 						<h2 class="sub-header">Shopping Cart</h2>
 	          			<div>
@@ -456,6 +399,51 @@
 					</table>
 					
 				</sec:authorize>
+				
+				<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+					<div id="ProfileView" style="display:none">
+						<h2 class="sub-header">Update Profile</h2>
+							<div class="alert" style="display:none;" id="v_email">
+								<p>Email is invalid</p>
+							</div>
+	            			<table class="table table-striped">
+	                			<tr>
+	                  				<th>FirstName</th>
+	                  				<th>LastName</th>
+	                  				<th>Email</th>
+	               				</tr>
+	               				<tr>
+	               					<td><input id="u_firstName" type="text" maxlength="20"/></td>
+	               					<td><input id="u_lastName" type="text" maxlength="20"/></td>
+	               					<td><input id="u_email" type="text" maxlength="50" /></td>
+	               				</tr>
+	            			</table>
+	            			<button onclick="updateUser()" class="button orange">Submit</button>
+							<br />
+							<br />
+						<h2 class="sub-header">Change Password</h2>
+							<div class="alert" style="display:none;" id="v_password">
+								<p>Password is length must be between 8 to 16 charactors</p>
+							</div>
+							<div class="alert" style="display:none;" id="ve_password">
+								<p>Password and Comfirm Password must be same</p>
+							</div>
+
+	            			<table class="table table-striped">
+	                			<tr>
+	                  				<th>New Password</th>
+	                  				<th>Comfirm New Password</th>
+	               				</tr>
+	               				<tr>
+	               					<td><input id="u_password" type="password"/></td>
+	               					<td><input id="cu_password" type="password"/></td>
+	               				</tr>
+	            			</table>
+	            			<button onclick="updatePassword()" class="button orange">Submit</button>
+
+					</div>
+				</sec:authorize>				
+				
 			</div>
 		</div>
     </div>
