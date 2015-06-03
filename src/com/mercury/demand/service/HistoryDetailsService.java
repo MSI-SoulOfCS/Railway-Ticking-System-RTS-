@@ -1,14 +1,13 @@
 package com.mercury.demand.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mercury.demand.persistence.dao.HistoryDao;
-import com.mercury.demand.persistence.model.History;
-import com.mercury.demand.persistence.model.Person;
-import com.mercury.demand.persistence.model.Ticket;
+import com.mercury.demand.persistence.model.Transaction;
 
 @Service
 public class HistoryDetailsService {
@@ -23,11 +22,16 @@ public class HistoryDetailsService {
 		this.hd = hd;
 	}
 	
-	public List<History> getAllHistory(){
+	public List<Transaction> getAllHistory(){
 		return hd.getAllHistory();
 	}
 	
-	public List<Ticket> getTicketsHistoryByUser(Person person) {
-		return hd.getTicketsHistoryByUser(person);
+	public List<Transaction> getTransactionByUsername(String username) {
+		return hd.getUserTransaction(username);
 	}
+	public void addAHistory(String user_id, String ticket_id, String seat_no, Date date) {
+		System.out.println(user_id + " " + ticket_id);
+		hd.addAHistory(user_id, ticket_id, seat_no, date);
+	}
+
 }

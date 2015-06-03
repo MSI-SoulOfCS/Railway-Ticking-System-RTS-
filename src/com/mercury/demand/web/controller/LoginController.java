@@ -105,9 +105,7 @@ public class LoginController {
 	public ModelAndView ticket(@RequestParam("From") String from, 
 			   				   @RequestParam("To") String to,
 			   				   @RequestParam("Time") String time, 
-			 				   ModelMap model) {
-		System.out.println("From:"+from+" To:"+to+" Date:"+time);
-		
+			 				   ModelMap model) {		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String[] DateAndTime = time.split("/");
 		String[] HourTime = DateAndTime[1].split("-");

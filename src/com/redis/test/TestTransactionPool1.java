@@ -33,9 +33,9 @@ public class TestTransactionPool1
 	//@Test
 	public void addTicket() 
 	{
-		String[] seats = new String[30];
+		String[] seats = new String[100];
 		
-		for(int i=1;i<=30;i++)
+		for(int i=1;i<=100;i++)
 		{
 			seats[i-1] = "X" + i;
 		}
@@ -43,7 +43,7 @@ public class TestTransactionPool1
 		RedisTicket ticket = new RedisTicket();
 	
 		ticket.setStart("beijing");
-		ticket.setDestination("nanjing");
+		ticket.setDestination("xian");
 		ticket.setDate(DateFormatUtil.stringToDateBlur("201505291023"));
 		ticket.setActive("true");
 		ticket.setAmount(30);
@@ -74,7 +74,7 @@ public class TestTransactionPool1
 	{
 			//final Random random = new Random();
 			
-			for(int i=0;i<200;i++)
+			for(int i=0;i<1500;i++)
 			{
 				Thread t = new Thread(new Runnable(){
 
@@ -115,6 +115,7 @@ public class TestTransactionPool1
 				t.start();
 			}
 			
+			/*
 			while(true)
 			{
 				try 
@@ -127,8 +128,81 @@ public class TestTransactionPool1
 					e.printStackTrace();
 				}
 				
-				TransactionService.completeTransaction();
+				//TransactionService.completeTransaction();
+			}*/
+			
+		}
+	
+	@Test
+	public void testBuyTicketMultiThreadByMoreTicket()
+	{
+			final Random random = new Random();
+			
+			final String[] tickets = {
+					"beijing#baotou#201505291023",
+					"beijing#jining#201505291023",
+					"beijing#haerbin#201505291023",
+					"beijing#tianjin#201505291023",
+					"beijing#xian#201505291023"
+			};
+			
+			for(int i=0;i<1500;i++)
+			{
+				Thread t = new Thread(new Runnable(){
+
+					@Override
+					public void run() 
+					{
+						try 
+						{
+							RedisRequest request = new RedisRequest();
+							
+							request.setUserId(Thread.currentThread().getName());
+							
+							//System.out.println(Thread.currentThread().getName());
+							RedisRequest r = 
+									service.buyTicket(request, tickets[random.nextInt(5)]);
+							
+							
+							if(r != null)
+							{
+								//Thread.sleep(1000*random.nextInt(10));
+								service.transactionCompleteWithPool(RelationConverter.requestKeyGenerator(r));
+								System.out.println(r.getUserId() + "---" + 
+										r.getTicketKey() + "---" + 
+										r.getSeatNo() + "---" + 
+										r.getDate());
+							}	
+						} 
+						catch (Exception e) 
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+					
+				});
+				
+				t.start();
 			}
+			
+			/*
+			while(true)
+			{
+				try 
+				{
+					Thread.sleep(20000);
+				} 
+				catch (InterruptedException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				//TransactionService.completeTransaction();
+			}*/
+			
 		}
 
 }

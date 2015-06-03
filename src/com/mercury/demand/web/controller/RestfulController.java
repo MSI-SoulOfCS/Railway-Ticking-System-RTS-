@@ -23,6 +23,7 @@ import com.mercury.demand.persistence.model.History;
 import com.mercury.demand.persistence.model.Person;
 import com.mercury.demand.persistence.model.Station;
 import com.mercury.demand.persistence.model.Ticket;
+import com.mercury.demand.persistence.model.Transaction;
 import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
 import com.mercury.demand.service.StationDetailsService;
@@ -101,13 +102,6 @@ public class RestfulController {
 		return ticketService.getAllTicket()	;
 	}
 	
-	@RequestMapping(value="/restful/history.html", method = RequestMethod.GET)
-	public @ResponseBody List<Ticket> getTicketsByUserID() {
-		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Person person=userDetailsService.getUserByUsername(user.getUsername());
-		return historyDetailsService.getTicketsHistoryByUser(person);
-	}
-	
 	//Get tickets during a period of time
 	@RequestMapping(value="/restful/PeroidTickets.html", method = RequestMethod.POST)
 	public @ResponseBody List<RedisTicket> getTicketsDuringPeriodTime(@RequestParam("ticketItem") String ticketItem) {
@@ -174,14 +168,14 @@ public class RestfulController {
 	//****************************************	
 	//Get all history
 	@RequestMapping(value="/auth/History.html", method = RequestMethod.GET)
-	public @ResponseBody List<History> getAllHistory() {
+	public @ResponseBody List<Transaction> getAllHistory() {
 		return historyDetailsService.getAllHistory();
 	}
 	
 	@RequestMapping(value="/auth/UserHistory.html", method = RequestMethod.GET)
-	public @ResponseBody List<Ticket> getUserHistory() {
+	public @ResponseBody List<Transaction> getUserHistory() {
 		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return historyDetailsService.getTicketsHistoryByUser(userDetailsService.getUserByUsername(user.getUsername()));
+		return historyDetailsService.getTransactionByUsername(user.getUsername());
 	}
 	
 	//****************************************
@@ -262,14 +256,13 @@ public class RestfulController {
 	
 	@RequestMapping(value="/auth/CheckOut.html", method = RequestMethod.POST)
 	public @ResponseBody String checkOut(@RequestBody CartItem[] data) {
-	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+	    
 		for(CartItem item : data) 
 		{
-//			ticketService.transactionCompleteWithPool(item.getItemId());
+			ticketService.transactionCompleteWithPool(item.getItemId());
 		}
 		
-		return null;
+		return "[{\"result\":\"" + "yes" + "\"}]";
 	}
 	
 	//****************************************

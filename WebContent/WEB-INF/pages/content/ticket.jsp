@@ -111,13 +111,15 @@
                     </thead>
                     <tbody>
 						<c:forEach var="ticket" items="${resultTickets}">
-							<tr>
-								<td>${ticket.start }</td>
-								<td>${ticket.destination}</td>
-								<td>${ticket.price}</td>
-								<td><fmt:formatDate value="${ticket.date}" type="both" pattern="yyyy-MM-dd HH:mm" /></td>
-								<td><input id="check" type="checkbox"/></td>
-							</tr>
+							<c:if test="${ticket.avaiNumber > 0}">
+								<tr>
+									<td>${ticket.start }</td>
+									<td>${ticket.destination}</td>
+									<td>${ticket.price}</td>
+									<td><fmt:formatDate value="${ticket.date}" type="both" pattern="yyyy-MM-dd HH:mm" /></td>
+									<td><input id="check" type="checkbox"/></td>
+								</tr>
+							</c:if>
 						</c:forEach>
                     </tbody>
                 </table>

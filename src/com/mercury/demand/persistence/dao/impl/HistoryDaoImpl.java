@@ -1,6 +1,6 @@
 package com.mercury.demand.persistence.dao.impl;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.mercury.demand.persistence.dao.HistoryDao;
-import com.mercury.demand.persistence.model.History;
-import com.mercury.demand.persistence.model.Person;
-import com.mercury.demand.persistence.model.Ticket;
+import com.mercury.demand.persistence.model.Transaction;
 
 public class HistoryDaoImpl implements HistoryDao{
 
@@ -25,20 +23,34 @@ public class HistoryDaoImpl implements HistoryDao{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<History> getAllHistory() {
+	public List<Transaction> getAllHistory() {
 		// TODO Auto-generated method stub
-		String hql = "From History";
+		String hql = "From Transaction";
 		return template.find(hql);
 	}
-	@SuppressWarnings({ "unchecked"})
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Ticket> getTicketsHistoryByUser(Person person){
-		String hql="From History where person=?";
-		List<History> historyList=template.find(hql,person);
-		List<Ticket> ticketList=new ArrayList<Ticket>();
-		for(int i=0;i<historyList.size();i++){
-			ticketList.add(historyList.get(i).getTicket());
+	public List<Transaction> getUserTransaction(String username) {
+		// TODO Auto-generated method stub
+		String hql = "From Transaction where user_id = ?";
+		return template.find(hql,username);
+	}
+
+	@Override
+	public void addAHistory(String user_id, String ticket_id, String seat_no, Date date) {
+		// TODO Auto-generated method stub
+		Transaction transaction = new Transaction();
+		transaction.setUser_id(user_id);
+		transaction.setTicket_id(ticket_id);
+		transaction.setSeat_no(seat_no);
+		transaction.setTran_time(date);
+		template.save(transaction);
+		
+		List<Transaction> list = this.getAllHistory();
+		for(Transaction tran : list) {
+			System.out.println(tran.getTicket_id());
 		}
-		return ticketList;
+		System.out.println("--------");
 	}
 }
