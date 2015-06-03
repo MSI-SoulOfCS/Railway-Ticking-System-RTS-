@@ -23,14 +23,19 @@
    	<script src="<c:url value="/js/jquery-ui.js"/>"></script>
   	<script src="<c:url value="/js/msi-jquery.js"/>"></script>
   	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
-	
+  	
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<script>
-		$(document).ready(function() {
+		google.load("visualization", "1", {packages:["corechart"]});
+		
+		var amount=0;
+		var available=0;
+		$(document).ready(function(){
 			loadAllUserCart();
 			loadAllTicket();			
  			$.ajax({
@@ -63,9 +68,73 @@
 						
 			$('#checkoutBtn').click(function(){
 				window.location.href='http://localhost:8080/Demand1/auth/checkOut.html';
-			})
+			});
+			
+			
+		
 		});
 		
+		function loadAllTicketForAnalysis() {
+	    	$.ajax({
+				  url:"/Demand1/restful/Tickets.html",
+				  type:"GET",
+				  dataType:"json",
+				  success:reloadAllTicketAfterNewTicketForAnalysis
+			});
+	    }
+		
+		function reloadAllTicketAfterNewTicketForAnalysis(data) {
+			var rows = "";
+			$("#analysisTicket").empty();
+			$(data).each(function(i,item) {
+				var d = new Date(item.date);
+				var str=item.start +"+"+item.destination+"+" + d.getFullYear()+"-"+addZeros((d.getMonth()+1))+ "-"+ addZeros(d.getDate())
+				+" "+addZeros(d.getHours())+":"+addZeros(d.getMinutes())+":00.0";
+				str=str.replace(/ /g, "_");
+				rows = "<tr><td>" + item.start + "</td><td>"+item.destination+"</td><td>"+
+				d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate()) + 
+				" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price + 
+				"</td><td><input id=" +str+ " type=\"button\" value=\"show pie chart\" onclick=\"sendIDforPieChart(id)\"/>"+"</td></tr>";
+				$(rows).appendTo("#analysisTicket");
+				
+			});
+	    }
+		 function sendIDforPieChart(data){
+		    	var id={ticketItem:data};
+		    	$.ajax({
+		    		url: "/Demand1/restful/PeroidTickets.html",
+		  			type: "post",
+		  			data: id,
+		  			dataType: "json",
+		  			success: drawChart
+		  			
+		    	});
+		    	
+		}
+		 
+		 function drawChart(data) {
+			 var saled=0;
+			 var available=0;
+			 $(data).each(function(i,item){
+				 saled=item.amount-item.avaiNumber;
+				 available=item.avaiNumber;
+			 });
+		      var data1 = google.visualization.arrayToDataTable([
+		        ['Sales', 'Amount'],
+		        ['Saled', saled],
+		        ['Not saled', available]
+		      ]);
+		          
+		      var options = {
+		        title: 'Ticket sale information',
+		        is3D: true,
+		      };
+		          
+		      var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+		      chart.draw(data1, options);
+		      $("#piechart_3d").show();
+		}
+		  
 		function showData(data) {
 			var rows = "";
 			$("#tickets").empty();
@@ -97,9 +166,13 @@
 			$("#ManageTicketView").hide();
 			$("#Analysis").parent().removeClass("active");
 			$("#AnalysisView").hide();
+			
+			$("#piechart_3d").hide();
 		}
+		
+		
 	</script>
-	<script src="<c:url value="/js/msi-jquery.js" />"></script>
+	
 	<style>
 		.alert {
 			color: red;
@@ -369,12 +442,19 @@
 	                  				<th>Date</th>
 	                  				<th>Seat</th>
 	                  				<th>Price</th>
+	                  				<th></th>
 	               				</tr>
 	               				<tbody id="analysisTicket">
 				  				</tbody>
 	            			</table>
 	          			</div>
 					</div>
+					<table>
+						<tr>
+							<td><div id="piechart_3d" align="center"></div></td>
+						</tr>
+					</table>
+					
 				</sec:authorize>
 			</div>
 		</div>
