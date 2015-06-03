@@ -80,12 +80,10 @@ public class PersonDaoImpl implements PersonDao {
 	}
 
 	@Override
-	public Person updateUserProfile(String username, String password,
+	public Person updateUserProfile(String username,
 			String email, String lastname, String firstname) {
 		// TODO Auto-generated method stub
 		Person updateUser = this.getPersonByUsername(username);
-		updateUser.setUsername(username);
-		updateUser.setPassword(password);
 		updateUser.setEmail(email);
 		updateUser.setFirstname(firstname);
 		updateUser.setLastname(lastname);
@@ -115,6 +113,15 @@ public class PersonDaoImpl implements PersonDao {
 		}
 		else
 			return "no";
+	}
+
+	@Override
+	public String updateUserPassword(String username, String password) {
+		// TODO Auto-generated method stub
+		Person updateUser = this.getPersonByUsername(username);
+		updateUser.setPassword(MagicCrypt.getInstance().MD5(password));
+		sessionFactory.getCurrentSession().update(updateUser);
+		return "yes";
 	}
 	
 
