@@ -179,6 +179,7 @@ public class TicketServiceImpl implements TicketService
 	@Override
 	public void ticketExpire() 
 	{
+		
 		Jedis jedis = RedisUtil.getJedis();
 		
 		List<String> values = 
@@ -198,7 +199,6 @@ public class TicketServiceImpl implements TicketService
 				jedis.del(RelationConverter.ticketSeatsGenerator(str));
 			}
 		}
-		
 		RedisUtil.close();
 	}
 

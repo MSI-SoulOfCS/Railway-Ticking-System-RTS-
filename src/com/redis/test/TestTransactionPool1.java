@@ -37,13 +37,13 @@ public class TestTransactionPool1
 		
 		for(int i=1;i<=100;i++)
 		{
-			seats[i-1] = "B" + i;
+			seats[i-1] = "K" + i;
 		}
 		
 		RedisTicket ticket = new RedisTicket();
 	
 		ticket.setStart("beijing");
-		ticket.setDestination("baotou");
+		ticket.setDestination("kunming");
 		ticket.setDate(DateFormatUtil.stringToDateBlur("201505291023"));
 		ticket.setActive("true");
 		ticket.setAmount(30);
@@ -59,7 +59,7 @@ public class TestTransactionPool1
 		RedisRequest request = new RedisRequest();
 		
 		request.setUserId("wangwu@gmail.com");
-		String ticketKey = "beijing#nanjing#201505291023";
+		String ticketKey = "beijing#xian#201505291023";
 		service.buyTicket(request, ticketKey);
 	}
 	
