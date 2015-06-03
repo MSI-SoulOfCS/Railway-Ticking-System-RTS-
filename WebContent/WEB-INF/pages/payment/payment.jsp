@@ -11,6 +11,8 @@
     <script src="<c:url value="/js/jquery-1.11.1.min.js" />"></script>
    	<script src="<c:url value="/js/jquery-ui.js"/>"></script>
   	<script src="<c:url value="/js/msi-jquery.js"/>"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="<c:url value="/js/jquery.creditCardValidator.js"/>"></script>
 
 	<title>Payment</title>
 	
@@ -21,6 +23,75 @@
 		    	checkoutPage();
 		   	});
 		});
+		
+		$(function() {
+	        $('#card_number').validateCreditCard(function(result) {
+	        	if(result.card_type == null){
+	        		$("#Visa").fadeTo("fast",1);
+	        		$("#AmericanExpress").fadeTo("fast",1);
+	        		$("#Master").fadeTo("fast",1);
+	        		$("#Discover").fadeTo("fast",1);
+	        		$("#Maestro").fadeTo("fast",1);
+	        	}
+	        	else{
+	        		if(result.card_type.name=="mastercard"){
+	            		$("#Master").fadeTo("fast",1);
+	            		$("#AmericanExpress").fadeTo("fast",0.3);
+	            		$("#Discover").fadeTo("fast",0.3);
+	            		$("#Visa").fadeTo("fast",0.3);
+	            		$("#Maestro").fadeTo("fast",0.3);
+	            	}
+	            	else if(result.card_type.name=="discover"){
+	            		$("#Discover").fadeTo("fast",1);
+	            		$("#AmericanExpress").fadeTo("fast",0.3);
+	            		$("#Master").fadeTo("fast",0.3);
+	            		$("#Visa").fadeTo("fast",0.3);
+	            		$("#Maestro").fadeTo("fast",0.3);
+	            	}
+	            	else if(result.card_type.name=="amex"){
+	            		$("#AmericaExpress").fadeTo("fast",1);
+	            		$("#Discover").fadeTo("fast",0.3);
+	            		$("#Master").fadeTo("fast",0.3);
+	            		$("#Visa").fadeTo("fast",0.3);
+	            		$("#Maestro").fadeTo("fast",0.3);
+	            	}
+	            	else if(result.card_type.name=="maestro"){
+	            		$("#Maestro").fadeTo("fast",1);
+	            		$("#AmericanExpress").fadeTo("fast",0.3);
+	            		$("#Master").fadeTo("fast",0.3);
+	            		$("#Visa").fadeTo("fast",0.3);
+	            		$("#Discover").fadeTo("fast",0.3);
+	            	}
+	            	else if(result.card_type.name=="visa"){
+	            		$("#Visa").fadeTo("fast",1);
+	            		$("#AmericanExpress").fadeTo("fast",0.3);
+	            		$("#Master").fadeTo("fast",0.3);
+	            		$("#Discover").fadeTo("fast",0.3);
+	            		$("#Maestro").fadeTo("fast",0.3);
+	            	}
+	        	}
+	        	var valid=result.valid;
+	        	var length=result.length_valid;
+	        	var luhn=result.luhn_valid;
+	        	$(".valid").hide();
+	        	if(valid&&luhn&&length){
+	        		$(".valid").hide();
+	        	}
+	        	else {
+	        		$(".valid").show();
+	        		$(".valid").html('Please enter a valid card number!');
+	        	}
+	        	
+	/*	             $(".log").html('Card type: ' + (result.card_type == null ? '-' : result.card_type.name)
+	                     + '<br>Valid: ' + result.valid
+	                     + '<br>Length valid: ' + result.length_valid
+	                     + '<br>Luhn valid: ' + result.luhn_valid);	*/
+	             /* if(result.card_type == null)
+	            	 alert("test");
+	             alert("hello"+result.card_type.name); */
+	        });     
+	    });
+		
 	</script>
 	</head>
 	<body>
@@ -100,7 +171,9 @@
 					<div class="left credit_card">
 						<form class="go-right">
 							<div>
-								<input type="text" name="card_number" value="" id="card_number" placeholder="xxxx-xxxx-xxxx-xxxx" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your Credit Card Number"/>
+								<input type="text" name="card_number" value="" id="card_number" >
+								<p id="valid" class="valid" style="color:red"></p>
+								<p id="length" class="length" style="color:red"></p>
 							</div>
 							<div>
 								<div class="expiry">	
@@ -149,17 +222,18 @@
 					</div>
 					<div class="right">
 						<div class="accepted">
-							<span><img src="<c:url value="/img/Z5HVIOt.png" />"></span>
-							<span><img src="<c:url value="/img/Le0Vvgx.png"/>"></span>
-							<span><img src="<c:url value="/img/D2eQTim.png"/>"></span>
-							<span><img src="<c:url value="/img/Pu4e7AT.png"/>"></span>
-							<span><img src="<c:url value="/img/ewMjaHv.png"/>"></span>
-							<span><img src="<c:url value="/img/3LmmFFV.png"/>"></span>
+							<span id="AmericanExpress"><img src="<c:url value="/img/Z5HVIOt.png" />"></span>
+							<%-- <span><img src="<c:url value="/img/Le0Vvgx.png"/>"></span> --%>
+							<span id="Discover"><img src="<c:url value="/img/D2eQTim.png"/>"></span>
+							<span id="Maestro"><img src="<c:url value="/img/Pu4e7AT.png"/>"></span>
+							<span id="Master"><img src="<c:url value="/img/ewMjaHv.png"/>"></span>
+							<span id="Visa"><img src="<c:url value="/img/3LmmFFV.png"/>"></span>
 						</div>
 						<div class="secured">
 							<img class="lock" src="<c:url value="/img/lock.png"/>">
 							<p class="security info">What, well you mean like a date? Doc? Am I to understand you're still hanging around with Doctor Emmett Brown, McFly? Tardy slip for you, Miss Parker. And one for you McFly I believe that makes four in a row. Now let me give you a nickle's worth of advice, young man. This so called Doctor Brown is dangerous, he's a real nuttcase.</p>
 						</div>
+						
 					</div>
 					<a class="continue" href="#">Proceed to checkout</a>
 				</div>
