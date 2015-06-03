@@ -213,7 +213,6 @@
 			var hmsplit = tsplit[1].split(":");
 			var time = dsplit[0] + "-" + dsplit[1] + "-" + tsplit[0] + "T" +  parseInt(hmsplit[0], 10) + ":" +  parseInt(hmsplit[1], 10) + ":00.000Z";
 			var price = $(rowcells[5]).html().split("$");
-			alert(time);
 			var item = {};
 			item["itemId"] = $(rowcells[0]).html();
 			item["from"] = $(rowcells[1]).html();

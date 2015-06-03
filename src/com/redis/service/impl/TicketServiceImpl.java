@@ -10,7 +10,7 @@ import redis.clients.jedis.Jedis;
 import com.redis.entity.CartItem;
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
-import com.redis.entity.Transaction;
+import com.redis.entity.RedisTransaction;
 import com.redis.service.TicketService;
 import com.redis.util.DateFormatUtil;
 import com.redis.util.RedisUtil;
@@ -432,14 +432,14 @@ public class TicketServiceImpl implements TicketService
 		 */
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(key);
-		buffer.append(Transaction.TRANSACTION_INFO_SPLITTER);
+		buffer.append(RedisTransaction.TRANSACTION_INFO_SPLITTER);
 		buffer.append(ticketId);
-		buffer.append(Transaction.TRANSACTION_INFO_SPLITTER);
+		buffer.append(RedisTransaction.TRANSACTION_INFO_SPLITTER);
 		buffer.append(seatNo);
-		buffer.append(Transaction.TRANSACTION_INFO_SPLITTER);
+		buffer.append(RedisTransaction.TRANSACTION_INFO_SPLITTER);
 		buffer.append(DateFormatUtil.dateToString(new Date()));
 		
-		jedis.rpush(Transaction.TRANSACTION_POOL_NAME, buffer.toString());
+		jedis.rpush(RedisTransaction.TRANSACTION_POOL_NAME, buffer.toString());
 		
 		RedisUtil.close();
 		
@@ -539,11 +539,11 @@ public class TicketServiceImpl implements TicketService
 
 
 	@Override
-	public Transaction stringToTransaction(String transactionInfo) 
+	public RedisTransaction stringToTransaction(String transactionInfo) 
 	{
-		Transaction transaction = new Transaction();
+		RedisTransaction transaction = new RedisTransaction();
 		
-		String[] arr = transactionInfo.split(Transaction.TRANSACTION_INFO_SPLITTER);
+		String[] arr = transactionInfo.split(RedisTransaction.TRANSACTION_INFO_SPLITTER);
 		
 		transaction.setUserId(arr[0]);
 		transaction.setTicketId(arr[1]);
@@ -555,21 +555,21 @@ public class TicketServiceImpl implements TicketService
 
 
 	@Override
-	public List<Transaction> getAllTransaction() 
+	public List<RedisTransaction> getAllTransaction() 
 	{
 		Jedis jedis = RedisUtil.getJedis();
 		
-		List<String> values = jedis.lrange(Transaction.TRANSACTION_POOL_NAME, 0, -1);
+		List<String> values = jedis.lrange(RedisTransaction.TRANSACTION_POOL_NAME, 0, -1);
 		
 		if(values.size() == 0)
 			return null;
 
-		List<Transaction> trans = new ArrayList<Transaction>();
+		List<RedisTransaction> trans = new ArrayList<RedisTransaction>();
 		
 		for(String str:values)
 		{
 	
-			Transaction tran = stringToTransaction(str);
+			RedisTransaction tran = stringToTransaction(str);
 			trans.add(tran);	
 			System.out.println(str);
 	
@@ -582,23 +582,23 @@ public class TicketServiceImpl implements TicketService
 
 
 	@Override
-	public List<Transaction> getAllTransactionAndDelete() 
+	public List<RedisTransaction> getAllTransactionAndDelete() 
 	{
 		Jedis jedis = RedisUtil.getJedis();
 		
-		List<String> values = jedis.lrange(Transaction.TRANSACTION_POOL_NAME, 0, -1);
+		List<String> values = jedis.lrange(RedisTransaction.TRANSACTION_POOL_NAME, 0, -1);
 		
 		if(values.size() == 0)
 			return null;
 
-		List<Transaction> trans = new ArrayList<Transaction>();
+		List<RedisTransaction> trans = new ArrayList<RedisTransaction>();
 		
 		for(String str:values)
 		{
 	
-			Transaction tran = stringToTransaction(str);
+			RedisTransaction tran = stringToTransaction(str);
 			trans.add(tran);		
-			jedis.lrem(Transaction.TRANSACTION_POOL_NAME, 1, str);
+			jedis.lrem(RedisTransaction.TRANSACTION_POOL_NAME, 1, str);
 		}
 		
 		RedisUtil.close();

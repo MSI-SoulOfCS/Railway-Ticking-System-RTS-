@@ -4,12 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.mercury.demand.persistence.dao.HistoryDao;
 import com.mercury.demand.persistence.model.Transaction;
+import com.redis.entity.RedisTransaction;
 
 public class HistoryDaoImpl implements HistoryDao{
 
@@ -38,19 +40,27 @@ public class HistoryDaoImpl implements HistoryDao{
 	}
 
 	@Override
-	public void addAHistory(String user_id, String ticket_id, String seat_no, Date date) {
+	public void addAHistory(List<RedisTransaction> trans) {
 		// TODO Auto-generated method stub
-		Transaction transaction = new Transaction();
-		transaction.setUser_id(user_id);
-		transaction.setTicket_id(ticket_id);
-		transaction.setSeat_no(seat_no);
-		transaction.setTran_time(date);
-		template.save(transaction);
-		
-		List<Transaction> list = this.getAllHistory();
-		for(Transaction tran : list) {
-			System.out.println(tran.getTicket_id());
+		Session session = template.getSessionFactory().openSession();
+		org.hibernate.Transaction tx = session.beginTransaction();
+		   
+		for ( int i = 0 ; i < trans.size() ; i++ ) {
+			RedisTransaction record = trans.get(i);
+		    Transaction oracleRecord = new Transaction();
+		    oracleRecord.setUser_id(record.getUserId());
+		    oracleRecord.setTicket_id(record.getTicketId());
+		    oracleRecord.setSeat_no(record.getSeatNo());
+		    oracleRecord.setTran_time(record.getDate());
+		    session.save(oracleRecord);
+		    if ( i % 20 == 0 ) { //20, same as the JDBC batch size
+		        //flush a batch of inserts and release memory:
+		        session.flush();
+		        session.clear();
+		    }
 		}
-		System.out.println("--------");
+		   
+		tx.commit();
+		session.close();
 	}
 }

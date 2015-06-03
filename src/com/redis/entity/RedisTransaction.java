@@ -2,7 +2,7 @@ package com.redis.entity;
 
 import java.util.Date;
 
-public class Transaction 
+public class RedisTransaction 
 {
 	public static final String TRANSACTION_POOL_NAME = "transactionPool";
 	public static final String TRANSACTION_INFO_SPLITTER = "&";
@@ -12,9 +12,9 @@ public class Transaction
 	private String seatNo; 
 	private Date date;
 	
-	public Transaction(){}
+	public RedisTransaction(){}
 	
-	public Transaction(String userId, String ticketId, String seatNo, Date date) {
+	public RedisTransaction(String userId, String ticketId, String seatNo, Date date) {
 		super();
 		this.userId = userId;
 		this.ticketId = ticketId;

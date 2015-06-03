@@ -17,7 +17,7 @@ import com.mercury.demand.service.TransactionService;
 import com.redis.entity.CartItem;
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
-import com.redis.entity.Transaction;
+import com.redis.entity.RedisTransaction;
 import com.redis.service.TicketService;
 import com.redis.service.impl.TicketServiceImpl;
 import com.redis.util.DateFormatUtil;
@@ -344,7 +344,7 @@ public class TicketServiceTest
 	//@Test
 	public void test11()
 	{
-		List<Transaction> list = service.getAllTransaction();
+		List<RedisTransaction> list = service.getAllTransaction();
 		//System.out.println(list.size());
 		
 		/*
@@ -361,7 +361,7 @@ public class TicketServiceTest
 		*/
 		
 	
-		for(Transaction t:list)
+		for(RedisTransaction t:list)
 		{
 			System.out.println("id:" + t.getUserId() + 
 					" " + "ticketid:" + t.getTicketId() + 

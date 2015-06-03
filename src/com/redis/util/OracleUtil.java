@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import com.redis.entity.Transaction;
+import com.redis.entity.RedisTransaction;
 
 public class OracleUtil 
 {
-	public static void save(List<Transaction> transactions)
+	public static void save(List<RedisTransaction> transactions)
 	{
 		Connection con = JDBCUtil.getConnection();
 		
@@ -25,7 +25,7 @@ public class OracleUtil
 			PreparedStatement stat = 
 					con.prepareStatement("insert into transaction values(?,?,?,?)");
 			
-			for(Transaction transaction:transactions)
+			for(RedisTransaction transaction:transactions)
 			{
 				stat.setString(1, transaction.getUserId());
 				stat.setString(2, transaction.getTicketId());
