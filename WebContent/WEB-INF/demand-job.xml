@@ -6,6 +6,7 @@
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
  <bean id="runMeTask" class="com.mercury.demand.job.RunMeTask" />
  <bean id="ticketService" class="com.redis.test.TestService"/>
+ <bean id="transactionService" class="com.mercury.demand.service.TransactionService"/>
  
 	<!-- Spring Quartz -->
 	<!-- 
@@ -40,8 +41,8 @@
 	
 	<bean id="transactionTask" 
             class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
-		<property name="targetObject" ref="ticketService" /> 
-		<property name="targetMethod" value="transactionPool" /> 
+		<property name="targetObject" ref="transactionService" /> 
+		<property name="targetMethod" value="complete" /> 
 	</bean> 
  
 	<!-- Simple Trigger, run every 5 seconds -->

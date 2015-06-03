@@ -10,8 +10,11 @@ import com.redis.util.OracleUtil;
 
 public class TransactionService 
 {
-	public static void completeTransaction()
+	public void complete()
 	{
+		System.out.println("transaction manager running");
+		
+		
 		TicketService service = 
 				new TicketServiceImpl();
 		

@@ -373,7 +373,7 @@ public class TicketServiceTest
 	@Test
 	public void test22()
 	{
-		TransactionService.completeTransaction();
+		//TransactionService.completeTransaction();
 	}
 	
 }
