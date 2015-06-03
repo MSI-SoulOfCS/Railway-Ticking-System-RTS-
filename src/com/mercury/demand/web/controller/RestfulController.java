@@ -313,4 +313,13 @@ public class RestfulController {
 	public @ResponseBody String resetUserPwd(@RequestParam("email") String email) {
 		return "[{\"result\":\"" + userDetailsService.resetUserPwd(email) + "\"}]";
 	}
+	
+	//****************************************
+	//***TEST MULTI-THREAD BUY TICKET*********
+	//****************************************
+	@RequestMapping(value="/restful/TestTicket.html", method = RequestMethod.POST)
+	public void testTicket(@RequestParam("userid") String userid, @RequestParam("ticketid") String ticketid) {
+		
+	}
+	
 }
