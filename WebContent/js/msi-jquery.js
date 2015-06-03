@@ -100,7 +100,7 @@
 			var d = new Date(item.start);
 			rows = "<tr><td style=\"display:none\">" + item.itemId + "</td><td>" + item.from + "</td><td>"+item.to+"</td><td>"+
 			d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate() 
-			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.seatNo +"</td><td>"+item.price+"</td><td><input id=" + item.itemId + " type=\"button\" value=\"remove\" onclick=\"sendID(id)\"/></td></tr>";
+			+"	"+d.getHours()+":"+d.getMinutes()+ "</td><td>"+item.seatNo +"</td><td>"+item.price+"</td><td><input id=" + item.itemId + " type=\"button\" class=\"btn btn-default\" value=\"remove\" onclick=\"sendID(id)\"/></td></tr>";
 			$(rows).appendTo("#CartTicket");
 			add+=parseInt(item.price);
 		});

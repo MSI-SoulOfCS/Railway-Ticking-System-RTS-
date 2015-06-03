@@ -14,7 +14,7 @@
     <title>User Account Info</title>
 
     <!-- Bootstrap core CSS -->    
-	 <link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">   
+	<link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">   
     <!-- Custom styles for this template -->
     <link href="<c:url value="/css/dashboard.css" />" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value="/css/jquery-ui.css"/>">    
@@ -22,36 +22,35 @@
     <script src="<c:url value="/js/jquery-1.11.1.min.js" />"></script>
    	<script src="<c:url value="/js/jquery-ui.js"/>"></script>
   	<script src="<c:url value="/js/msi-jquery.js"/>"></script>
+  	<script src="<c:url value="/js/bootstrap.js"/>"></script>
+
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
 
   	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
-  	
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<script>
-		google.load("visualization", "1", {packages:["corechart"]});
-		
-		var amount=0;
-		var available=0;
 		$(document).ready(function(){
 			loadAllUserCart();
 			loadAllTicket();
-			loadUserHistory();
-			loadUserInfo();
+
 			$("#navigation-menu li a").on("click", function(event){
 				removeActiveClass();
 				$(event.target).parent().addClass("active");
 				var viewTag = event.target.id + "View";
 				$("#"+viewTag).show();
+				
 				if(viewTag=="AnalysisView"){
 					loadAllTicketForAnalysis();
 				} else if(viewTag=="HistoryView") {
 					loadUserHistory();					
-				} else if(veiwTag=="ManageTicketView") {
+				} else if(viewTag=="ManageTicketView") {
 					loadAllTicket();					
+				} else if(viewTag=="ProfileView") {
+					loadUserInfo();					
 				}
 				
 			});	
@@ -96,8 +95,9 @@
 				rows = "<tr><td>" + item.start + "</td><td>"+item.destination+"</td><td>"+
 				d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate()) + 
 				" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price + 
-				"</td><td><input id=" +str+ " type=\"button\" value=\"show pie chart\" onclick=\"sendIDforPieChart(id)\"/>"+"</td></tr>";
-				$(rows).appendTo("#analysisTicket");
+				"</td><td><button id = " + str + " class=\"btn btn-default\" onclick=\"sendIDforPieChart(id)\" data-toggle=\"modal\" data-target=\"#myModal\">Pie Chart</button>";
+/* <input id=" +str+ " type=\"button\" value=\"show pie chart\" onclick=\"sendIDforPieChart(id)\"/>"+"</td></tr>";
+ */				$(rows).appendTo("#analysisTicket");
 				
 			});
 	    }
@@ -121,6 +121,7 @@
 			 $(data).each(function(i,item){
 				 saled=item.amount-item.avaiNumber;
 				 available=item.avaiNumber;
+				 $("#myModalLabel").text(item.start+" To "+item.destination);
 			 });
 		      var data1 = google.visualization.arrayToDataTable([
 		        ['Sales', 'Amount'],
@@ -267,6 +268,7 @@
 	                  				<th>Date</th>
 	                  				<th>Seat</th>
 	                  				<th>Price</th>
+	                  				<th>Operation</th>
 	               				</tr>
 	               				<tbody id="CartTicket">
 				  				</tbody>
@@ -392,12 +394,31 @@
 	            			</table>
 	          			</div>
 					</div>
-					<table>
+<!-- 					<table>
 						<tr>
 							<td><div id="piechart_3d" align="center"></div></td>
 						</tr>
 					</table>
-					
+ -->					
+ 
+					<!-- Modal -->
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					        <h4 class="modal-title" id="myModalLabel">Pop Up</h4>
+					      </div>
+					      <div class="modal-body">
+					       <div id="piechart_3d" style="width: 150px; height: 200px;"></div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+ 
 				</sec:authorize>
 				
 				<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">

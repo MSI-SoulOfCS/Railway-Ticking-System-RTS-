@@ -194,12 +194,10 @@
 						</tr>
 						<tr>
 							<td></td>
-							<td>
-								<a href="#forget_form" style="color:#000000;">forget password</a>
-							</td>
+							<td></td>
 						</tr>
 		            </table>
-		            	            
+					<a href="#forget_form" style="color:#000000;">forgot username and password?</a>    
 	 			</form>
 	            <a class="close" href="/Demand1/"></a>
 	       </div>
