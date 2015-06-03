@@ -7,13 +7,14 @@
  <bean id="runMeTask" class="com.mercury.demand.job.RunMeTask" />
  <bean id="ticketService" class="com.redis.test.TestService"/>
  <bean id="transactionService" class="com.mercury.demand.service.TransactionService"/>
+ <bean id="requestService" class="com.mercury.demand.service.RequestManager"/>
  
 	<!-- Spring Quartz -->
 	<!-- 
 	<bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 		<property name="jobClass" value="com.mercury.demand.job.RunMeJob" />
 		<property name="jobDataAsMap">
-		  	<map>
+		  	<map>ice
 				<entry key="runMeTask" value-ref="runMeTask" />
 		  	</map>
 		</property>
@@ -35,8 +36,8 @@
 	
 	<bean id="requestTask" 
             class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
-		<property name="targetObject" ref="ticketService" /> 
-		<property name="targetMethod" value="requestAndCart" /> 
+		<property name="targetObject" ref="requestService" /> 
+		<property name="targetMethod" value="removeExpiredRequest" /> 
 	</bean> 
 	
 	<bean id="transactionTask" 
@@ -65,7 +66,7 @@
 	
 	<bean id="requestTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="requestTask" />
-		<property name="cronExpression" value="0/8 * * * * ?" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
 	</bean>
 	
 	<bean id="transactionTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">

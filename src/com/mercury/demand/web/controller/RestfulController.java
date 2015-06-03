@@ -317,9 +317,11 @@ public class RestfulController {
 	//****************************************
 	//***TEST MULTI-THREAD BUY TICKET*********
 	//****************************************
-	@RequestMapping(value="/restful/TestTicket.html", method = RequestMethod.POST)
+	@RequestMapping(value="/buyTicket.html", method = RequestMethod.POST)
 	public void testTicket(@RequestParam("userid") String userid, @RequestParam("ticketid") String ticketid) 
 	{
+		//System.out.println(userid + " " + ticketid);
+		
 		RedisRequest request = new RedisRequest();
 		
 		request.setUserId(userid);
