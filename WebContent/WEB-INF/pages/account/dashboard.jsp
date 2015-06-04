@@ -35,8 +35,9 @@
 	<script>
 		$(document).ready(function(){
 			loadAllUserCart();
-			loadAllTicket();				
-
+			loadAllTicket();
+			loadUserInfo();
+			
 			$("#navigation-menu li a").on("click", function(event){
 				removeActiveClass();
 				$(event.target).parent().addClass("active");
@@ -47,14 +48,9 @@
 					loadAllTicketForAnalysis();
 				} else if(viewTag=="HistoryView") {
 					loadUserHistory();					
-				} else if(viewTag=="ManageTicketView") {
-					loadAllTicket();					
-				} else if(viewTag=="ProfileView") {
-					loadUserInfo();					
 				} else if(viewTag=="ShoppingCartView") {
 					loadAllUserCart();					
 				}
-				
 			});	
 			
 			var select = '';
@@ -250,9 +246,12 @@
 	          			<div>
 	            			<table class="table table-striped">
 	                			<tr>
-	                  				<th>Ticket ID</th>
+	                  				<th>From</th>
+	                  				<th>To</th>
+	                  				<th>Departure</th>
 	                  				<th>Seat</th>
 	                  				<th>Transaction Date</th>
+	                  				<th></th>
 	               				</tr>
 	               				<tbody id="tickets">
 				  				</tbody>

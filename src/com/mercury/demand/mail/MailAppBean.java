@@ -25,13 +25,13 @@ public class MailAppBean {
 		this.simpleMailMessage = simpleMailMessage;
 	}
 
-	public void sendMail(String dear, String content, String email) {
+	public void sendMail(String dear, String title, String content, String email) {
 		MimeMessage message = mailSender.createMimeMessage();
 		try{
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setFrom(simpleMailMessage.getFrom());
 			helper.setTo(email);
-			helper.setSubject(simpleMailMessage.getSubject());
+			helper.setSubject(title);
 			helper.setText(String.format(simpleMailMessage.getText(), dear, content));
 		} catch (MessagingException e) {
 			throw new MailParseException(e);

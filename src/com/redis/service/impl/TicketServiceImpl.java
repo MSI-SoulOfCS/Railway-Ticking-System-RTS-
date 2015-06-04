@@ -607,4 +607,19 @@ public class TicketServiceImpl implements TicketService
 	}
 
 
+	@Override
+	public void returnBackTicket(String ticketKey, String seatNo) {
+		// TODO Auto-generated method stub
+		Jedis jedis = RedisUtil.getJedis();
+		
+		if(jedis.exists(ticketKey))
+		{
+			String seats = RelationConverter.ticketSeatsGenerator(ticketKey);
+			jedis.rpush(seats, seatNo);
+		}
+		
+		RedisUtil.close();		
+	}
+
+
 }

@@ -62,7 +62,7 @@ public interface TicketService
 	
 	public void ticketExpire();
 	public void returnBackTicket(RedisTicket ticket,String seatNo);
-	
+	public void returnBackTicket(String ticketKey ,String seatNo);
 	/*
 	 * search ticket by period of time
 	 */
