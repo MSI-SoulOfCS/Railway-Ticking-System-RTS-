@@ -3,7 +3,6 @@ package com.redis.util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import com.redis.entity.RedisTransaction;

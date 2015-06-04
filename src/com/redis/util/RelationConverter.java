@@ -1,7 +1,5 @@
 package com.redis.util;
 
-import java.util.Date;
-
 import com.redis.entity.RedisRequest;
 import com.redis.entity.RedisTicket;
 

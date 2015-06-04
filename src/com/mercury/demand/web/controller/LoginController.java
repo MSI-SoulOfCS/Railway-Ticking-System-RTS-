@@ -2,7 +2,6 @@ package com.mercury.demand.web.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mercury.demand.persistence.model.CartEntity;
-import com.mercury.demand.persistence.model.Ticket;
 import com.mercury.demand.service.HistoryDetailsService;
-import com.mercury.demand.service.ModUserDetailsService;
+/*import com.mercury.demand.service.ModUserDetailsService;*/
 import com.mercury.demand.service.StationDetailsService;
 import com.mercury.demand.service.TicketDetailsService;
 import com.redis.entity.RedisTicket;
@@ -38,8 +35,8 @@ public class LoginController {
 	private HistoryDetailsService historyDetailsService;
 	@Autowired
 	private TicketDetailsService ticketDetailsService;
-	@Autowired
-	private ModUserDetailsService userDetailsService;
+/*	@Autowired
+	private ModUserDetailsService userDetailsService;*/
 	
 	private TicketService ticketService;
 	
