@@ -1,3 +1,37 @@
+		    var StationGPSList = {
+				"NY,New York,Penn Station":"40.750580,-73.993584",
+				"NY,New York,Jamaica":"40.6997222,-73.8080556",
+				"NY,NewYork,Yonkers Amtrak":"40.935607,-73.902268",
+				"NJ,Princeton,West Trenton":"40.2639965,-74.8184964",
+//				"NJ,Princeton,Joe's Train Station":"39.83,-89.64",
+				"NJ,Princeton,Princeton Junction":"40.3161505,-74.6239757",
+				"NJ,Hoboken,Hoboken terminal":"39.83,-89.64",
+				"MA,Boston,North Station":"39.83,-89.64",
+				"MA,Boston,Haymarket Station":"39.83,-89.64",
+				"MA,Boston,Back Bay Station":"39.83,-89.64",
+				"CA,SanFrancisco,San Jose Train Station":"39.83,-89.64",
+				"CA,SanFrancisco,San Francisco Caltrain Station":"39.83,-89.64",
+				"CA,Los Angeles,Union Station":"39.83,-89.64",
+				"CA,Los Angeles,Pomona-North Metrolink Station":"39.83,-89.64",
+				"CA,Los Angeles,Santa Train Station":"39.83,-89.64",
+				"TX,Abilene,Abilene Regional station":"39.83,-89.64",
+				"TX,Amarillo,Rick Husband Amarillo station":"39.83,-89.64",
+				"TX,Austin,Austin-Bergstrom station":"39.83,-89.64",
+				"FL,Orlando,Orlando Amtrak Train Station":"39.83,-89.64",
+				"FL,Orlando,SunRail Station":"39.83,-89.64",
+				"FL,Orlando,Church Street Station":"39.83,-89.64",
+				"FL,Miami,Miami Amtrak Train Station":"39.83,-89.64",
+				"NC,Winston-Salem,Winston-Salem Amtrak Train Station":"39.83,-89.64",
+				"NC,Winston-Salem,Willow Street Train Station":"39.83,-89.64",
+				"NC,Chapel Hill,Chapel Hill Metro Station":"39.83,-89.64",
+				"NC,Chapel Hill,Southern Rail":"39.83,-89.64",
+				"NC,Chapel Hill,Amtrak Station":"39.83,-89.64",
+				"GA,Appling County,Apple Station":"39.83,-89.64",
+				"GA,Appling County,Sant Train Station":"39.83,-89.64",
+				"GA,Appling County,Amtrak Station":"39.83,-89.64"
+		    };
+
+
 	function IsEmail(email) {
 		  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 		  return regex.test(email);
@@ -222,7 +256,6 @@
     
     function reloadAllTicketAfterNewTicket(data) {
 		var rows = "";
-		alert("reload");
 		$("#ManageTicketTable").empty();
 		$(data).each(function(i,item) {
 			var d = new Date(item.date);
@@ -231,11 +264,12 @@
 			" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price;
 			var key = item.start+"#"+item.destination+"#"+d.getFullYear()+addZeros((d.getMonth()+1))+addZeros(d.getDate())+addZeros(d.getHours())+addZeros(d.getMinutes());
 			key = key.replace(/ /gi, "_");
-			if(item.active) {
+			
+			if(item.active == "true") {
 				rows = rows + "</td><td><input id=" + key + " type=\"button\" class=\"btn btn-default\" value=\"disable\" onclick=\"disableTicket(id)\"/>";
 			}
 			else {
-				rows = rows + "</td><td><input id=" + key + " type=\"button\" class=\"btn btn-default\" value=\"disable\" onclick=\"enableTicket(id)\"/>";
+				rows = rows + "</td><td><input id=" + key + " type=\"button\" class=\"btn btn-default\" value=\"enable\" onclick=\"enableTicket(id)\"/>";
 				if(item.avaiNumber == item.amount) {
 					rows = rows + "<input id=" + key + " type=\"button\" class=\"btn btn-default\" value=\"delete\" onclick=\"deleteTicket(id)\"/>";
 				}

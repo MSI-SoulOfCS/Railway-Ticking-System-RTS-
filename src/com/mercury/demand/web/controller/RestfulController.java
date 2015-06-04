@@ -153,7 +153,7 @@ public class RestfulController {
 			ticket.setPrice(Double.valueOf(price).toString());
 			ticket.setAmount(amount);
 			ticket.setAvailable(true);
-			ticket.setActive("true");
+			ticket.setActive("false");
 			
 			ticket.setSeats(RelationConverter.seatGenerator(seatType, amount));
 			

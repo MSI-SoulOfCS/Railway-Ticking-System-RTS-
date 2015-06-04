@@ -14,13 +14,11 @@
     <link href="<c:url value="/css/coverInTicket.css" />" rel="stylesheet">
     <link href="<c:url value="/css/modal.css" />" rel="stylesheet">
     <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet" />
-    <link href="<c:url value="/css/jquery.bootgrid.css"/>" rel="stylesheet" />
-    <script src="<c:url value="/js/moderniz.2.8.1.js"/>"></script>
     <script src="<c:url value="/js/jquery-1.11.1.js"/>"></script>
     <script src="<c:url value="/js/bootstrap.js"/>"></script>
-    <script src="<c:url value="/js/jquery.bootgrid.js"/>"></script>
    	<script src="<c:url value="/js/jquery-ui.js"/>"></script>
     <script src="<c:url value="/js/msi-jquery.js"/>"></script>
+  	<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAUFsv4PDnx3pCIa50N2K6O7CpFi8AW4R0&sensor=true&language=en"></script>
 
     <style>
     .button {
@@ -50,8 +48,17 @@
 	.hideTd{
 		display:none;
 	}
+	.close-CSS {
+	    background-image: url( <c:url value="/img/googlemaps.png"/> );
+	    background-size: 15px 15px;
+	    height: 19px;  
+	    width: 19px;
+	}
     </style>
 	<script>
+		var map;
+		var infowindow;
+		
 		$(document).ready(function() {
 			$('#BackToLogin').click(function(){
 				window.location.href='http://localhost:8080/Demand1/#login_form';
@@ -61,6 +68,58 @@
 			})		
 
 		});
+		
+		// init map setting
+		function initialize(lat, lng) 
+	    {
+	        var mapCenter = new google.maps.LatLng(lat, lng);
+
+	        var myOptions = {
+	            zoom:15,
+	            mapTypeId: google.maps.MapTypeId.ROADMAP,
+	            center: mapCenter
+	        }
+			
+			infowindow = new google.maps.InfoWindow({
+				content: "default"
+			});
+
+	        map = new google.maps.Map(document.getElementById("map_direction"), myOptions);
+		}
+		
+		function addMark(lat,lng,title) {
+			// add marker to map
+			var location = new google.maps.LatLng(lat, lng);
+			var marker = new google.maps.Marker({
+				position: location,
+				title : title,
+				bounds : true,
+				map: map,
+				html: '<div id="content">' +
+				'<div id="siteNotce">' +
+				'</div>' +
+				'<div id="bodyContent">' +
+				'<p><b>' + title + '</b>' +
+				'<p><img src=\'http://maps.googleapis.com/maps/api/streetview?size=75x75&location=' + lat + ',' + lng +'&fov=120&heading=150&pitch=10&sensor=false&key=AIzaSyAUFsv4PDnx3pCIa50N2K6O7CpFi8AW4R0 \' width=75px"></img>' +
+				'</div>' +
+				'</div>'
+			});
+													
+			// add click event for infowindows
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.setContent(this.html);
+				infowindow.open(map,this);
+			});
+
+		}
+		function showUpMap(clicked_id) {
+			var gps = StationGPSList[clicked_id];
+			var gps = gps.split(",");
+			location.href='#map_form';
+			initialize(gps[0],gps[1]);
+	        addMark(gps[0], gps[1], clicked_id);
+		}
+		
 	</script>
 </head>
 <body>
@@ -111,15 +170,17 @@
                     </thead>
                     <tbody>
 						<c:forEach var="ticket" items="${resultTickets}">
- 							<c:if test="${ticket.avaiNumber > 0}">
-								<tr>
-									<td>${ticket.start }</td>
-									<td>${ticket.destination}</td>
-									<td>${ticket.price}</td>
-									<td><fmt:formatDate value="${ticket.date}" type="both" pattern="yyyy-MM-dd HH:mm" /></td>
-									<td><input id="check" type="checkbox"/></td>
-								</tr>
- 							</c:if>
+							<c:if test="${ticket.active == 'true'}">
+	 							<c:if test="${ticket.avaiNumber > 0}">
+									<tr>
+										<td>${ticket.start} <button id="<c:out value="${ticket.start}"/>" onclick="showUpMap(id)" class="close-CSS"></button></td>
+										<td>${ticket.destination} <button id="<c:out value="${ticket.destination}"/>" onclick="showUpMap(id)" class="close-CSS"></button></td>
+										<td>${ticket.price}</td>
+										<td><fmt:formatDate value="${ticket.date}" type="both" pattern="yyyy-MM-dd HH:mm" /></td>
+										<td><input id="check" type="checkbox"/></td>
+									</tr>
+	 							</c:if>
+	 						</c:if>
 						</c:forEach>
                     </tbody>
                 </table>
@@ -132,6 +193,15 @@
             </div>
         </div>
     </div>
+          <!-- popup form #1 -->
+	       <a href="#" class="overlay" id="map_form"></a>
+	       
+	       <div class="popup">
+				<div id="map_direction" style="width:400px;height:400px;"></div>
+	            <a class="close" href="#"></a>
+	       </div>	
+	       <!-- ----------- -->
+
     <footer id="footer">
     </footer>
 </body>
