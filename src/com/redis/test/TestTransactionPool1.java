@@ -33,9 +33,9 @@ public class TestTransactionPool1
 	@Test
 	public void addTicket() 
 	{
-		String[] seats = new String[100];
+		String[] seats = new String[30];
 		
-		for(int i=1;i<=100;i++)
+		for(int i=1;i<=30;i++)
 		{
 			seats[i-1] = "K" + i;
 		}
