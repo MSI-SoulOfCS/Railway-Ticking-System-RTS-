@@ -322,6 +322,7 @@
 	}
 	
 	function checkOutResult(data) {
+		alert("Success!");
 		window.location.href="/Demand1/";		
 	}
 	/*check out function end here*/
