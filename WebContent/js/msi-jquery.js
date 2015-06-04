@@ -420,7 +420,7 @@
 	  	} else if ($("#j_password").val().length == 0) {
 	  		$("#passwordReq").show();
 	  		return false;
-	  	} else {
+	  	} else {		
 	  		return true;
 	  	}
 	}

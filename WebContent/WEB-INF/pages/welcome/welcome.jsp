@@ -55,12 +55,15 @@
 
 <script>
 	$(document).ready(function() {
+
 		if ("<c:out value='${param.login_error}'/>" != "") {
 		  	$('#wrongCredentials').show();
 		}
 		$("#signin").on("click", loginValidation);
 		$("#signup").on("click", signUpValidation);
 		$("#forgetpwd").on("click", forgetPWDValidation);
+		
+
 	});
 </script>
 </head>
