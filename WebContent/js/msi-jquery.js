@@ -320,8 +320,8 @@
 			var rowcells = row.find('td');
 			var item = {};
 			item["from"] = $(rowcells[0]).html();
-			item["to"] = $(rowcells[1]).html();
-			item["time"] =$(rowcells[3]).html();
+			item["to"] = $(rowcells[2]).html();
+			item["time"] =$(rowcells[5]).html();
 			formData.push(item);
 		});
     	$.ajax({

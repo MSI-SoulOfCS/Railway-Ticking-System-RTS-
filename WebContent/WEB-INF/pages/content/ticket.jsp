@@ -163,7 +163,9 @@
                     <thead>
                         <tr>
                             <th data-column-id="from">From</th>
+                            <th></th>
                             <th data-column-id="to">To</th>
+                            <th></th>
                             <th data-column-id="price" data-order="asc">Price</th>
                             <th data-column-id="date" data-type="date">Date</th>
                             <th data-column-id="checkbox">Purchase</th>
@@ -174,8 +176,10 @@
 							<c:if test="${ticket.active == 'true'}">
 	 							<c:if test="${ticket.avaiNumber > 0}">
 									<tr>
-										<td>${ticket.start} <button id="<c:out value="${ticket.start}"/>" onclick="showUpMap(id)" class="close-CSS"></button></td>
-										<td>${ticket.destination} <button id="<c:out value="${ticket.destination}"/>" onclick="showUpMap(id)" class="close-CSS"></button></td>
+										<td>${ticket.start}</td> 
+										<td><button id="<c:out value="${ticket.start}"/>" onclick="showUpMap(id)" class="close-CSS"></button></td>
+										<td>${ticket.destination}</td>
+										<td><button id="<c:out value="${ticket.destination}"/>" onclick="showUpMap(id)" class="close-CSS"></button></td>
 										<td>${ticket.price}</td>
 										<td><fmt:formatDate value="${ticket.date}" type="both" pattern="yyyy-MM-dd HH:mm" /></td>
 										<td><input id="check" type="checkbox"/></td>
