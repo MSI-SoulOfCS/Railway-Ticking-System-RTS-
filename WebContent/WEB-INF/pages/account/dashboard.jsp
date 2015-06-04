@@ -368,6 +368,7 @@
 											<th align="left" >Leave:</th>
 											<th align="left" >Amount:</th>
 											<th align="left" >Price:</th>
+											<th align="left" >Operation:</th>
 										</tr>	
 										
 	               						<tbody id="ManageTicketTable">

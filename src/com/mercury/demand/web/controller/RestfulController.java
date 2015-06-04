@@ -96,7 +96,14 @@ public class RestfulController {
 	
 	@RequestMapping(value="/restful/Tickets.html", method = RequestMethod.GET)
 	public @ResponseBody List<RedisTicket> getTicketsByUser() {
-		return ticketService.getAllTicket()	;
+		List<RedisTicket> list = ticketService.getAllTicket();
+		
+		for(RedisTicket ticket : list) {
+			System.out.println("\""+RelationConverter.ticketKeyGenerator(ticket)+"\",");
+		}
+		System.out.println("---------------------------------");
+		
+		return list	;
 	}
 	
 	//Get tickets during a period of time
@@ -157,6 +164,29 @@ public class RestfulController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return this.ticketService.getAllTicket();
+	}
+	
+	@RequestMapping(value="/admin/EnableTicket.html", method = RequestMethod.POST)
+	public @ResponseBody List<RedisTicket> enableTicket(@RequestParam("key") String key) {
+		key = key.replace("_", " ");
+		System.out.println(key);
+		ticketService.enableTicket(key);
+		return this.ticketService.getAllTicket();
+	}
+	
+	@RequestMapping(value="/admin/DisableTicket.html", method = RequestMethod.POST)
+	public @ResponseBody List<RedisTicket> disableTicket(@RequestParam("key") String key) {
+		key = key.replace("_", " ");
+		System.out.println(key);
+		ticketService.disableTicket(key);
+		return this.ticketService.getAllTicket();
+	}
+
+	@RequestMapping(value="/admin/DeleteTicket.html", method = RequestMethod.POST)
+	public @ResponseBody List<RedisTicket> deleteTicket(@RequestParam("key") String key) {
+		key = key.replace("_", " ");
+		ticketService.deleteTicket(key);
 		return this.ticketService.getAllTicket();
 	}
 	

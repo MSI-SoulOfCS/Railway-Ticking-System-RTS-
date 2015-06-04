@@ -222,16 +222,61 @@
     
     function reloadAllTicketAfterNewTicket(data) {
 		var rows = "";
+		alert("reload");
 		$("#ManageTicketTable").empty();
 		$(data).each(function(i,item) {
 			var d = new Date(item.date);
 			rows = "<tr><td>" + item.start + "</td><td>"+item.destination+"</td><td>"+
 			d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate()) + 
-			" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price+"</td></tr>";
+			" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "</td><td>"+item.avaiNumber+"/"+item.amount +"</td><td>"+item.price;
+			var key = item.start+"#"+item.destination+"#"+d.getFullYear()+addZeros((d.getMonth()+1))+addZeros(d.getDate())+addZeros(d.getHours())+addZeros(d.getMinutes());
+			key = key.replace(/ /gi, "_");
+			if(item.active) {
+				rows = rows + "</td><td><input id=" + key + " type=\"button\" class=\"btn btn-default\" value=\"disable\" onclick=\"disableTicket(id)\"/>";
+			}
+			else {
+				rows = rows + "</td><td><input id=" + key + " type=\"button\" class=\"btn btn-default\" value=\"disable\" onclick=\"enableTicket(id)\"/>";
+				if(item.avaiNumber == item.amount) {
+					rows = rows + "<input id=" + key + " type=\"button\" class=\"btn btn-default\" value=\"delete\" onclick=\"deleteTicket(id)\"/>";
+				}
+			}
+			rows = rows + "</td></tr>";
 			$(rows).appendTo("#ManageTicketTable");
 		});
     } 
     /*new a ticket function end here*/
+    
+    /*Enable And Disable And Delete ticket*/
+    function disableTicket(key) {
+		var formData = {key : key};
+	    	$.ajax({
+				url: "/Demand1/admin/DisableTicket.html",
+				type: "POST",
+				data: formData,
+				dataType: "json",
+				success: reloadAllTicketAfterNewTicket
+			});    
+    }
+    function enableTicket(key) {
+		var formData = {key : key};
+    	$.ajax({
+			url: "/Demand1/admin/EnableTicket.html",
+			type: "POST",
+			data: formData,
+			dataType: "json",
+			success: reloadAllTicketAfterNewTicket
+		});    
+    }
+    function deleteTicket(key) {
+		var formData = {key : key};
+    	$.ajax({
+			url: "/Demand1/admin/DeleteTicket.html",
+			type: "POST",
+			data: formData,
+			dataType: "json",
+			success: reloadAllTicketAfterNewTicket
+		});    
+    }
     
     /*This function use to add ticket to cart*/
     function check(){

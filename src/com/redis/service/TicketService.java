@@ -94,4 +94,7 @@ public interface TicketService
 	 * after insert the value into the Oracle
 	 */
 	public List<RedisTransaction> getAllTransactionAndDelete();
+	
+	
+	public void deleteTicket(String ticketKey);
 }

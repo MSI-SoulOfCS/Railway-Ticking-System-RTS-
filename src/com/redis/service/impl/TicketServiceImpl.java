@@ -622,4 +622,18 @@ public class TicketServiceImpl implements TicketService
 	}
 
 
+	@Override
+	public void deleteTicket(String ticketKey) {
+		// TODO Auto-generated method stub
+		Jedis jedis = RedisUtil.getJedis();
+		
+		jedis.lrem(RedisTicket.TICKET_POOL_NAME, 1, ticketKey);
+		jedis.del(ticketKey);
+		jedis.del(RelationConverter.ticketSeatsGenerator(ticketKey));
+		
+		RedisUtil.close();		
+		
+	}
+
+
 }

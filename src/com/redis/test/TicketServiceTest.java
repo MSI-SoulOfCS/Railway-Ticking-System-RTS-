@@ -37,7 +37,7 @@ public class TicketServiceTest
 	}
 
 	
-	@Test
+//	@Test
 	public void addTicket() 
 	{
 		String[] seats = new String[30];
@@ -373,7 +373,7 @@ public class TicketServiceTest
 	@Test
 	public void test22()
 	{
-		//TransactionService.completeTransaction();
+		service.deleteTicket("NY,New York,Penn Station#MA,Boston,North Station#201506180708");
 	}
 	
 }

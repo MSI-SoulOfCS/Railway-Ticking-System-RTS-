@@ -20,7 +20,7 @@ public class RequestManager
 	{	
 		this.service.cartExpire(2);
 		
-		System.out.println("request manager running");
+//		System.out.println("request manager running");
 	}
 
 }
