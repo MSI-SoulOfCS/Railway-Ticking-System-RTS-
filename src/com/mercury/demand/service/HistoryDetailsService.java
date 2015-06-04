@@ -13,6 +13,7 @@ import com.redis.entity.RedisTransaction;
 public class HistoryDetailsService {
 	@Autowired
 	private HistoryDao hd;
+
 		
 	public HistoryDao getHd() {
 		return hd;
@@ -29,8 +30,10 @@ public class HistoryDetailsService {
 	public List<Transaction> getTransactionByUsername(String username) {
 		return hd.getUserTransaction(username);
 	}
-	public void addAHistory(List<RedisTransaction> trans) {
+	public void addAHistory(List<RedisTransaction> trans) {		
 		hd.addAHistory(trans);
 	}
-
+	public List<Transaction> cancelTicket(String ticket_id, String seat_no, String username) {
+		return hd.cancelTransaction(ticket_id, seat_no, username);
+	}
 }

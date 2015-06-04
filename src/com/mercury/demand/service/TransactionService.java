@@ -14,15 +14,20 @@ import com.redis.service.impl.TicketServiceImpl;
 @Service
 public class TransactionService 
 { 
-	
-	public static void complete()
-	{
-		TicketService service = 
-				new TicketServiceImpl();
-		
-		List<RedisTransaction> trans = service.getAllTransactionAndDelete();
+	private TicketService service;
+	public TransactionService() {
+		System.out.println("New Transaction Service");
+		service = new TicketServiceImpl();
+	}
+	public void complete()
+	{		
+		List<RedisTransaction> trans = this.service.getAllTransactionAndDelete();
+		if(trans != null) {
+			OracleTransaction.getInstance().addTransactionToOracle(trans);
+			System.out.println("Insert transaction record to Oracle");
+		}
 
-		OracleTransaction.getInstance().addTransactionToOracle(trans);
+			
 
 //		OracleUtil.save(trans);
 	}

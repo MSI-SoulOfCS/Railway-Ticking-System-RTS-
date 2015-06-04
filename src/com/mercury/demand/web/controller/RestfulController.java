@@ -17,12 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mercury.demand.persistence.dao.PersonDao;
 import com.mercury.demand.persistence.model.CartEntity;
-import com.mercury.demand.persistence.model.History;
 import com.mercury.demand.persistence.model.Person;
 import com.mercury.demand.persistence.model.Station;
-import com.mercury.demand.persistence.model.Ticket;
 import com.mercury.demand.persistence.model.Transaction;
 import com.mercury.demand.service.HistoryDetailsService;
 import com.mercury.demand.service.ModUserDetailsService;
@@ -162,6 +159,20 @@ public class RestfulController {
 		}
 		return this.ticketService.getAllTicket();
 	}
+	
+	//Return ticket
+	@RequestMapping(value="/auth/RefundTicket.html", method = RequestMethod.POST)
+	public @ResponseBody List<Transaction> refundTicket (@RequestParam("key") String key) {
+		
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		key = key.replace("_", " ");
+		String[] keys = key.split("\\+");
+
+		ticketService.returnBackTicket(keys[0], keys[1]);		
+		
+		return historyDetailsService.cancelTicket(keys[0], keys[1], user.getUsername());
+	}
+	
 
 	//****************************************
 	//***************History******************

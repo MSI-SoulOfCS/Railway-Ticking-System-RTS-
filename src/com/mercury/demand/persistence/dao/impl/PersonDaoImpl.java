@@ -55,7 +55,7 @@ public class PersonDaoImpl implements PersonDao {
 			
 			String encryptStr = MagicCrypt.getInstance().encrypt(username);
 			encryptStr = MagicCrypt.getInstance().httpGetStringConvert(encryptStr);
-			mailApp.sendMail(firstname + " " + lastname, "	Please click the following link to activate your account.\nhttp://localhost:8080/Demand1/restful/UserActivate.html?id="+encryptStr, email);
+			mailApp.sendMail(firstname + " " + lastname, "Welcome to join MSI ticket system" ,"	Please click the following link to activate your account.\nhttp://localhost:8080/Demand1/restful/UserActivate.html?id="+encryptStr, email);
 			
 			return "yes";
 		}
@@ -108,7 +108,7 @@ public class PersonDaoImpl implements PersonDao {
 					template.update(person);
 				}
 			}
-			mailApp.sendMail(list.get(0).getFirstname() + " " + list.get(0).getLastname(), content, list.get(0).getEmail());
+			mailApp.sendMail(list.get(0).getFirstname() + " " + list.get(0).getLastname(),"MSI Ticket System Password reset", content, list.get(0).getEmail());
 			return "yes";
 		}
 		else

@@ -175,11 +175,33 @@
 		$("#tickets").empty();
 		$(data).each(function(i,item) {
 			var d = new Date(item.tran_time);
-			rows = "<tr><td>" + item.ticket_id + "</td><td>"+item.seat_no+"</td><td>"+
-			d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate())
-			+"	"+ addZeros(d.getHours())+":"+ addZeros(d.getMinutes())+ "</td></tr>";
+			var dataCols = item.ticket_id.split("#");
+			var dateTicket = new Date(dataCols[2].slice(0, 4), dataCols[2].slice(4, 6) - 1, dataCols[2].slice(6, 8), dataCols[2].slice(8, 10), dataCols[2].slice(10, 12));
+			rows = "<tr><td>" + dataCols[0] + "</td><td>" + dataCols[1] + "</td><td>" + dateTicket.getFullYear() 
+			+ "-" + addZeros((dateTicket.getMonth()+1)) + "-" + addZeros(dateTicket.getDate())
+			+"	"+ addZeros(dateTicket.getHours())+":"+ addZeros(dateTicket.getMinutes()) + "</td><td>" 
+			+ item.seat_no + "</td><td>" + d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate())
+			+"	"+ addZeros(d.getHours())+":"+ addZeros(d.getMinutes())+ "</td><td>";
+			var dateNow = new Date();
+			if(dateNow < dateTicket) {
+				var combine_key = item.ticket_id.replace(/ /gi, "_");
+				rows = rows + "<input id=" + combine_key + "+" + item.seat_no + " type=\"button\" class=\"btn btn-default\" value=\"refund\" onclick=\"ticketRefund(id)\"/></td></tr>";
+			}
+			else {
+				rows = rows + "</td></tr>";
+			}
 			$(rows).appendTo("#tickets");
 		});
+	}
+	function ticketRefund(id) {
+    	var data={key:id};
+    	$.ajax({
+    		url: "/Demand1/auth/RefundTicket.html",
+  			type: "post",
+  			data: data,
+  			dataType: "json",
+  			success: loadHistory
+    	});
 	}
     /*This function use to load user's transaction from oracle*/
     
@@ -233,6 +255,22 @@
 		});
     }
 	function checkResult(data) {
+		
+		if(data.length != 0) {
+			var rows = '';
+			$(data).each(function(i,item) {
+				var d = new Date(item.date);
+				rows = rows + "From : " + item.start + "\nTO : "+item.destination+"\nOn "+
+				d.getFullYear() + "-" + addZeros((d.getMonth()+1)) + "-" + addZeros(d.getDate()) + 
+				" "+ addZeros(d.getHours()) + ":" + addZeros(d.getMinutes())+ "\nTicket already sold out.\n\n";
+			});
+			rows = rows + "Please check out in 2 min, or the reservation will be canceled.";
+			alert(rows);
+		}
+		else {
+			alert("Please check out in 2 mins, or the reservation will be canceled.");
+		}
+		
 		window.location.href="/Demand1/auth/user.html";
 /*		if(data[0].result == "yes") {
 			location.href = "#success_addToCart";
@@ -279,8 +317,13 @@
 			  type:"post",
 			  data: JSON.stringify(formData),
 			  dataType:"json",
-			  success:checkResult
+			  success:checkOutResult
 		});
+	}
+	
+	function checkOutResult(data) {
+		alert("Success!");
+		window.location.href="/Demand1/";		
 	}
 	/*check out function end here*/
 	

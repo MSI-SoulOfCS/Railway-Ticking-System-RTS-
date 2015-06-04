@@ -9,4 +9,5 @@ public interface HistoryDao {
 	public List<Transaction> getAllHistory();
 	public List<Transaction> getUserTransaction(String username);
 	public void addAHistory(List<RedisTransaction> trans);
+	public List<Transaction> cancelTransaction(String ticket_id, String seat_no, String username);
 }
