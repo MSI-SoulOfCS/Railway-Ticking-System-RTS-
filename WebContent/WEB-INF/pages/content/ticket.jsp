@@ -100,7 +100,7 @@
 				'</div>' +
 				'<div id="bodyContent">' +
 				'<p><b>' + title + '</b>' +
-				'<p><img src=\'http://maps.googleapis.com/maps/api/streetview?size=75x75&location=' + lat + ',' + lng +'&fov=120&heading=150&pitch=10&sensor=false&key=AIzaSyAUFsv4PDnx3pCIa50N2K6O7CpFi8AW4R0 \' width=75px"></img>' +
+				'<p><img src=\'http://maps.googleapis.com/maps/api/streetview?size=75x75&location=' + lat + ',' + lng +'&fov=120&heading=150&pitch=10&sensor=false&key=AIzaSyAUFsv4PDnx3pCIa50N2K6O7CpFi8AW4R0 \' width=150px"></img>' +
 				'</div>' +
 				'</div>'
 			});
@@ -116,6 +116,7 @@
 			var gps = StationGPSList[clicked_id];
 			var gps = gps.split(",");
 			location.href='#map_form';
+			$("#viewTitle").text(clicked_id);
 			initialize(gps[0],gps[1]);
 	        addMark(gps[0], gps[1], clicked_id);
 		}
@@ -197,6 +198,7 @@
 	       <a href="#" class="overlay" id="map_form"></a>
 	       
 	       <div class="popup">
+	       		<div id="viewTitle" style="font-size:25px;">***</div>
 				<div id="map_direction" style="width:400px;height:400px;"></div>
 	            <a class="close" href="#"></a>
 	       </div>	
