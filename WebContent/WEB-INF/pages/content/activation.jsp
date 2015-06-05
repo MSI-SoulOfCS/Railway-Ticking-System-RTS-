@@ -53,7 +53,7 @@ function countDown(secs,surl){//alert(surl);
 	}
 </style>
 </head>
-<body background="<c:url value="/img/15.jpg" />">
+<body background="<c:url value="/img/bg.jpg" />">
 <div class="style">
 	
 	<br/>

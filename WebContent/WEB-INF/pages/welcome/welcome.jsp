@@ -67,7 +67,7 @@
 	});
 </script>
 </head>
-<body background="<c:url value="/img/15.jpg" />">
+<body background="<c:url value="/img/bg.jpg" />">
 <!-- Login Form -->	
 <div class="site-wrapper">
 
