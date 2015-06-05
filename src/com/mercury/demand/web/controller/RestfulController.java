@@ -122,7 +122,6 @@ public class RestfulController {
 		Date ticketDate;
 		try {
 			ticketDate = dateFormat.parse(date);
-			System.out.println(ticketDate);
 			List<RedisTicket> result = this.ticketService.searchTicket(from, to, ticketDate, ticketDate);
 			return result;
 		} catch (ParseException e) {
@@ -170,7 +169,6 @@ public class RestfulController {
 	@RequestMapping(value="/admin/EnableTicket.html", method = RequestMethod.POST)
 	public @ResponseBody List<RedisTicket> enableTicket(@RequestParam("key") String key) {
 		key = key.replace("_", " ");
-		System.out.println(key);
 		ticketService.enableTicket(key);
 		return this.ticketService.getAllTicket();
 	}
@@ -178,7 +176,6 @@ public class RestfulController {
 	@RequestMapping(value="/admin/DisableTicket.html", method = RequestMethod.POST)
 	public @ResponseBody List<RedisTicket> disableTicket(@RequestParam("key") String key) {
 		key = key.replace("_", " ");
-		System.out.println(key);
 		ticketService.disableTicket(key);
 		return this.ticketService.getAllTicket();
 	}
@@ -284,15 +281,8 @@ public class RestfulController {
 	}
 	
 	@RequestMapping(value="/auth/FindTicket.html",method=RequestMethod.POST)
-	public @ResponseBody RedisTicket getTicket(@RequestParam("ticketItem") String ticketItem){
-		ticketItem=ticketItem.replace('_', ' ');
-		System.out.println(ticketItem);
-		String[] str=ticketItem.split("\\+");
-		
-		for(int i=0;i<str.length;i++)System.out.println(str[i]);
-		
+	public @ResponseBody RedisTicket getTicket(@RequestParam("ticketItem") String ticketItem) {		
 		return new RedisTicket();
-		
 	}
 	
 	@RequestMapping(value="/auth/CheckOut.html", method = RequestMethod.POST)
@@ -373,7 +363,7 @@ public class RestfulController {
 	//****************************************
 
 	@RequestMapping(value="/buyTicket.html", method = RequestMethod.POST)
-	public void testTicket(@RequestParam("userid") String userid, @RequestParam("ticketid") String ticketid) 
+	public @ResponseBody String testTicket(@RequestParam("userid") String userid, @RequestParam("ticketid") String ticketid) 
 	{
 		//System.out.println(userid + " " + ticketid);
 		
@@ -394,7 +384,7 @@ public class RestfulController {
 					r.getSeatNo() + "---" + 
 					r.getDate());
 		}
-		return;
+		return "[{\"result\":\"" + "ok" + "\"}]";
 	}
 	
 }

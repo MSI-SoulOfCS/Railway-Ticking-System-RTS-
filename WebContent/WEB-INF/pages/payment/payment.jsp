@@ -171,14 +171,14 @@
 					<div class="left credit_card">
 						<form class="go-right">
 							<div>
-								<input type="text" name="card_number" value="" id="card_number" >
+								<input type="text" name="card_number" placeholder="card number" value="" id="card_number" >
 								<p id="valid" class="valid" style="color:red"></p>
 								<p id="length" class="length" style="color:red"></p>
 							</div>
 							<div>
 								<div class="expiry">	
 									<div class="month_select">
-										<select name="exp_month"  id="exp_month"  data-trigger="change" data-type="name" data-required="true" data-error-message="Enter Your Credit Card Expiration Date">
+										<select name="exp_month" id="exp_month"  data-trigger="change" data-type="name" data-required="true" data-error-message="Enter Your Credit Card Expiration Date">
 											<option value = "1">01 (Jan)</option>
 				                   			<option value = "2">02 (Feb)</option>
 				                   			<option value = "3">03 (Mar)</option>
@@ -214,7 +214,7 @@
 								
 								<div class="sec_num">
 									<div>
-										<input type="text" name="ccv" value="" id="ccv" placeholder="123" data-trigger="change" data-validation-minlength="3" data-type="name" data-required="true" data-error-message="Enter Your Card Security Code"/>
+										<input type="text" name="ccv" value="" id="ccv" placeholder="security code" data-trigger="change" data-validation-minlength="3" data-type="name" data-required="true" data-error-message="Enter Your Card Security Code"/>
 									</div>
 								</div>
 							</div>		

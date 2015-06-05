@@ -313,7 +313,7 @@
 
           <div class="mastfoot">
             <div class="inner">
-              <p style="color:#FFFFFF;">Copyright © 2015 Nina, Vincent, Takuro, God Song All rights reserved.</p>
+              <p style="color:#FFFFFF">Copyright © 2015 Nina, Vincent, Takuro, God Song All rights reserved.</p>
             </div>
           </div>
 

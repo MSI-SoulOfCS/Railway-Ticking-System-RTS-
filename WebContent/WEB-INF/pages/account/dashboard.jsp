@@ -348,8 +348,8 @@
 												<select id="AT_Min" style="height:24px">
 												</select>
 											</td>
-											<td><input type="text" style="height:24px" id="AT_Amount" placeholder="amount"></td>
-											<td><input type="text" style="height:24px;width:70px;" id="AT_Price" placeholder="price"></td>
+											<td><input type="number" style="height:24px;width:100px" id="AT_Amount" placeholder="amount"></td>
+											<td><input type="number" style="height:24px;width:70px;" id="AT_Price" placeholder="price"></td>
 											<td><input type="text" style="height:24px;width:70px;" id="AT_Seat" placeholder="seat type"></td>
 										</tr>
 									</table>
