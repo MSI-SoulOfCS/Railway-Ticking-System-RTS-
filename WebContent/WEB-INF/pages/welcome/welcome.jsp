@@ -200,7 +200,10 @@
 							<td></td>
 						</tr>
 		            </table>
-					<a href="#forget_form" style="color:#000000;">forgot username and password?</a>    
+					<a href="#join_form" style="color:#000000;">Sign up</a>
+					<br />
+					<br />
+					<a href="#forget_form" style="color:#000000;">Forgot username and password?</a>    
 	 			</form>
 	            <a class="close" href="/Demand1/"></a>
 	       </div>
